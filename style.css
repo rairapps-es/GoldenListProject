@@ -230,3 +230,64 @@ body {
 @keyframes pulseFomoGlow { from { opacity: 0.3; } to { opacity: 0.8; } }
 .fomo-icon { font-size: 1.1rem; }
 #fomo-text { font-size: 0.72rem; color: #e2e8f0; line-height: 1.3; }
+
+/* 🏷️ ETIQUETAS FLOTANTES SOBRE IMÁGENES */
+.badge-tipo-flotante {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+/* Colores dinámicos por tipo */
+.badge-suscripcion { background: rgba(168, 85, 247, 0.25); color: #c084fc; border-color: rgba(168, 85, 247, 0.4); }
+.badge-servicio { background: rgba(0, 240, 255, 0.2); color: #00f0ff; border-color: rgba(0, 240, 255, 0.4); }
+.badge-producto { background: rgba(234, 179, 8, 0.2); color: #fde047; border-color: rgba(234, 179, 8, 0.4); }
+
+/* 📊 DISTRIBUCIÓN HORIZONTAL (ESTRUCTURA DE CONTENIDO) */
+.card-body-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 6px;
+}
+.card-left-info { flex: 1; }
+.card-right-pricing {
+    text-align: right;
+    min-width: 90px;
+}
+
+/* 📈 BLOQUE DE SIMULADOR DE DESEOS REALISTA */
+.simulador-deseos-box {
+    margin-top: 8px;
+    font-size: 0.72rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 6px 10px;
+    border-radius: 10px;
+    line-height: 1.3;
+}
+.simulador-deseos-box strong {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
+}
+
+/* 👆 TEXTO DESCRIPCIÓN PULSABLE */
+.descripcion-clickable {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.descripcion-clickable:hover {
+    color: #e2e8f0;
+}
