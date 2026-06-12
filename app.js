@@ -535,8 +535,34 @@ function cargarPaginaDeseosOriginales() {
 // =========================================================================
 // 👤 SECCIÓN PERFIL DE USUARIO
 // =========================================================================
+// =========================================================================
+// 👤 SECCIÓN PERFIL DE USUARIO (REVISADO Y COMPLETO CON TEXTOS NATIVOS)
+// =========================================================================
 function cargarDatosPanelPerfil() {
-    const userTelegramID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "1320417199";
+    // 1. 🎛️ EXTRACCIÓN SOBERANA DE DATOS DE TELEGRAM SDK
+    const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
+    const userTelegramID = userTelegram?.id || "1320417199"; // Fallback por si testeas en navegador local
+    
+    const firstName = userTelegram?.first_name || "Usuario Golden";
+    const lastName = userTelegram?.last_name || "";
+    const nombreCompleto = `${firstName} ${lastName}`.trim();
+
+    // 2. ⚡ GENERADOR DINÁMICO DE RANGOS FUTURISTAS
+    let rangoFuturista = "⚡ Miembro Golden VIP Synergia";
+    
+    // Verificamos si el ID del operador está registrado en tu lista de administradores premium
+    if (window.LISTA_USUARIOS_PREMIUM && window.LISTA_USUARIOS_PREMIUM.includes(String(userTelegramID))) {
+        rangoFuturista = "👑 Administrador Alpha Network";
+    }
+
+    // 🌟 INYECCIÓN DIRECTA EN EL DOM (Adiós para siempre al "Buscando datos...")
+    const perfNombreDOM = document.getElementById('perf-nombre');
+    const perfRangoDOM = document.getElementById('perf-rango');
+    
+    if (perfNombreDOM) perfNombreDOM.innerText = `👤 ${nombreCompleto}`;
+    if (perfRangoDOM) perfRangoDOM.innerText = `Rango: ${rangoFuturista}`;
+
+    // 3. 🏛️ ESTRUCTURACIÓN DE PANELES DE HISTORIAL
     const baseCompras = window.DB_COMPRAS_USUARIOS[userTelegramID] || [];
 
     const panelSubs = document.getElementById('panel-suscripciones');
@@ -544,9 +570,15 @@ function cargarDatosPanelPerfil() {
     const panelProds = document.getElementById('panel-productos');
     const panelAnuncios = document.getElementById('panel-anuncios');
 
-    panelSubs.innerHTML = ""; panelServs.innerHTML = ""; panelProds.innerHTML = ""; panelAnuncios.innerHTML = "";
+    // Limpieza de hilos HTML previos para evitar duplicados al cambiar de pestañas
+    if (panelSubs) panelSubs.innerHTML = ""; 
+    if (panelServs) panelServs.innerHTML = ""; 
+    if (panelProds) panelProds.innerHTML = ""; 
+    if (panelAnuncios) panelAnuncios.innerHTML = "";
+    
     let tieneSuscripcion = false;
 
+    // Mapeo recursivo de transacciones del cliente
     baseCompras.forEach(item => {
         let htmlCard = `
             <div class="panel-item-data view-fade-in">
@@ -555,13 +587,14 @@ function cargarDatosPanelPerfil() {
                 <p style="color:var(--neon-cyan); font-size:0.65rem; font-weight:bold; margin-top:3px;">Estado: ${item.estado}</p>
             </div>
         `;
-        if (item.tipo === "suscripcion") { panelSubs.innerHTML += htmlCard; tieneSuscripcion = true; }
-        if (item.tipo === "servicio") panelServs.innerHTML += htmlCard;
-        if (item.tipo === "producto") panelProds.innerHTML += htmlCard;
-        if (item.tipo === "anuncio") panelAnuncios.innerHTML += htmlCard;
+        if (item.tipo === "suscripcion") { if (panelSubs) panelSubs.innerHTML += htmlCard; tieneSuscripcion = true; }
+        if (item.tipo === "servicio") { if (panelServs) panelServs.innerHTML += htmlCard; }
+        if (item.tipo === "producto") { if (panelProds) panelProds.innerHTML += htmlCard; }
+        if (item.tipo === "anuncio") { if (panelAnuncios) panelAnuncios.innerHTML += htmlCard; }
     });
 
-    if (!tieneSuscripcion) {
+    // 4. 🚨 SISTEMA DE SEGURIDAD PARA CASILLAS VACÍAS
+    if (!tieneSuscripcion && panelSubs) {
         panelSubs.innerHTML = `
             <div style="text-align:center; padding:4px 0;">
                 <p style="color:#64748b; font-size:0.72rem;">No registras ninguna credencial de suscripción activa en la red.</p>
@@ -570,9 +603,9 @@ function cargarDatosPanelPerfil() {
         `;
     }
 
-    if (panelServs.innerHTML === "") panelServs.innerHTML = `<p style='color:#64748b; font-size:0.7rem;'>0 módulos en cola de desarrollo.</p>`;
-    if (panelProds.innerHTML === "") panelProds.innerHTML = `<p style='color:#64748b; font-size:0.7rem;'>0 productos de asignación directa.</p>`;
-    if (panelAnuncios.innerHTML === "") panelAnuncios.innerHTML = `<p style='color:#64748b; font-size:0.7rem;'>0 pautas publicitarias registradas.</p>`;
+    if (panelServs && panelServs.innerHTML === "") panelServs.innerHTML = `<p style='color:#64748b; font-size:0.7rem;'>0 módulos en cola de desarrollo.</p>`;
+    if (panelProds && panelProds.innerHTML === "") panelProds.innerHTML = `<p style='color:#64748b; font-size:0.7rem;'>0 productos de asignación directa.</p>`;
+    if (panelAnuncios && panelAnuncios.innerHTML === "") panelAnuncios.innerHTML = `<p style='color:#64748b; font-size:0.7rem;'>0 pautas publicitarias registradas.</p>`;
 }
 
 // =========================================================================
