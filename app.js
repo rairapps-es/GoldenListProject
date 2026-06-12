@@ -19,7 +19,7 @@ window.CATALOGO_SERVICIOS = [];
 // 👑 ITEM 001: Configurado como servicio premium de suscripción
 window.CATALOGO_SERVICIOS.push({
     id: "SERV-001",
-    tipo: "suscripcion", // Se mantiene como servicio para que sea visible en el catálogo
+    tipo: "servicio", // Se mantiene como servicio para que sea visible en el catálogo
     categoria: "bot",
     titulo: "👑 Suscripción Anual - Bot SaaS Automatizado",
     rating: "5.0",
