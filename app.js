@@ -293,10 +293,31 @@ function renderizerEcosistemaActual(cargarMas = false) {
 // =========================================================================
 // 🧱 COMPONENTE ARQUITECTÓNICO DE TARJETA (EFECTOS COMPLETO)
 // =========================================================================
+// =========================================================================
+// 🧱 COMPONENTE DE TARJETA ULTRA-PREMIUM (REDISEÑO CON PRECIO A LA DERECHA)
+// =========================================================================
 function generarTarjetaInyectableHTML(item) {
     const deseosLocales = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
     const estaEnDeseos = deseosLocales.some(d => d.id === item.id);
     const precioFinal = item.precio - (item.descuento || 0);
+
+    // 1. Determinar el texto de la etiqueta y su clase de color según el tipo
+    let tipoTexto = "Servicio";
+    let tipoClase = "badge-servicio";
+    if (item.tipo === "suscripcion") { tipoTexto = "Suscripción"; tipoClase = "badge-suscripcion"; }
+    if (item.tipo === "producto") { tipoTexto = "Producto"; tipoClase = "badge-producto"; }
+
+    // 2. Obtener o inicializar los datos del simulador de deseos para este ítem específico
+    let simKey = `sim_deseos_${item.id}`;
+    let simData = JSON.parse(localStorage.getItem(simKey));
+    let ahora = Date.now();
+    
+    // Si no existe o pasaron más de 24 horas (86400000 ms), se resetea con un número base realista
+    if (!simData || (ahora - simData.timestamp > 86400000)) {
+        let baseAleatoria = Math.floor(Math.random() * 40) + 15; // Inicia entre 15 y 55 personas
+        simData = { count: baseAleatoria, timestamp: ahora };
+        localStorage.setItem(simKey, JSON.stringify(simData));
+    }
 
     const botonDeseosHTML = estaEnDeseos 
         ? `<button class="btn-wishlist active" onclick="controladorDeseosDirecto('${item.id}', '${item.titulo}', this)">❤️ Guardado</button>`
@@ -305,32 +326,46 @@ function generarTarjetaInyectableHTML(item) {
     return `
         <div class="servicio-card view-fade-in" id="card-context-${item.id}">
             <div class="card-image-placeholder">
+                <div class="badge-tipo-flotante ${tipoClase}">${tipoTexto}</div>
                 <img src="${item.imagen}" alt="Media Network">
             </div>
             
-            <h3 class="card-title-clickable" onclick="toggleAcordeon('${item.id}')">👉 ${item.titulo}</h3>
-            
-            <div style="margin-bottom: 8px;">
-                <div class="rating-clickable" onclick="window.open('https://t.me/ListaGolden', '_blank')">
-                    ⭐ ${item.rating || '4.9'} <span style="color:#94a3b8; font-size:0.65rem; text-decoration:underline;">(Reseñas)</span>
+            <div class="card-body-flex">
+                <div class="card-left-info">
+                    <h3 class="card-title-clickable" onclick="toggleAcordeon('${item.id}')">👉 ${item.titulo}</h3>
+                    
+                    <div style="margin: 4px 0;">
+                        <div class="rating-clickable" onclick="window.open('https://t.me/ListaGoldenCanalResenas', '_blank')">
+                            ⭐ ${item.rating || '4.9'} <span style="color:#64748b; font-size:0.65rem;">(Reseñas)</span>
+                        </div>
+                    </div>
+                    
+                    <p class="descripcion-clickable" onclick="toggleAcordeon('${item.id}')" style="font-size:0.75rem; color:#94a3b8; line-height:1.4;">
+                        ${item.descripcion_corta || item.descripcion_breve || ''}
+                    </p>
+                </div>
+                
+                <div class="card-right-pricing">
+                    <div style="font-size: 1.15rem; font-weight: 900; color: var(--neon-cyan); text-shadow: 0 0 8px rgba(0,240,255,0.25);">
+                        ${precioFinal}€
+                    </div>
+                    ${item.descuento > 0 ? `<div style="font-size: 0.68rem; color: #64748b; text-decoration: line-through; margin-top:-2px;">Antes: ${item.precio}€</div>` : ''}
+                    ${item.oferta ? `<div style="color: var(--neon-pink); font-size: 0.62rem; font-weight:800; text-transform: uppercase; letter-spacing:0.3px; margin-top:2px; line-height:1.1;">${item.oferta}</div>` : ''}
                 </div>
             </div>
 
-            <p style="font-size:0.75rem; color:#94a3b8; line-height:1.4; margin-bottom:6px;">${item.descripcion_corta || item.descripcion_breve || ''}</p>
-            
-            <div style="margin:6px 0; font-size:0.85rem; font-weight:800;">
-                <span style="color:var(--neon-cyan); font-size:1rem; text-shadow: 0 0 8px rgba(0,240,255,0.2);">${precioFinal}€</span>
-                <span style="color:var(--neon-pink); font-size:0.68rem; margin-left:8px; text-transform:uppercase; letter-spacing:0.5px;">${item.oferta || ''}</span>
+            <div class="simulador-deseos-box">
+                🔥 <strong id="sim-contador-render-${item.id}">${simData.count}</strong> personas añadieron este ${tipoTexto.toLowerCase()} a su lista de deseos hoy.
             </div>
 
             <div id="expand-${item.id}" class="acordeon-contenido">
                 <p style="color:#cbd5e1; margin-bottom:4px;"><strong>Módulo Técnico:</strong> ${item.descripcion_larga || 'Especificación de ingeniería Lista Golden optimizada para canales de alta conversión.'}</p>
-                <p style="color:#64748b; font-size:0.68rem;">Entrega: ${item.tiempoEntregaBase || 'Inmediato'} | Revisiones: ${item.revisiones || 1}</p>
+                <p style="color:#64748b; font-size:0.68rem;">Plazo de despliegue: ${item.tiempoEntregaBase || 'Inmediato'} | Revisiones: ${item.revisiones || 1}</p>
             </div>
 
             <div class="card-actions-row">
                 ${botonDeseosHTML}
-                <button class="btn-contratar" onclick="abrirModalCheckoutEspecifico('${item.id}', '${item.tipo}')">Comprar 🛍️</button>
+                <button class="btn-contratar" onclick="abrirModalCheckoutEspecifico('${item.id}', '${item.tipo}')">Comprar Módulo 🛍️</button>
             </div>
         </div>
     `;
@@ -543,15 +578,38 @@ function cargarDatosPanelPerfil() {
 // =========================================================================
 // 🤖 SIMULADORES AUTOMÁTICOS ASÍNCRONOS
 // =========================================================================
+// =========================================================================
+// ⏱️ MOTOR DEL SIMULADOR ASÍNCRONO DE DESEOS EN TIEMPO REAL
+// =========================================================================
 function iniciarSimuladorContadoresTarjeta() {
+    // Cada 7 segundos evaluamos si aumentamos un nodo de forma orgánica
     setInterval(() => {
-        const target = window.CATALOGO_SERVICIOS[Math.floor(Math.random() * window.CATALOGO_SERVICIOS.length)];
-        if (target) {
-            target.deseosIniciales += Math.random() > 0.5 ? 1 : 0;
-            const el = document.getElementById(`fomo-card-deseos-${target.id}`);
-            if (el) el.innerHTML = `🔥 ${target.deseosIniciales} nodos guardaron esto en su base de datos.`;
+        // Combinamos todos nuestros almacenes de productos disponibles
+        const poolDeItems = [...window.CATALOGO_SERVICIOS, ...window.CATALOGO_CANALES, ...window.CATALOGO_ANUNCIOS];
+        if (poolDeItems.length === 0) return;
+
+        // Seleccionamos un ítem al azar de toda nuestra base de datos
+        const itemAleatorio = poolDeItems[Math.floor(Math.random() * poolDeItems.length)];
+        const simKey = `sim_deseos_${itemAleatorio.id}`;
+        let simData = JSON.parse(localStorage.getItem(simKey));
+
+        if (simData) {
+            // El simulador tiene un 65% de probabilidades de subir +1 en esta iteración
+            if (Math.random() > 0.35) {
+                simData.count += 1;
+                localStorage.setItem(simKey, JSON.stringify(simData));
+
+                // Si la tarjeta está renderizada en pantalla actualmente, actualizamos el número con un efecto fluido
+                const contadorDOM = document.getElementById(`sim-contador-render-${itemAleatorio.id}`);
+                if (contadorDOM) {
+                    contadorDOM.innerText = simData.count;
+                    // Mini animación flash de neón al subir el dígito
+                    contadorDOM.style.textShadow = "0 0 15px #00f0ff";
+                    setTimeout(() => { contadorDOM.style.textShadow = "0 0 6px rgba(0, 240, 255, 0.3)"; }, 1000);
+                }
+            }
         }
-    }, 9000);
+    }, 7000); 
 }
 
 function ejecutarFomoFlotanteSincronizado() {
