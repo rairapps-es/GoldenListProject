@@ -70,6 +70,25 @@ window.CATALOGO_SERVICIOS.push({
     deseosIniciales: 512
 });
 
+// 📦 ITEM 003: Configurado como producto digital (Activa formulario de Estrellas de Telegram)
+window.CATALOGO_SERVICIOS.push({
+    id: "PROD-003",
+    tipo: "producto", // 🌟 Activa pasarela de Estrellas, PayPal y USDT sin preguntas de entrega
+    categoria: "canal",
+    titulo: "📦 Inteligente AI",
+    rating: "4.2",
+    imagen: "https://picsum.photos/id/1025/400/220",
+    descripcion_corta: "nativo para automatizar contenido en tus canales.",
+    descripcion_larga: "archivo ejecutable compatible con servidores Linux/Windows. Conecta tus fuentes de información y deja que la IA redacte, maquete y publique en tus canales de Telegram de forma autónoma.",
+    precio: 50,
+    descuento: 10, // El usuario paga 45€
+    oferta: "🔥 ¡Oferta Flash!",
+    tiempoEntregaBase: "Descarga Inmediata",
+    revisiones: 0,
+    deseosIniciales: 112
+});
+
+
 // =========================================================================
 // 📢 CATÁLOGO DE CANALES EN VENTA (CORREGIDO Y CONFIGURADO)
 // =========================================================================
