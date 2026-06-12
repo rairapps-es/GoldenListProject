@@ -128,10 +128,14 @@ window.CATALOGO_ANUNCIOS = [
     }
 ];
 
-let catalogoActualActivo = "servicios"; 
-let filtroActualActivo = "todos"; 
-let tarjetasDesplegadasActualmente = 10; 
-let itemSeleccionadoParaCompra = null;
+// =========================================================================
+// 🎛️ TORRE DE CONTROL DE ESTADOS (FILTRADO CRUZADO Y PASARELAS)
+// =========================================================================
+let filtroTipoActivo = "todos";      // 🏷️ Filtro A (Pestaña): "todos", "servicio", "suscripcion", "producto"
+let filtroCategoriaActiva = "todos"; // 📂 Filtro B (Botones): "todos", "mi", "bot", "grupo", "canal"
+
+let tarjetasDesplegadasActualmente = 10; // 🔄 Contador para el Lazy Load automático
+let itemSeleccionadoParaCompra = null;   // 🛍️ Almacén temporal del ítem que se va a enviar a @Airdayz
 
 // =========================================================================
 // 🚀 INICIALIZACIÓN CON CARGA SOBERANA DE PERFIL
@@ -230,6 +234,20 @@ function aplicarFiltrosYOrdenacion(listado) {
     return listado;
 }
 
+// Ejecutar cuando pinchen en las pestañas de Tipo (Todos, Servicios, etc.)
+function filtrarPorTipo(tipo) {
+    filtroTipoActivo = tipo;
+    // Quitamos la clase active de los botones viejos y se la ponemos al nuevo...
+    renderizerEcosistemaActual(); // Recargamos el catálogo
+}
+
+// Ejecutar cuando pinchen en las subcategorías (Para mí, Bots, Grupos, Canales)
+function filtrarPorCategoria(categoria) {
+    filtroCategoriaActiva = categoria;
+    // Quitamos la clase active de los sub-botones viejos y se la ponemos al nuevo...
+    renderizerEcosistemaActual(); // Recargamos el catálogo
+}
+
 // =========================================================================
 // 📥 MOTOR DE RENDIMIENTO LAZY LOAD
 // =========================================================================
@@ -237,54 +255,56 @@ function renderizerEcosistemaActual(cargarMas = false) {
     const grid = document.querySelector('.catalog-grid');
     if (!grid) return;
 
-    // Si no es "Cargar más", limpiamos la pantalla y reiniciamos el contador a 10
     if (!cargarMas) { 
         grid.innerHTML = ""; 
         tarjetasDesplegadasActualmente = 10; 
     }
 
-    let listadoBase = [];
-    
-    // 1. SELECCIÓN DE DATOS SEGÚN LA PESTAÑA ACTIVA
-    if (catalogoActualActivo === "servicios") {
-        // 🌟 CORRECCIÓN: Filtra y muestra tanto tus "servicios" como tus "productos" en la misma pestaña
-        listadoBase = window.CATALOGO_SERVICIOS.filter(item => item.tipo === "servicio" || item.tipo === "producto");
-    }
-    if (catalogoActualActivo === "canales") {
-        listadoBase = [...window.CATALOGO_CANALES];
-    }
-    if (catalogoActualActivo === "anuncios") {
-        listadoBase = [...window.CATALOGO_ANUNCIOS];
+    // 1. Clonamos la base de datos completa de servicios/productos/suscripciones
+    let listadoFiltrado = [...window.CATALOGO_SERVICIOS];
+
+    // 2. 🎛️ PRIMER FILTRO: Por Tipo de Modelo (Pestaña Principal)
+    if (filtroTipoActivo !== "todos") {
+        listadoFiltrado = listadoFiltrado.filter(item => item.tipo === filtroTipoActivo);
     }
 
-    // 2. APLICAR ORDENACIÓN Y FILTROS AVANZADOS (Destacados, Barato, Descuentos)
-    listadoBase = aplicarFiltrosYOrdenacion(listadoBase);
+    // 3. 📂 SEGUNDO FILTRO: Por Destinatario/Categoría (Sub-botones o Select)
+    if (filtroCategoriaActiva !== "todos") {
+        listadoFiltrado = listadoFiltrado.filter(item => item.categoria === filtroCategoriaActiva);
+    }
 
-    // 3. SEGMENTACIÓN LAZY LOAD (Cortamos la lista para mostrar solo las que tocan)
-    const bloquePaginado = listadoBase.slice(0, tarjetasDesplegadasActualmente);
+    // 4. Aplicar ordenación extra si tienes (precios, ratings, etc.)
+    if (typeof aplicarFiltrosYOrdenacion === "function") {
+        listadoFiltrado = aplicarFiltrosYOrdenacion(listadoFiltrado);
+    }
+
+    // 5. Segmentación e Inyección en el HTML
+    const bloquePaginado = listadoFiltrado.slice(0, tarjetasDesplegadasActualmente);
     let html = "";
     
-    // Construimos el HTML acumulado de las tarjetas de esta tanda
     bloquePaginado.forEach(item => { 
         html += generarTarjetaInyectableHTML(item); 
     });
 
-    // Eliminamos el botón de "Cargar más" antiguo para que no se duplique abajo
     const trigger = document.getElementById('trigger-lazy-load');
     if (trigger) trigger.remove();
 
-    // Inyectamos el nuevo HTML de forma limpia o sumando al final
-    if (cargarMas) {
-        grid.insertAdjacentHTML('beforeend', html);
-    } else {
-        grid.innerHTML = html;
+    if (cargarMas) grid.insertAdjacentHTML('beforeend', html);
+    else grid.innerHTML = html;
+
+    // Mensaje amigable si la combinación de filtros no arroja resultados
+    if (listadoFiltrado.length === 0) {
+        grid.innerHTML = `
+            <div style="text-align:center; padding: 40px 20px; color:#64748b; width:100%;">
+                📡 No hay conexiones disponibles para esta combinación de filtros.
+            </div>
+        `;
     }
 
-    // 4. GENERADOR DEL BOTÓN LAZY LOAD (Solo si quedan más tarjetas ocultas por mostrar)
-    if (listadoBase.length > tarjetasDesplegadasActualmente) {
+    if (listadoFiltrado.length > tarjetasDesplegadasActualmente) {
         grid.insertAdjacentHTML('beforeend', `
-            <div id="trigger-lazy-load" style="text-align:center; padding:10px 0; width:100%;" class="view-fade-in">
-                <button onclick="tarjetasDesplegadasActualmente+=10; renderizerEcosistemaActual(true);" style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,240,255,0.2); color:#00f0ff; padding:10px; border-radius:12px; font-size:0.75rem; font-weight:bold; cursor:pointer; width:100%; box-shadow: 0 0 10px rgba(0,240,255,0.05);">Desplegar Más Conexiones ⬇️</button>
+            <div id="trigger-lazy-load" style="text-align:center; padding:10px 0; width:100%;">
+                <button onclick="tarjetasDesplegadasActualmente+=10; renderizerEcosistemaActual(true);" style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,240,255,0.2); color:#00f0ff; padding:10px; border-radius:12px; font-size:0.75rem; font-weight:bold; width:100%;">Desplegar Más Conexiones ⬇️</button>
             </div>
         `);
     }
