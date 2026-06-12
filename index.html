@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lista Golden - Ecosistema Cyberpunk</title>
-    <!-- SDK Oficial de Telegram WebApps -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
     <style>
@@ -346,7 +345,6 @@
 </head>
 <body>
 
-    <!-- 🌐 HEADER GENERAL -->
     <div class="top-bar">
         <div class="brand">Lista Golden</div>
         <div class="user-pill">
@@ -355,7 +353,6 @@
         </div>
     </div>
 
-    <!-- 🛒 FILTROS ESTILO AMAZON -->
     <div class="amazon-filter-wrapper" id="filter-bar-container">
         <div class="amazon-scroll-row" id="pestañas-tipo-container">
             <button class="tab-tipo-btn active" onclick="cambiarPestañaTipo('todos', this)">🌐 Todo el Catálogo</button>
@@ -371,7 +368,6 @@
                 <option value="descuento">🔥 Liquidaciones</option>
             </select>
             <button class="cat-btn active" onclick="cambiarCategoriaFiltro('todos', this)">Todos</button>
-            <!-- 👤 NUEVA OPCIÓN "PARA MÍ" EN FILTRO DE CATEGORÍAS -->
             <button class="cat-btn" onclick="cambiarCategoriaFiltro('personal', this)">👤 Para Mí</button>
             <button class="cat-btn" onclick="cambiarCategoriaFiltro('bot', this)">Bots</button>
             <button class="cat-btn" onclick="cambiarCategoriaFiltro('grupo', this)">Grupos</button>
@@ -379,16 +375,13 @@
         </div>
     </div>
 
-    <!-- 📦 VISTA A: GRID DE CATÁLOGO PRINCIPAL -->
     <div class="catalog-grid view-fade-in" id="vista-catalogo-principal"></div>
 
-    <!-- 📰 VISTA B: BLOG EXCLUSIVO CYBERPUNK (POSTS DE CONTENIDO) -->
     <div id="vista-blog-exclusivo" class="view-section">
         <div style="margin-bottom: 14px;">
             <h2 style="font-size:1.2rem; font-weight:900; text-shadow: 0 0 8px var(--neon-cyan);">⚡ DATA CENTER ARCHIVES</h2>
             <p style="font-size:0.75rem; color:var(--text-muted);">Repositorio y herramientas cifradas de Lista Golden.</p>
         </div>
-        <!-- Filtros del Blog -->
         <div style="display:flex; gap:6px; overflow-x:auto; margin-bottom:16px; padding-bottom:4px; scrollbar-width:none;">
             <button class="tab-tipo-btn active" id="blog-cat-all" onclick="filtrarBlog('todos', this)">Todos</button>
             <button class="tab-tipo-btn" onclick="filtrarBlog('descargas', this)">💾 Descargas</button>
@@ -398,7 +391,6 @@
         <div class="blog-wrapper" id="feed-posts-container"></div>
     </div>
 
-    <!-- 🛡️ VISTA C: APOYO AL PROYECTO -->
     <div id="vista-apoyo-proyecto" class="view-section">
         <div style="margin-bottom: 16px;">
             <h2 style="font-size:1.2rem; font-weight:900; color:#fff;">🤍 APOYO AL DESARROLLO</h2>
@@ -422,14 +414,54 @@
         </button>
     </div>
 
-    <!-- ❤️ VISTA D: LISTA DE DESEOS -->
     <div id="lista-deseos-view" class="view-section">
         <h2 style="font-size:1.1rem; font-weight:900; margin-bottom:4px;">Tu Almacén Virtual</h2>
         <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">Módulos guardados en la memoria de tu terminal.</p>
         <div id="wishlist-original-grid" style="display:flex; flex-direction:column; gap:16px;"></div>
     </div>
 
-    <!-- 👤 VISTA E: PERFIL DE USUARIO COMPLETO -->
+    <div id="vista-traspaso-canales" class="view-section">
+        <div style="margin-bottom: 20px;">
+            <h2 style="font-size:1.2rem; font-weight:900; color:var(--neon-gold);">🔄 MERCADO DE TRASPASOS</h2>
+            <p style="font-size:0.75rem; color:var(--text-muted);">Terminales de canales y grupos en proceso de transferencia de propiedad.</p>
+        </div>
+        <div id="grid-traspasos" style="display:flex; flex-direction:column; gap:16px;">
+            <div class="post-card">
+                <div style="padding:14px; border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <div style="font-size:0.6rem; color:var(--neon-gold); font-weight:800;">PROPIEDAD VERIFICADA</div>
+                    <h3 style="font-size:0.9rem; margin-top:4px;">Canal: "Tech Cyber News"</h3>
+                </div>
+                <div style="padding:14px; font-size:0.75rem; display:flex; justify-content:space-between;">
+                    <span>👥 45,000 Suscriptores</span>
+                    <span style="color:var(--neon-green);">Precio: 1,200 USDT</span>
+                </div>
+                <button class="btn-contratar" style="margin:0 14px 14px 14px; width:calc(100% - 28px);" onclick="abrirTraspasoManual('Tech Cyber News', '1,200 USDT')">SOLICITAR TRASPASO 🔗</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="vista-contratar-anuncios" class="view-section">
+        <div style="margin-bottom: 20px;">
+            <h2 style="font-size:1.2rem; font-weight:900; color:var(--neon-pink);">📣 CONTRATACIÓN PUBLICITARIA</h2>
+            <p style="font-size:0.75rem; color:var(--text-muted);">Lanza tu mensaje en toda la red de Lista Golden con precisión de segmentación.</p>
+        </div>
+        <div class="support-box">
+            <div class="modal-field">
+                <label>Tipo de Impacto:</label>
+                <select id="select-anuncio">
+                    <option value="Campaña de Intercambio (10k vistas)">Campaña de Intercambio (10k vistas)</option>
+                    <option value="Banner Fijo en Dashboard (30 días)">Banner Fijo en Dashboard (30 días)</option>
+                    <option value="Notificación Push Premium (Masiva)">Notificación Push Premium (Masiva)</option>
+                </select>
+            </div>
+            <div class="modal-field">
+                <label>Enlace de tu Proyecto:</label>
+                <input type="text" id="input-url-anuncio" placeholder="t.me/TuProyecto" style="width:100%; background:#060913; border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:8px; color:#fff; font-size:0.8rem; outline:none;">
+            </div>
+            <button class="btn-contratar" style="width:100%; background:var(--neon-pink); color:#fff; font-weight:800; border:none;" onclick="procesarAnuncioCampania()">ENVIAR ORDEN DE COMPRA</button>
+        </div>
+    </div>
+
     <div id="perfil-usuario-view" class="view-section">
         <div class="perfil-header">
             <div class="big-avatar-container">
@@ -440,7 +472,6 @@
             <p id="perf-rango" style="font-size:0.7rem; color:var(--neon-cyan); font-weight:bold; margin-top:2px;"></p>
         </div>
 
-        <!-- 📊 NUEVO PANEL DE ESTADÍSTICAS HUD EXIGIDO -->
         <div class="panel-title">Estadísticas del Nodo</div>
         <div class="hud-stats-grid">
             <div class="hud-stat-card">
@@ -487,15 +518,19 @@
         </div>
     </div>
 
-    <!-- 🛍️ MODAL DE CHECKOUT / INFORMACIÓN -->
     <div class="modal-overlay" id="checkout-modal">
         <div class="modal-card" id="modal-dinamico-cuerpo"></div>
     </div>
 
-    <!-- 🧭 NAVEGACIÓN INFERIOR NATIVA REESTRUCTURADA -->
     <div class="bottom-nav">
         <button class="nav-item active" id="nav-servicios" onclick="navegarA('servicios')">
             <span class="nav-icon">🛠️</span><span>Catálogo</span>
+        </button>
+        <button class="nav-item" id="nav-traspaso" onclick="navegarA('traspaso')">
+            <span class="nav-icon">🔄</span><span>Traspaso</span>
+        </button>
+        <button class="nav-item" id="nav-publicidad" onclick="navegarA('publicidad')">
+            <span class="nav-icon">📣</span><span>Ads</span>
         </button>
         <button class="nav-item" id="nav-blog" onclick="navegarA('blog')">
             <span class="nav-icon">📰</span><span>Archivos</span>
@@ -660,15 +695,21 @@
             document.getElementById('vista-apoyo-proyecto').style.display = "none";
             document.getElementById('lista-deseos-view').style.display = "none";
             document.getElementById('perfil-usuario-view').style.display = "none";
+            document.getElementById('vista-traspaso-canales').style.display = "none";
+            document.getElementById('vista-contratar-anuncios').style.display = "none";
             document.getElementById('filter-bar-container').style.display = "none";
 
-            const navBtn = document.getElementById(`nav-${seccion === 'servicios' ? 'servicios' : seccion}`);
+            const navBtn = document.getElementById(`nav-${seccion === 'servicios' ? 'servicios' : (seccion === 'traspaso' ? 'traspaso' : (seccion === 'publicidad' ? 'publicidad' : seccion))}`);
             if (navBtn) navBtn.classList.add('active');
 
             if (seccion === "servicios") {
                 document.getElementById('vista-catalogo-principal').style.display = "flex";
                 document.getElementById('filter-bar-container').style.display = "block";
                 renderizerEcosistemaActual(false);
+            } else if (seccion === "traspaso") {
+                document.getElementById('vista-traspaso-canales').style.display = "block";
+            } else if (seccion === "publicidad") {
+                document.getElementById('vista-contratar-anuncios').style.display = "block";
             } else if (seccion === "blog") {
                 document.getElementById('vista-blog-exclusivo').style.display = "block";
                 limitePostBlogVisibles = 3; // Reseteo de Lazy Load
@@ -776,7 +817,7 @@
             let html = "";
 
             bloqueVisibles.forEach(post => {
-                let accesoConcedido = false;
+                let acceso Concedido = false;
                 if (post.condicion === "POST-PUBLICO" || post.condicion === "POST-GRATIS") {
                     accesoConcedido = true;
                 } else if (post.condicion === "POST-PREMIUM" && esVIP) {
@@ -843,6 +884,38 @@
             else window.open(url, '_blank');
         }
 
+        // FUNCIONES DE INTERACCIÓN DE LAS NUEVAS VISTAS RESTAURADAS
+        function abrirTraspasoManual(canalNombre, precio) {
+            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            const tgID = userTelegram?.id || "1320417199";
+            let msg = `🔄 *SOLICITUD DE TRASPASO DE CANAL*\n\n`;
+            msg += `🆔 *Usuario ID:* \`${tgID}\`\n`;
+            msg += `📢 *Canal solicitado:* ${canalNombre}\n`;
+            msg += `💰 *Valor estipulado:* ${precio}\n\n`;
+            msg += `_Solicito iniciar el protocolo de traspaso seguro mediante intermediario certificado de Lista Golden._`;
+            
+            const url = `https://t.me/Airdayz?text=${encodeURIComponent(msg)}`;
+            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(url);
+            else window.open(url, '_blank');
+        }
+
+        function procesarAnuncioCampania() {
+            const tipoImpacto = document.getElementById('select-anuncio').value;
+            const urlProyecto = document.getElementById('input-url-anuncio').value || "No especificado";
+            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            const tgID = userTelegram?.id || "1320417199";
+
+            let msg = `📣 *NUEVA ORDEN DE CAMPAÑA PUBLICITARIA*\n\n`;
+            msg += `🆔 *Anunciante ID:* \`${tgID}\`\n`;
+            msg += `📊 *Tipo de impacto:* ${tipoImpacto}\n`;
+            msg += `🔗 *Proyecto:* ${urlProyecto}\n\n`;
+            msg += `_Solicito la generación del enlace de liquidación y confirmación de espacios de emisión en el dashboard._`;
+
+            const url = `https://t.me/Airdayz?text=${encodeURIComponent(msg)}`;
+            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(url);
+            else window.open(url, '_blank');
+        }
+
         // 📊 CARGA DEL PANEL DE PERFIL E INYECCIÓN DE CONTADORES EN EL HUD DE ESTADÍSTICAS
         function cargarDatosPanelPerfil() {
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
@@ -887,7 +960,7 @@
                     <div class="panel-item-data view-fade-in" onclick="abrirModalCheckoutEspecifico('${item.idItem}', '${item.tipo}', true, '${item.titulo}', '${item.descLarga || ''}', '${vigencia}')">
                         <p style="font-weight:700; font-size:0.85rem; color:#fff;">${item.titulo}</p>
                         <p style="color:#64748b; font-size:0.68rem; margin-top:2px;">${vigencia}</p>
-                        <div style="display:flex; justify-content:between; align-items:center; margin-top:4px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
                             <div class="badge-estado-pago ${cssClass}">${item.mensajeEstado}</div>
                             <span style="font-size:0.65rem; color:var(--neon-cyan); margin-left:auto;">Expandir 🔍</span>
                         </div>
@@ -918,6 +991,24 @@
             localStorage.setItem('lista_deseos_golden', JSON.stringify(deseos));
         }
 
+        function generarTarjetaInyectableHTML(item) {
+            const precioFinal = item.precio - item.descuento;
+            return `
+                <div class="servicio-card view-fade-in">
+                    <div class="card-body-flex" style="padding:12px;">
+                        <div>
+                            <p style="font-size:0.6rem; color:var(--neon-cyan); text-transform:uppercase; font-weight:800;">MÓDULO ALMACENADO</p>
+                            <h4 style="font-size:0.85rem; font-weight:700; margin-top:2px;">${item.titulo}</h4>
+                        </div>
+                        <div style="text-align:right;">
+                            <span style="font-size:0.9rem; font-weight:900; color:var(--neon-cyan);">${precioFinal}€</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Inyección de función auxiliar para el renderizado dinámico de Deseos
         function cargarPaginaDeseosOriginales() {
             const grid = document.getElementById('wishlist-original-grid');
             if (!grid) return; grid.innerHTML = "";
