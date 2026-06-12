@@ -251,63 +251,32 @@ function filtrarPorCategoria(categoria) {
 // =========================================================================
 // 📥 MOTOR DE RENDIMIENTO LAZY LOAD
 // =========================================================================
-function renderizerEcosistemaActual(cargarMas = false) {
-    const grid = document.querySelector('.catalog-grid');
-    if (!grid) return;
+// =========================================================================
+// 🔄 DISPARADORES INTERACTIVOS DEL HTML PARA FILTRADO
+// =========================================================================
 
-    if (!cargarMas) { 
-        grid.innerHTML = ""; 
-        tarjetasDesplegadasActualmente = 10; 
-    }
-
-    // 1. Clonamos la base de datos completa de servicios/productos/suscripciones
-    let listadoFiltrado = [...window.CATALOGO_SERVICIOS];
-
-    // 2. 🎛️ PRIMER FILTRO: Por Tipo de Modelo (Pestaña Principal)
-    if (filtroTipoActivo !== "todos") {
-        listadoFiltrado = listadoFiltrado.filter(item => item.tipo === filtroTipoActivo);
-    }
-
-    // 3. 📂 SEGUNDO FILTRO: Por Destinatario/Categoría (Sub-botones o Select)
-    if (filtroCategoriaActiva !== "todos") {
-        listadoFiltrado = listadoFiltrado.filter(item => item.categoria === filtroCategoriaActiva);
-    }
-
-    // 4. Aplicar ordenación extra si tienes (precios, ratings, etc.)
-    if (typeof aplicarFiltrosYOrdenacion === "function") {
-        listadoFiltrado = aplicarFiltrosYOrdenacion(listadoFiltrado);
-    }
-
-    // 5. Segmentación e Inyección en el HTML
-    const bloquePaginado = listadoFiltrado.slice(0, tarjetasDesplegadasActualmente);
-    let html = "";
+// Controla las pestañas superiores (Filtro A)
+function cambiarPestañaTipo(tipo, botonPulsado) {
+    filtroTipoActivo = tipo;
     
-    bloquePaginado.forEach(item => { 
-        html += generarTarjetaInyectableHTML(item); 
-    });
+    // Cambiar la clase activa visualmente en la fila de Tipos
+    document.querySelectorAll('.tab-tipo-btn').forEach(btn => btn.classList.remove('active'));
+    botonPulsado.classList.add('active');
+    
+    // Refrescar el catálogo con el doble filtro aplicado
+    renderizerEcosistemaActual();
+}
 
-    const trigger = document.getElementById('trigger-lazy-load');
-    if (trigger) trigger.remove();
-
-    if (cargarMas) grid.insertAdjacentHTML('beforeend', html);
-    else grid.innerHTML = html;
-
-    // Mensaje amigable si la combinación de filtros no arroja resultados
-    if (listadoFiltrado.length === 0) {
-        grid.innerHTML = `
-            <div style="text-align:center; padding: 40px 20px; color:#64748b; width:100%;">
-                📡 No hay conexiones disponibles para esta combinación de filtros.
-            </div>
-        `;
-    }
-
-    if (listadoFiltrado.length > tarjetasDesplegadasActualmente) {
-        grid.insertAdjacentHTML('beforeend', `
-            <div id="trigger-lazy-load" style="text-align:center; padding:10px 0; width:100%;">
-                <button onclick="tarjetasDesplegadasActualmente+=10; renderizerEcosistemaActual(true);" style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,240,255,0.2); color:#00f0ff; padding:10px; border-radius:12px; font-size:0.75rem; font-weight:bold; width:100%;">Desplegar Más Conexiones ⬇️</button>
-            </div>
-        `);
-    }
+// Controla los botones de categoría inferiores (Filtro B)
+function cambiarCategoriaFiltro(categoria, botonPulsado) {
+    filtroCategoriaActiva = categoria;
+    
+    // Cambiar la clase activa visualmente en la fila de Categorías
+    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+    botonPulsado.classList.add('active');
+    
+    // Refrescar el catálogo con el doble filtro aplicado
+    renderizerEcosistemaActual();
 }
 
 // =========================================================================
