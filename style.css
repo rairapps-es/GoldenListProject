@@ -291,3 +291,54 @@ body {
 .descripcion-clickable:hover {
     color: #e2e8f0;
 }
+
+.contenedor-filtros-global {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 16px;
+    margin: 12px;
+}
+
+/* Filas con scroll horizontal fluido */
+.fila-filtro-tipo, .fila-filtro-categoria {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 4px;
+}
+/* Ocultar barra de scroll feis de navegador */
+.fila-filtro-tipo::-webkit-scrollbar, .fila-filtro-categoria::-webkit-scrollbar {
+    display: none;
+}
+
+/* Estilo Base de Botones */
+.tab-tipo-btn, .cat-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Estados Activos (Neon Glow) */
+.tab-tipo-btn.active {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: #c084fc;
+    color: #c084fc;
+    box-shadow: 0 0 10px rgba(168, 85,  purple, 0.2);
+}
+
+.cat-btn.active {
+    background: rgba(0, 240, 255, 0.1);
+    border-color: #00f0ff;
+    color: #00f0ff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
