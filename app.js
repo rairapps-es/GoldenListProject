@@ -7,7 +7,7 @@ window.DB_COMPRAS_USUARIOS = {
     "1320417199": [
         { idItem: "SUB-GOLDEN", tipo: "suscripcion", titulo: "Suscripción Golden VIP Anual", fechaInicio: "01/01/2026", fechaFin: "01/01/2027", estado: "Activa 👑" },
         { idItem: "SERV-002", tipo: "servicio", titulo: "Estrategia Avanzada N°2", fechaInicio: "10/06/2026", fechaFin: "25/06/2026", estado: "En Desarrollo 🛠️" },
-        { idItem: "PROD-102", tipo: "producto", titulo: "Script Auto-Backup Modular", fechaCompra: "12/05/2026", estado: "Entregado ✅" }
+        { idItem: "PROD-001", tipo: "producto", titulo: "Script Auto-Backup Modular", fechaCompra: "12/05/2026", estado: "Entregado ✅" }
     ]
 };
 
@@ -54,7 +54,7 @@ window.CATALOGO_SERVICIOS.push({
 
 // 📦 ITEM 003: Configurado como producto digital (Activa formulario de Estrellas de Telegram)
 window.CATALOGO_SERVICIOS.push({
-    id: "SERV-003",
+    id: "PROD-001",
     tipo: "producto", // 🌟 Activa pasarela de Estrellas, PayPal y USDT sin preguntas de entrega
     categoria: "canal",
     titulo: "📦 Script Pack Auto-Post Inteligente AI",
