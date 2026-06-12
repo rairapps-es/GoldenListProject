@@ -13,68 +13,119 @@ window.DB_COMPRAS_USUARIOS = {
 
 // Generador de Tarjetas con Identificadores de Imagen de Alta Calidad (Cyber/Tech)
 // AGREGAR UN NUEVO SERVICIO PERSONALIZADO MANUALLY
+// ====== LIMPIAR EL ARRAY AUTOMÁTICO ANTES DE INSERTAR LOS TUYOS ======
+window.CATALOGO_SERVICIOS = []; 
+
+// 👑 ITEM 001: Configurado como servicio premium de suscripción
 window.CATALOGO_SERVICIOS.push({
-    id: "SERV-001", // Asegúrate de que el ID sea único
-    tipo: "suscripcion",
-    categoria: "bot", // Puede ser: "bot", "grupo" o "canal"
-    titulo: "🤖 Creación de Bot SaaS Automatizado Pro",
+    id: "SERV-001",
+    tipo: "servicio", // Se mantiene como servicio para que sea visible en el catálogo
+    categoria: "bot",
+    titulo: "👑 Suscripción Anual - Bot SaaS Automatizado",
     rating: "5.0",
-    imagen: "https://picsum.photos/id/1062/400/220", // URL de la imagen de portada
-    descripcion_corta: "Despliegue de bots con base de datos en tiempo real.",
-    descripcion_larga: "Desarrollo a medida con Node.js o Python, integración de pasarelas de pago (PayPal, USDT, Estrellas de Telegram) y panel de administración avanzado protegido.",
-    precio: 150, // Precio original en euros
-    descuento: 30, // Descuento en euros (El usuario pagará 120€)
-    oferta: "🔥 ¡Oferta Flash!", // Etiqueta de marketing
-    tiempoEntregaBase: "48 horas",
-    revisiones: 3,
+    imagen: "https://picsum.photos/id/1062/400/220",
+    descripcion_corta: "Acceso ilimitado a nuestra infraestructura de bots en tiempo real.",
+    descripcion_larga: "Licencia anual premium. Incluye soporte prioritario 24/7, actualizaciones automáticas de parches en tu servidor y acceso exclusivo a los módulos Beta de Lista Golden.",
+    precio: 150,
+    descuento: 30, // El usuario paga 120€
+    oferta: "🔥 ¡Oferta Anual!",
+    tiempoEntregaBase: "Inmediato",
+    revisiones: 0,
     deseosIniciales: 245
 });
 
+// 🛠️ ITEM 002: Configurado como servicio de desarrollo (Activa formulario Urgente/Express)
 window.CATALOGO_SERVICIOS.push({
-    id: "SERV-002", // Asegúrate de que el ID sea único
+    id: "SERV-002",
     tipo: "servicio",
-    categoria: "grupo", // Puede ser: "bot", "grupo" o "canal"
-    titulo: "🤖 Creación de Bot SaaS Automatizado Pro",
-    rating: "5.0",
-    imagen: "https://picsum.photos/id/1062/400/220", // URL de la imagen de portada
-    descripcion_corta: "Despliegue de bots con base de datos en tiempo real.",
-    descripcion_larga: "Desarrollo a medida con Node.js o Python, integración de pasarelas de pago (PayPal, USDT, Estrellas de Telegram) y panel de administración avanzado protegido.",
-    precio: 150, // Precio original en euros
-    descuento: 30, // Descuento en euros (El usuario pagará 120€)
-    oferta: "🔥 ¡Oferta Flash!", // Etiqueta de marketing
-    tiempoEntregaBase: "48 horas",
+    categoria: "grupo",
+    titulo: "🛠️ Configuración y Montaje de Grupo Monetizado",
+    rating: "4.9",
+    imagen: "https://picsum.photos/id/1043/400/220",
+    descripcion_corta: "Estructuración completa de canales de venta y embudos.",
+    descripcion_larga: "Modelado técnico de tu grupo de Telegram. Instalación de bots de bienvenida, pasarelas de pago integradas al chat, sistemas anti-spam avanzados y consultoría de retención de usuarios.",
+    precio: 95,
+    descuento: 0,
+    oferta: "Tarifa Regular",
+    tiempoEntregaBase: "72 horas",
     revisiones: 3,
-    deseosIniciales: 245
+    deseosIniciales: 132
 });
 
+// 📦 ITEM 003: Configurado como producto digital (Activa formulario de Estrellas de Telegram)
 window.CATALOGO_SERVICIOS.push({
-    id: "SERV-003", // Asegúrate de que el ID sea único
-    tipo: "producto",
-    categoria: "canal", // Puede ser: "bot", "grupo" o "canal"
-    titulo: "🤖 Creación de Bot SaaS Automatizado Pro",
+    id: "SERV-003",
+    tipo: "producto", // 🌟 Activa pasarela de Estrellas, PayPal y USDT sin preguntas de entrega
+    categoria: "canal",
+    titulo: "📦 Script Pack Auto-Post Inteligente AI",
     rating: "5.0",
-    imagen: "https://picsum.photos/id/1062/400/220", // URL de la imagen de portada
-    descripcion_corta: "Despliegue de bots con base de datos en tiempo real.",
-    descripcion_larga: "Desarrollo a medida con Node.js o Python, integración de pasarelas de pago (PayPal, USDT, Estrellas de Telegram) y panel de administración avanzado protegido.",
-    precio: 150, // Precio original en euros
-    descuento: 30, // Descuento en euros (El usuario pagará 120€)
-    oferta: "🔥 ¡Oferta Flash!", // Etiqueta de marketing
-    tiempoEntregaBase: "48 horas",
-    revisiones: 3,
-    deseosIniciales: 245
+    imagen: "https://picsum.photos/id/1025/400/220",
+    descripcion_corta: "Código fuente nativo para automatizar contenido en tus canales.",
+    descripcion_larga: "Descarga inmediata de archivo ejecutable compatible con servidores Linux/Windows. Conecta tus fuentes de información y deja que la IA redacte, maquete y publique en tus canales de Telegram de forma autónoma.",
+    precio: 60,
+    descuento: 15, // El usuario paga 45€
+    oferta: "🔥 ¡Oferta Flash!",
+    tiempoEntregaBase: "Descarga Inmediata",
+    revisiones: 0,
+    deseosIniciales: 512
 });
 
-
+// =========================================================================
+// 📢 CATÁLOGO DE CANALES EN VENTA (CORREGIDO Y CONFIGURADO)
+// =========================================================================
 window.CATALOGO_CANALES = [
-    { id: "CHAN-001", tipo: "canal", titulo: "Canal de Apuestas Deportivas (Venta)", imagen: "https://picsum.photos/id/1071/400/220", suscriptores: "14,200", categoria: "Deportes", precio: 290, descuento: 0, oferta: "Destacado VIP ⭐", descripcion_breve: "Rentabilidad y conversión demostrable mediante auditorías." },
-{ id: "CHAN-002", tipo: "canal", titulo: "Canal de Apuestas Deportivas (Venta)", imagen: "https://picsum.photos/id/1071/400/220", suscriptores: "14,200", categoria: "Deportes", precio: 290, descuento: 0, oferta: "Destacado VIP ⭐", descripcion_breve: "Rentabilidad y conversión demostrable mediante auditorías." }
-
+    { 
+        id: "CHAN-001", 
+        tipo: "canal", 
+        titulo: "💰 Canal de Apuestas Deportivas (Venta)", 
+        imagen: "https://picsum.photos/id/1071/400/220", 
+        suscriptores: "14,200", 
+        categoria: "Deportes", 
+        precio: 290, 
+        descuento: 0, 
+        oferta: "Destacado VIP ⭐", 
+        descripcion_breve: "Rentabilidad y conversión demostrable mediante auditorías." 
+    },
+    { 
+        id: "CHAN-002", 
+        tipo: "canal", 
+        titulo: "🚀 Canal de Crypto & Airdrops Orgánico", 
+        imagen: "https://picsum.photos/id/1025/400/220", 
+        suscriptores: "8,500", 
+        categoria: "Finanzas", 
+        precio: 195, 
+        descuento: 25, // Paga 170€
+        oferta: "🔥 ¡Oferta Flash!", 
+        descripcion_breve: "Comunidad inversora ultra-activa con alta tasa de interacción diaria." 
+    }
 ];
 
+// =========================================================================
+// 🚀 CATÁLOGO DE PAUTAS Y ANUNCIOS PUBLICITARIOS
+// =========================================================================
 window.CATALOGO_ANUNCIOS = [
-    { id: "ANUN-001", tipo: "anuncio", titulo: "Pack Anuncios Masivo Lista Golden", imagen: "https://picsum.photos/id/1081/400/220", precio: 60, descuento: 10, oferta: "🔥 Ofertas Flash", descripcion_larga: "Captura masiva de leads cualificados de forma hiper-segmentada dentro del ecosistema.", tiempoEntregaBase: "24 horas" },
-{ id: "ANUN-002", tipo: "anuncio", titulo: "Pack Anuncios Masivo Lista Golden", imagen: "https://picsum.photos/id/1081/400/220", precio: 60, descuento: 10, oferta: "🔥 Ofertas Flash", descripcion_larga: "Captura masiva de leads cualificados de forma hiper-segmentada dentro del ecosistema.", tiempoEntregaBase: "24 horas" }
-
+    { 
+        id: "ANUN-001", 
+        tipo: "anuncio", 
+        titulo: "📢 Pack Anuncios Masivo Lista Golden", 
+        imagen: "https://picsum.photos/id/1081/400/220", 
+        precio: 60, 
+        descuento: 10, // Paga 50€
+        oferta: "🔥 Ofertas Flash", 
+        descripcion_larga: "Captura masiva de leads cualificados de forma hiper-segmentada dentro del ecosistema.", 
+        tiempoEntregaBase: "24 horas" 
+    },
+    { 
+        id: "ANUN-002", 
+        tipo: "anuncio", 
+        titulo: "💎 Mención VIP en Canales Afiliados Network", 
+        imagen: "https://picsum.photos/id/1069/400/220", 
+        precio: 120, 
+        descuento: 0, 
+        oferta: "Tarifa Regular", 
+        descripcion_larga: "Publicación fija durante 48 horas con notificación push activa en nuestra red de canales aliados con más de 100k usuarios globales.", 
+        tiempoEntregaBase: "12 horas" 
+    }
 ];
 
 let catalogoActualActivo = "servicios"; 
@@ -186,26 +237,50 @@ function renderizerEcosistemaActual(cargarMas = false) {
     const grid = document.querySelector('.catalog-grid');
     if (!grid) return;
 
-    if (!cargarMas) { grid.innerHTML = ""; tarjetasDesplegadasActualmente = 10; }
+    // Si no es "Cargar más", limpiamos la pantalla y reiniciamos el contador a 10
+    if (!cargarMas) { 
+        grid.innerHTML = ""; 
+        tarjetasDesplegadasActualmente = 10; 
+    }
 
     let listadoBase = [];
-    if (catalogoActualActivo === "servicios") listadoBase = [...window.CATALOGO_SERVICIOS];
-    if (catalogoActualActivo === "canales") listadoBase = [...window.CATALOGO_CANALES];
-    if (catalogoActualActivo === "anuncios") listadoBase = [...window.CATALOGO_ANUNCIOS];
+    
+    // 1. SELECCIÓN DE DATOS SEGÚN LA PESTAÑA ACTIVA
+    if (catalogoActualActivo === "servicios") {
+        // 🌟 CORRECCIÓN: Filtra y muestra tanto tus "servicios" como tus "productos" en la misma pestaña
+        listadoBase = window.CATALOGO_SERVICIOS.filter(item => item.tipo === "servicio" || item.tipo === "producto");
+    }
+    if (catalogoActualActivo === "canales") {
+        listadoBase = [...window.CATALOGO_CANALES];
+    }
+    if (catalogoActualActivo === "anuncios") {
+        listadoBase = [...window.CATALOGO_ANUNCIOS];
+    }
 
+    // 2. APLICAR ORDENACIÓN Y FILTROS AVANZADOS (Destacados, Barato, Descuentos)
     listadoBase = aplicarFiltrosYOrdenacion(listadoBase);
 
+    // 3. SEGMENTACIÓN LAZY LOAD (Cortamos la lista para mostrar solo las que tocan)
     const bloquePaginado = listadoBase.slice(0, tarjetasDesplegadasActualmente);
     let html = "";
     
-    bloquePaginado.forEach(item => { html += generarTarjetaInyectableHTML(item); });
+    // Construimos el HTML acumulado de las tarjetas de esta tanda
+    bloquePaginado.forEach(item => { 
+        html += generarTarjetaInyectableHTML(item); 
+    });
 
+    // Eliminamos el botón de "Cargar más" antiguo para que no se duplique abajo
     const trigger = document.getElementById('trigger-lazy-load');
     if (trigger) trigger.remove();
 
-    if (cargarMas) grid.insertAdjacentHTML('beforeend', html);
-    else grid.innerHTML = html;
+    // Inyectamos el nuevo HTML de forma limpia o sumando al final
+    if (cargarMas) {
+        grid.insertAdjacentHTML('beforeend', html);
+    } else {
+        grid.innerHTML = html;
+    }
 
+    // 4. GENERADOR DEL BOTÓN LAZY LOAD (Solo si quedan más tarjetas ocultas por mostrar)
     if (listadoBase.length > tarjetasDesplegadasActualmente) {
         grid.insertAdjacentHTML('beforeend', `
             <div id="trigger-lazy-load" style="text-align:center; padding:10px 0; width:100%;" class="view-fade-in">
