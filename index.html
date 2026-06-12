@@ -37,8 +37,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px;
-            background: linear-gradient(to bottom, #090d1a, var(--bg-core));
+            padding: 14px 16px;
+            background: #060814;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             position: sticky;
             top: 0;
@@ -84,70 +84,76 @@
             object-fit: cover;
         }
 
-        /* --- FILTROS DE PESTAÑA SUPERIOR (FILTRO A) --- */
-        .fila-filtro-tipo {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            padding: 12px 16px;
-            background: rgba(11, 15, 25, 0.4);
+        /* --- CONTENEDOR DE FILTROS ESTILO AMAZON --- */
+        .amazon-filter-wrapper {
+            background: #090d1a;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 0;
+            position: sticky;
+            top: 53px;
+            z-index: 99;
         }
 
-        .tab-tipo-btn {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
-            padding: 8px 4px;
-            border-radius: 8px;
-            font-size: 0.68rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .tab-tipo-btn.active {
-            background: rgba(0, 240, 255, 0.06);
-            border-color: var(--neon-cyan);
-            color: var(--neon-cyan);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
-        }
-
-        /* --- BARRA DE CONTROL (ORDENACIÓN Y FILTRO B) --- */
-        .filter-bar-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 4px 16px 12px 16px;
-        }
-
-        .selector-ordenacion {
-            width: 100%;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-main);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            outline: none;
-        }
-
-        .fila-subcategorias {
+        /* Scroll horizontal fluido idéntico a las categorías de Amazon */
+        .amazon-scroll-row {
             display: flex;
             gap: 8px;
             overflow-x: auto;
+            padding: 4px 16px;
             scroll-behavior: smooth;
             scrollbar-width: none;
         }
-        .fila-subcategorias::-webkit-scrollbar { display: none; }
+        .amazon-scroll-row::-webkit-scrollbar { display: none; }
+
+        /* Pestañas superiores (Tipos) compactadas */
+        .tab-tipo-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+        }
+
+        .tab-tipo-btn.active {
+            background: var(--neon-cyan);
+            color: #000;
+            border-color: var(--neon-cyan);
+            font-weight: 700;
+        }
+
+        /* Fila de utilidades (Ordenación + Subcategorías) agrupadas en una sola línea */
+        .amazon-sub-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px 2px 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .amazon-sub-row::-webkit-scrollbar { display: none; }
+
+        .selector-ordenacion {
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            outline: none;
+            white-space: nowrap;
+        }
 
         .cat-btn {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: transparent;
+            border: 1px solid transparent;
             color: var(--text-muted);
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 5px 10px;
+            border-radius: 4px;
             font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
@@ -155,9 +161,9 @@
         }
 
         .cat-btn.active {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
+            color: var(--neon-cyan);
+            border-bottom: 2px solid var(--neon-cyan);
+            border-radius: 0;
         }
 
         /* --- GRID / TARJETAS --- */
@@ -179,7 +185,7 @@
 
         .card-image-placeholder {
             width: 100%;
-            height: 160px;
+            height: 150px;
             position: relative;
             background: #131926;
         }
@@ -235,7 +241,7 @@
         }
 
         .simulador-deseos-box {
-            background: rgba(255, 0, 85, 0.03);
+            background: rgba(255, 0, 85, 0.01);
             border-top: 1px solid rgba(255, 255, 255, 0.02);
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             padding: 8px 14px;
@@ -296,7 +302,7 @@
         .view-fade-in { animation: fadeIn 0.3s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PERFIL DE USUARIO --- */
+        /* --- PERFIL DE USUARIO MODERNO --- */
         .perfil-header {
             text-align: center;
             padding: 20px 0;
@@ -313,9 +319,24 @@
         }
         .big-avatar img { width: 100%; height: 100%; object-fit: cover; }
         
-        .panel-container-historial { margin-bottom: 16px; }
-        .panel-title { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; font-weight: 800; }
-        .panel-item-data { background: var(--bg-card); padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.02); }
+        .panel-container-historial { margin-bottom: 20px; }
+        .panel-title { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px; }
+        .panel-item-data { background: var(--bg-card); padding: 14px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.02); }
+        
+        /* Badges de Estados de Pago */
+        .badge-estado-pago {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 3px 6px;
+            border-radius: 4px;
+            margin-top: 6px;
+            text-transform: uppercase;
+        }
+        .status-pagado { background: rgba(22, 163, 74, 0.15); color: #22c55e; border: 1px solid rgba(22, 163, 74, 0.3); }
+        .status-esperando { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .status-verificando { background: rgba(6, 182, 212, 0.15); color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.3); }
+        
         .btn-ver-catalogo { background: rgba(0,240,255,0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; margin-top: 8px; cursor: pointer; }
 
         /* --- MODAL CHECKOUT --- */
@@ -407,26 +428,25 @@
         </div>
     </div>
 
-    <div class="fila-filtro-tipo" id="pestañas-tipo-container">
-        <button class="tab-tipo-btn active" onclick="cambiarPestañaTipo('todos', this)">🌐 Ver Todo</button>
-        <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('servicio', this)">🛠️ Servicios</button>
-        <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('suscripcion', this)">👑 Subs</button>
-        <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('producto', this)">📦 Productos</button>
-    </div>
-
-    <div class="filter-bar-container" id="filter-bar-container">
-        <select id="select-sort" class="selector-ordenacion" onchange="renderizerEcosistemaActual(false)">
-            <option value="estrellas">Calificación: Alta ingeniería ⭐</option>
-            <option value="barato">Precio: Económicos primero 📈</option>
-            <option value="descuento">Liquidaciones: Mayor descuento 🔥</option>
-            <option value="ofertas">Módulos: Ofertas Flash únicamente ⚡</option>
-        </select>
+    <div class="amazon-filter-wrapper" id="filter-bar-container">
+        <div class="amazon-scroll-row" id="pestañas-tipo-container">
+            <button class="tab-tipo-btn active" onclick="cambiarPestañaTipo('todos', this)">🌐 Todos los productos</button>
+            <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('servicio', this)">🛠️ Servicios</button>
+            <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('suscripcion', this)">👑 Subs VIP</button>
+            <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('producto', this)">📦 Estructuras</button>
+        </div>
         
-        <div class="fila-subcategorias">
+        <div class="amazon-sub-row">
+            <select id="select-sort" class="selector-ordenacion" onchange="renderizerEcosistemaActual(false)">
+                <option value="estrellas">⭐ Filtro: Top Premium</option>
+                <option value="barato">📈 Filtro: Precio bajo</option>
+                <option value="descuento">🔥 Filtro: Liquidaciones</option>
+                <option value="ofertas">⚡ Filtro: Ofertas Flash</option>
+            </select>
             <button class="cat-btn active" onclick="cambiarCategoriaFiltro('todos', this)">Todos</button>
-            <button class="cat-btn" onclick="cambiarCategoriaFiltro('bot', this)">🤖 Bots</button>
-            <button class="cat-btn" onclick="cambiarCategoriaFiltro('grupo', this)">👥 Grupos</button>
-            <button class="cat-btn" onclick="cambiarCategoriaFiltro('canal', this)">📢 Canales</button>
+            <button class="cat-btn" onclick="cambiarCategoriaFiltro('bot', this)">Bots</button>
+            <button class="cat-btn" onclick="cambiarCategoriaFiltro('grupo', this)">Grupos</button>
+            <button class="cat-btn" onclick="cambiarCategoriaFiltro('canal', this)">Canales</button>
         </div>
     </div>
 
@@ -454,7 +474,7 @@
             <div id="panel-servicios"></div>
         </div>
         <div class="panel-container-historial">
-            <div class="panel-title">Asignación de Software</div>
+            <div class="panel-title">Asignación de Software (Productos)</div>
             <div id="panel-productos"></div>
         </div>
         <div class="panel-container-historial">
@@ -491,14 +511,14 @@
     </div>
 
     <script>
-        // Verificaciones manuales y listas VIP
         window.LISTA_USUARIOS_PREMIUM = ["1320417199", "987654321"]; 
 
+        // 📊 BASE DE DATOS LOCAL ACTUALIZADA CON FECHAS Y ESTADOS DE PAGO DINÁMICOS
         window.DB_COMPRAS_USUARIOS = {
             "1320417199": [
-                { idItem: "SUB-GOLDEN", tipo: "suscripcion", titulo: "Suscripción Golden VIP Anual", fechaInicio: "01/01/2026", fechaFin: "01/01/2027", estado: "Activa 👑" },
-                { idItem: "SERV-002", tipo: "servicio", titulo: "Estrategia Avanzada N°2", fechaInicio: "10/06/2026", fechaFin: "25/06/2026", estado: "En Desarrollo 🛠️" },
-                { idItem: "PROD-001", tipo: "producto", titulo: "Script Auto-Backup Modular", fechaCompra: "12/05/2026", estado: "Entregado ✅" }
+                { idItem: "SUB-GOLDEN", tipo: "suscripcion", titulo: "Suscripción Golden VIP Anual", fechaInicio: "01/01/2026", fechaFin: "01/01/2027", estadoPago: "pagado", mensajeEstado: "Activa 👑" },
+                { idItem: "SERV-002", tipo: "servicio", titulo: "Estrategia Avanzada N°2", fechaInicio: "10/06/2026", fechaFin: "25/06/2026", estadoPago: "verificando", mensajeEstado: "Verificando Pago 🔄" },
+                { idItem: "PROD-001", tipo: "producto", titulo: "Script Auto-Backup Modular", fechaCompra: "12/05/2026", estadoPago: "esperando", mensajeEstado: "Esperando Pago ⏳" }
             ]
         };
 
@@ -516,8 +536,7 @@
                 precio: 150,
                 descuento: 30,
                 oferta: "🔥 ¡Oferta Anual!",
-                tiempoEntregaBase: "Inmediato",
-                revisiones: 0
+                tiempoEntregaBase: "Inmediato"
             },
             {
                 id: "SERV-002",
@@ -531,8 +550,7 @@
                 precio: 95,
                 descuento: 0,
                 oferta: "Tarifa Regular",
-                tiempoEntregaBase: "72 horas",
-                revisiones: 3
+                tiempoEntregaBase: "72 horas"
             },
             {
                 id: "PROD-001",
@@ -546,8 +564,7 @@
                 precio: 60,
                 descuento: 15,
                 oferta: "🔥 ¡Oferta Flash!",
-                tiempoEntregaBase: "Descarga Inmediata",
-                revisiones: 0
+                tiempoEntregaBase: "Descarga Inmediata"
             }
         ];
 
@@ -563,26 +580,15 @@
                 descuento: 0, 
                 oferta: "Destacado VIP ⭐", 
                 descripcion_corta: "Rentabilidad y conversión demostrable mediante auditorías." 
-            },
-            { 
-                id: "CHAN-002", 
-                tipo: "producto", 
-                categoria: "canal",
-                titulo: "🚀 Canal de Crypto & Airdrops Orgánico", 
-                imagen: "https://picsum.photos/id/1025/400/220", 
-                rating: "4.9",
-                precio: 195, 
-                descuento: 25,
-                oferta: "🔥 ¡Oferta Flash!", 
-                descripcion_corta: "Comunidad inversora ultra-activa con alta tasa de interacción diaria." 
             }
         ];
 
+        // 💎 REPOSITORIO MAESTRO DE PAUTAS PUBLICITARIAS (ANUNCIOS)
         window.CATALOGO_ANUNCIOS = [
             { 
                 id: "ANUN-001", 
                 tipo: "servicio", 
-                categoria: "bot",
+                categoria: "canal",
                 titulo: "📢 Pack Anuncios Masivo Lista Golden", 
                 imagen: "https://picsum.photos/id/1081/400/220", 
                 rating: "5.0",
@@ -641,13 +647,11 @@
             const viewPerfil = document.getElementById('perfil-usuario-view');
             const viewDeseos = document.getElementById('lista-deseos-view');
             const filterBar = document.getElementById('filter-bar-container');
-            const tabsTipo = document.getElementById('pestañas-tipo-container');
 
             if (viewCatalog) viewCatalog.style.display = "none";
             if (viewPerfil) viewPerfil.style.display = "none";
             if (viewDeseos) viewDeseos.style.display = "none";
             if (filterBar) filterBar.style.display = "none";
-            if (tabsTipo) tabsTipo.style.display = "none";
 
             const views = [viewCatalog, viewPerfil, viewDeseos].filter(Boolean);
             views.forEach(v => v.classList.remove('view-fade-in'));
@@ -661,9 +665,7 @@
                     viewCatalog.classList.add('view-fade-in');
                 }
                 catalogoActualActivo = seccion;
-                
-                if (filterBar) filterBar.style.display = "flex";
-                if (tabsTipo) tabsTipo.style.display = "grid";
+                if (filterBar) filterBar.style.display = "block";
                 
                 renderizerEcosistemaActual(false);
             } 
@@ -704,7 +706,6 @@
             return listado;
         }
 
-        // Controladores de los dos niveles de filtrado cruzado
         function cambiarPestañaTipo(tipo, botonPulsado) {
             filtroTipoActivo = tipo;
             document.querySelectorAll('.tab-tipo-btn').forEach(btn => btn.classList.remove('active'));
@@ -719,7 +720,7 @@
             renderizerEcosistemaActual(false);
         }
 
-        // Motor Core de Procesamiento Visual
+        // Motor Core de Procesamiento
         function renderizerEcosistemaActual(cargarMas = false) {
             const grid = document.querySelector('.catalog-grid');
             if (!grid) return;
@@ -759,8 +760,8 @@
 
             if (listadoFiltrado.length === 0) {
                 grid.innerHTML = `
-                    <div style="text-align:center; padding: 40px 20px; color:#64748b; width:100%; font-size:0.8rem;" class="view-fade-in">
-                        📡 Sin respuestas en el espectro. Modifica los filtros superiores.
+                    <div style="text-align:center; padding: 40px 20px; color:#64748b; width:100%; font-size:0.8rem;">
+                        📡 Sin respuestas en este espectro. Filtros cruzados vacíos.
                     </div>
                 `;
             }
@@ -774,7 +775,6 @@
             }
         }
 
-        // Componente Inyectable de Tarjeta Comercial
         function generarTarjetaInyectableHTML(item) {
             const deseosLocales = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
             const estaEnDeseos = deseosLocales.some(d => d.id === item.id);
@@ -786,7 +786,6 @@
 
             let simKey = `sim_deseos_${item.id}`;
             let simData = JSON.parse(localStorage.getItem(simKey)) || { count: Math.floor(Math.random() * 40) + 15, timestamp: Date.now() };
-            localStorage.setItem(simKey, JSON.stringify(simData));
 
             const botonDeseosHTML = estaEnDeseos 
                 ? `<button class="btn-wishlist active" onclick="controladorDeseosDirecto('${item.id}', '${item.titulo}', this)">❤️ Guardado</button>`
@@ -803,9 +802,9 @@
                         <div class="card-left-info">
                             <h3 class="card-title-clickable" onclick="toggleAcordeon('${item.id}')">👉 ${item.titulo}</h3>
                             <div style="margin: 4px 0;">
-                                <div class="rating-clickable" onclick="window.open('https://t.me/ListaGoldenCanalResenas', '_blank')">⭐ ${item.rating || '4.9'} <span style="color:#64748b; font-size:0.65rem;">(Reseñas)</span></div>
+                                <div class="rating-clickable">⭐ ${item.rating || '4.9'} <span style="color:#64748b; font-size:0.65rem;">(Auditoría)</span></div>
                             </div>
-                            <p class="descripcion-clickable" onclick="toggleAcordeon('${item.id}')" style="font-size:0.75rem; color:#94a3b8; line-height:1.4;">${item.descripcion_corta}</p>
+                            <p style="font-size:0.75rem; color:#94a3b8; line-height:1.4;">${item.descripcion_corta}</p>
                         </div>
                         <div class="card-right-pricing">
                             <div style="font-size: 1.15rem; font-weight: 900; color: var(--neon-cyan);">${precioFinal}€</div>
@@ -813,7 +812,7 @@
                         </div>
                     </div>
 
-                    <div class="simulador-deseos-box">🔥 <strong><span id="sim-contador-render-${item.id}">${simData.count}</span></strong> personas guardaron este módulo hoy.</div>
+                    <div class="simulador-deseos-box">🔥 <strong><span id="sim-contador-render-${item.id}">${simData.count}</span></strong> terminales analizaron este módulo hoy.</div>
 
                     <div id="expand-${item.id}" class="acordeon-contenido">
                         <p style="color:#cbd5e1; margin-bottom:4px;"><strong>Módulo Técnico:</strong> ${item.descripcion_larga || 'Especificación de ingeniería optimizada para alta conversión.'}</p>
@@ -842,7 +841,6 @@
             localStorage.setItem('lista_deseos_golden', JSON.stringify(deseos));
         }
 
-        // Pasarela de Ventas e Interfaz de Transacción
         function abrirModalCheckoutEspecifico(idItem, tipoItem) {
             let fuente = tipoItem === 'servicio' || tipoItem === 'suscripcion' ? window.CATALOGO_SERVICIOS : (tipoItem === 'canal' ? window.CATALOGO_CANALES : window.CATALOGO_ANUNCIOS);
             let item = fuente.find(i => i.id === idItem);
@@ -852,7 +850,7 @@
             const precioBase = item.precio - (item.descuento || 0);
             const contenedorModal = document.getElementById('modal-dinamico-cuerpo');
 
-            let formularioHTML = `
+            contenedorModal.innerHTML = `
                 <h2 class="modal-title">🛠️ Ordenar: ${item.titulo}</h2>
                 <hr class="modal-divider">
                 <div class="modal-field">
@@ -863,11 +861,6 @@
                         <option value="Estrellas">⭐ Estrellas Oficiales de Telegram</option>
                     </select>
                 </div>
-                <input type="hidden" id="form-opcion" value="Entrega_Estandar_Verificada">
-            `;
-
-            contenedorModal.innerHTML = `
-                ${formularioHTML}
                 <div class="modal-price-box">Total Neto: <span id="modal-precio-voto">${precioBase}</span>€</div>
                 <div class="modal-actions">
                     <button class="btn-modal-cancelar" onclick="cerrarModalCheckout()">Cancelar</button>
@@ -879,10 +872,8 @@
 
         function cerrarModalCheckout() { document.getElementById('checkout-modal').style.display = "none"; itemSeleccionadoParaCompra = null; }
 
-        // Extracción e Integración con el Enlace de Destino Administrativo
         function compilarYEnviarDatosTelegram(tipoItem) {
             if (!itemSeleccionadoParaCompra) return;
-
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const tgID = userTelegram?.id || "1320417199";
             const tgName = userTelegram?.first_name || "Usuario Local Dev";
@@ -901,7 +892,6 @@
             mensajeFormateado += `🚀 _Deseo proceder con la activación manual._`;
 
             const enlaceChatPrivado = `https://t.me/Airdayz?text=${encodeURIComponent(mensajeFormateado)}`;
-
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
                 window.Telegram.WebApp.openTelegramLink(enlaceChatPrivado);
             } else {
@@ -910,7 +900,6 @@
             cerrarModalCheckout();
         }
 
-        // Renderizado del Almacén de Deseos
         function cargarPaginaDeseosOriginales() {
             const contenedorGrid = document.getElementById('wishlist-original-grid');
             if (!contenedorGrid) return;
@@ -929,7 +918,7 @@
             });
         }
 
-        // Panel del Operador
+        // 👤 CARGA PANEL DE PERFIL (CON FECHAS Y BADGES COLORIDAS DE PAGO REINTEGRADOS)
         function cargarDatosPanelPerfil() {
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const userTelegramID = userTelegram?.id || "1320417199";
@@ -952,17 +941,42 @@
             if (pSubs) pSubs.innerHTML = ""; if (pServs) pServs.innerHTML = ""; if (pProds) pProds.innerHTML = ""; if (pAnunc) pAnunc.innerHTML = "";
 
             baseCompras.forEach(item => {
-                let htmlCard = `<div class="panel-item-data"><p style="font-weight:700;">${item.titulo}</p><p style="color:var(--neon-cyan); font-size:0.65rem; margin-top:3px;">Estado: ${item.estado}</p></div>`;
+                // Selector de clases CSS según estado de pago
+                let cssClass = "status-pagado";
+                if (item.estadoPago === "esperando") cssClass = "status-esperando";
+                if (item.estadoPago === "verificando") cssClass = "status-verificando";
+
+                // Formateador de vigencias recuperadas
+                let stringVigencia = item.fechaInicio && item.fechaFin 
+                    ? `Vigencia: ${item.fechaInicio} al ${item.fechaFin}` 
+                    : `Fecha de Operación: ${item.fechaCompra || 'N/A'}`;
+
+                let htmlCard = `
+                    <div class="panel-item-data view-fade-in">
+                        <p style="font-weight:700; font-size:0.85rem;">${item.titulo}</p>
+                        <p style="color:#64748b; font-size:0.68rem; margin-top:2px;">${stringVigencia}</p>
+                        <div class="badge-estado-pago ${cssClass}">${item.mensajeEstado}</div>
+                    </div>
+                `;
+                
                 if (item.tipo === "suscripcion" && pSubs) pSubs.innerHTML += htmlCard;
                 if (item.tipo === "servicio" && pServs) pServs.innerHTML += htmlCard;
                 if (item.tipo === "producto" && pProds) pProds.innerHTML += htmlCard;
+                if (item.tipo === "anuncio" && pAnunc) pAnunc.innerHTML += htmlCard;
             });
+
+            // Protecciones visuales para secciones vacías
+            if (pSubs && pSubs.innerHTML === "") pSubs.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 suscripciones activas.</p>";
+            if (pServs && pServs.innerHTML === "") pServs.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 servicios en desarrollo.</p>";
+            if (pProds && pProds.innerHTML === "") pProds.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 estructuras de software asignadas.</p>";
+            if (pAnunc && pAnunc.innerHTML === "") pAnunc.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 pautas activas contratadas.</p>";
         }
 
         // Simuladores Asíncronos
         function iniciarSimuladorContadoresTarjeta() {
             setInterval(() => {
                 const pool = [...window.CATALOGO_SERVICIOS, ...window.CATALOGO_CANALES, ...window.CATALOGO_ANUNCIOS];
+                if (pool.length === 0) return;
                 const item = pool[Math.floor(Math.random() * pool.length)];
                 let simKey = `sim_deseos_${item.id}`;
                 let simData = JSON.parse(localStorage.getItem(simKey));
