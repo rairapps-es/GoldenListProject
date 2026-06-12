@@ -12,35 +12,69 @@ window.DB_COMPRAS_USUARIOS = {
 };
 
 // Generador de Tarjetas con Identificadores de Imagen de Alta Calidad (Cyber/Tech)
-window.CATALOGO_SERVICIOS = [];
-const arrayImgIds = [1014, 1025, 1062, 1069, 1074, 1082, 1043, 1050, 1035, 1024];
-for (let i = 1; i <= 22; i++) {
-    let cat = i % 3 === 0 ? "bot" : (i % 3 === 1 ? "grupo" : "canal");
-    let imgId = arrayImgIds[i % arrayImgIds.length];
-    window.CATALOGO_SERVICIOS.push({
-        id: `SERV-${String(i).padStart(3, '0')}`,
-        tipo: "servicio",
-        categoria: cat,
-        titulo: `Estrategia Avanzada para ${cat.toUpperCase()} N°${i}`,
-        rating: (4.6 + (i % 4) * 0.1).toFixed(1),
-        imagen: `https://picsum.photos/id/${imgId}/400/220`,
-        descripcion_corta: `Infraestructura táctica optimizada para despliegues en Telegram.`,
-        descripcion_larga: `Configuración técnica milimétrica estructurada, auditoría interna de embudos, automatización recursiva y posicionamiento orgánico indexado en motores de búsqueda de Telegram.`,
-        precio: 40 + (i * 15),
-        descuento: i % 2 === 0 ? 15 : 0,
-        oferta: i % 3 === 0 ? "🔥 ¡Oferta Flash!" : "Tarifa Regular",
-        tiempoEntregaBase: "72 horas",
-        revisiones: 2,
-        deseosIniciales: 110 + i
-    });
-}
+// AGREGAR UN NUEVO SERVICIO PERSONALIZADO MANUALLY
+window.CATALOGO_SERVICIOS.push({
+    id: "SERV-001", // Asegúrate de que el ID sea único
+    tipo: "suscripcion",
+    categoria: "bot", // Puede ser: "bot", "grupo" o "canal"
+    titulo: "🤖 Creación de Bot SaaS Automatizado Pro",
+    rating: "5.0",
+    imagen: "https://picsum.photos/id/1062/400/220", // URL de la imagen de portada
+    descripcion_corta: "Despliegue de bots con base de datos en tiempo real.",
+    descripcion_larga: "Desarrollo a medida con Node.js o Python, integración de pasarelas de pago (PayPal, USDT, Estrellas de Telegram) y panel de administración avanzado protegido.",
+    precio: 150, // Precio original en euros
+    descuento: 30, // Descuento en euros (El usuario pagará 120€)
+    oferta: "🔥 ¡Oferta Flash!", // Etiqueta de marketing
+    tiempoEntregaBase: "48 horas",
+    revisiones: 3,
+    deseosIniciales: 245
+});
+
+window.CATALOGO_SERVICIOS.push({
+    id: "SERV-002", // Asegúrate de que el ID sea único
+    tipo: "servicio",
+    categoria: "grupo", // Puede ser: "bot", "grupo" o "canal"
+    titulo: "🤖 Creación de Bot SaaS Automatizado Pro",
+    rating: "5.0",
+    imagen: "https://picsum.photos/id/1062/400/220", // URL de la imagen de portada
+    descripcion_corta: "Despliegue de bots con base de datos en tiempo real.",
+    descripcion_larga: "Desarrollo a medida con Node.js o Python, integración de pasarelas de pago (PayPal, USDT, Estrellas de Telegram) y panel de administración avanzado protegido.",
+    precio: 150, // Precio original en euros
+    descuento: 30, // Descuento en euros (El usuario pagará 120€)
+    oferta: "🔥 ¡Oferta Flash!", // Etiqueta de marketing
+    tiempoEntregaBase: "48 horas",
+    revisiones: 3,
+    deseosIniciales: 245
+});
+
+window.CATALOGO_SERVICIOS.push({
+    id: "SERV-003", // Asegúrate de que el ID sea único
+    tipo: "producto",
+    categoria: "canal", // Puede ser: "bot", "grupo" o "canal"
+    titulo: "🤖 Creación de Bot SaaS Automatizado Pro",
+    rating: "5.0",
+    imagen: "https://picsum.photos/id/1062/400/220", // URL de la imagen de portada
+    descripcion_corta: "Despliegue de bots con base de datos en tiempo real.",
+    descripcion_larga: "Desarrollo a medida con Node.js o Python, integración de pasarelas de pago (PayPal, USDT, Estrellas de Telegram) y panel de administración avanzado protegido.",
+    precio: 150, // Precio original en euros
+    descuento: 30, // Descuento en euros (El usuario pagará 120€)
+    oferta: "🔥 ¡Oferta Flash!", // Etiqueta de marketing
+    tiempoEntregaBase: "48 horas",
+    revisiones: 3,
+    deseosIniciales: 245
+});
+
 
 window.CATALOGO_CANALES = [
-    { id: "CHAN-001", tipo: "canal", titulo: "Canal de Apuestas Deportivas (Venta)", imagen: "https://picsum.photos/id/1071/400/220", suscriptores: "14,200", categoria: "Deportes", precio: 290, descuento: 0, oferta: "Destacado VIP ⭐", descripcion_breve: "Rentabilidad y conversión demostrable mediante auditorías." }
+    { id: "CHAN-001", tipo: "canal", titulo: "Canal de Apuestas Deportivas (Venta)", imagen: "https://picsum.photos/id/1071/400/220", suscriptores: "14,200", categoria: "Deportes", precio: 290, descuento: 0, oferta: "Destacado VIP ⭐", descripcion_breve: "Rentabilidad y conversión demostrable mediante auditorías." },
+{ id: "CHAN-002", tipo: "canal", titulo: "Canal de Apuestas Deportivas (Venta)", imagen: "https://picsum.photos/id/1071/400/220", suscriptores: "14,200", categoria: "Deportes", precio: 290, descuento: 0, oferta: "Destacado VIP ⭐", descripcion_breve: "Rentabilidad y conversión demostrable mediante auditorías." }
+
 ];
 
 window.CATALOGO_ANUNCIOS = [
-    { id: "ANUN-001", tipo: "anuncio", titulo: "Pack Anuncios Masivo Lista Golden", imagen: "https://picsum.photos/id/1081/400/220", precio: 60, descuento: 10, oferta: "🔥 Ofertas Flash", descripcion_larga: "Captura masiva de leads cualificados de forma hiper-segmentada dentro del ecosistema.", tiempoEntregaBase: "24 horas" }
+    { id: "ANUN-001", tipo: "anuncio", titulo: "Pack Anuncios Masivo Lista Golden", imagen: "https://picsum.photos/id/1081/400/220", precio: 60, descuento: 10, oferta: "🔥 Ofertas Flash", descripcion_larga: "Captura masiva de leads cualificados de forma hiper-segmentada dentro del ecosistema.", tiempoEntregaBase: "24 horas" },
+{ id: "ANUN-002", tipo: "anuncio", titulo: "Pack Anuncios Masivo Lista Golden", imagen: "https://picsum.photos/id/1081/400/220", precio: 60, descuento: 10, oferta: "🔥 Ofertas Flash", descripcion_larga: "Captura masiva de leads cualificados de forma hiper-segmentada dentro del ecosistema.", tiempoEntregaBase: "24 horas" }
+
 ];
 
 let catalogoActualActivo = "servicios"; 
@@ -202,8 +236,8 @@ function generarTarjetaInyectableHTML(item) {
             <h3 class="card-title-clickable" onclick="toggleAcordeon('${item.id}')">👉 ${item.titulo}</h3>
             
             <div style="margin-bottom: 8px;">
-                <div class="rating-clickable" onclick="window.open('https://t.me/ListaGoldenCanalResenas', '_blank')">
-                    ⭐ ${item.rating || '4.9'} <span style="color:#94a3b8; font-size:0.65rem; text-decoration:underline;">(Canal Reseñas)</span>
+                <div class="rating-clickable" onclick="window.open('https://t.me/ListaGolden', '_blank')">
+                    ⭐ ${item.rating || '4.9'} <span style="color:#94a3b8; font-size:0.65rem; text-decoration:underline;">(Reseñas)</span>
                 </div>
             </div>
 
@@ -216,12 +250,12 @@ function generarTarjetaInyectableHTML(item) {
 
             <div id="expand-${item.id}" class="acordeon-contenido">
                 <p style="color:#cbd5e1; margin-bottom:4px;"><strong>Módulo Técnico:</strong> ${item.descripcion_larga || 'Especificación de ingeniería Lista Golden optimizada para canales de alta conversión.'}</p>
-                <p style="color:#64748b; font-size:0.68rem;">Plazo de despliegue: ${item.tiempoEntregaBase || 'Inmediato'} | Revisiones: ${item.revisiones || 1}</p>
+                <p style="color:#64748b; font-size:0.68rem;">Entrega: ${item.tiempoEntregaBase || 'Inmediato'} | Revisiones: ${item.revisiones || 1}</p>
             </div>
 
             <div class="card-actions-row">
                 ${botonDeseosHTML}
-                <button class="btn-contratar" onclick="abrirModalCheckoutEspecifico('${item.id}', '${item.tipo}')">Comprar Módulo 🛍️</button>
+                <button class="btn-contratar" onclick="abrirModalCheckoutEspecifico('${item.id}', '${item.tipo}')">Comprar 🛍️</button>
             </div>
         </div>
     `;
@@ -451,7 +485,8 @@ function ejecutarFomoFlotanteSincronizado() {
     if (!banner || !fomoText) return;
     const nombres = ["X-801", "Kaelen", "Alpha_09", "Vesper", "Elysia", "Zephyr"];
     const servicio = window.CATALOGO_SERVICIOS[Math.floor(Math.random() * window.CATALOGO_SERVICIOS.length)];
-    fomoText.innerHTML = `🌐 Operador <strong>${nombres[Math.floor(Math.random() * nombres.length)]}</strong> acaba de desplegar el módulo: <span style="color:var(--neon-cyan); font-weight:800;">${servicio.titulo}</span>`;
+    fomoText.innerHTML = `👤 <strong>${nombres[Math.floor(Math.random() * nombres.length)]}</strong> compró <span style="color:var(--neon-cyan); font-weight:800;">${servicio.titulo}.
+</span>`;
     banner.style.opacity = "1"; banner.style.transform = "translateY(0px)";
     setTimeout(() => { banner.style.opacity = "0"; banner.style.transform = "translateY(15px)"; }, 5500);
 }
