@@ -474,36 +474,51 @@ function recalcularPrecioDinamicoModal(precioBase, tipo) {
 function cerrarModalCheckout() { document.getElementById('checkout-modal').style.display = "none"; itemSeleccionadoParaCompra = null; }
 
 // =========================================================================
-// 📥 EXTACTOR AUTOMÁTICO DE CREDENCIALES NATIVAS (MENSAJE PRIVADO)
+// 📥 ENVIAR PEDIDO DIRECTO AL CHAT PRIVADO DEL ADMINISTRADOR (@Airdayz)
 // =========================================================================
 function compilarYEnviarDatosTelegram(tipoItem) {
     if (!itemSeleccionadoParaCompra) return;
 
+    // 1. Extraer credenciales del comprador
     const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
     const tgID = userTelegram?.id || "1320417199";
     const tgName = userTelegram?.first_name || "Usuario Local Dev";
     const tgUser = userTelegram?.username ? `@${userTelegram.username}` : "Sin_Alias_Configurado";
 
+    // 2. Recolectar datos del formulario de compra
     const opcionSeleccionada = document.getElementById('form-opcion')?.value || "N/A";
     const metodoPago = document.getElementById('form-pago')?.value || "N/A";
     const importeFinal = document.getElementById('modal-precio-voto')?.innerText || "0";
 
-    const payloadOrdenSaaS = {
-        origen: "LISTA_GOLDEN_NEXO_UI",
-        tipo_operacion: tipoItem.toUpperCase(),
-        comprador: { id: tgID, nombre: tgName, alias: tgUser },
-        item: { id: itemSeleccionadoParaCompra.id, titulo: itemSeleccionadoParaCompra.titulo, precio_base: itemSeleccionadoParaCompra.precio + "€" },
-        transaccion: { parametro: opcionSeleccionada, pasarela: metodoPago, monto_neto: importeFinal + "€" }
-    };
+    // 3. Redactar el mensaje en texto limpio y ultra-legible
+    let mensajeFormateado = `⚡ *NUEVA ORDEN DE COMPRA - LISTA GOLDEN*\n\n`;
+    mensajeFormateado += `👤 *Comprador:* ${tgName} (${tgUser})\n`;
+    mensajeFormateado += `🆔 *Telegram ID:* \`${tgID}\`\n\n`;
+    mensajeFormateado += `📦 *Módulo:* ${itemSeleccionadoParaCompra.titulo}\n`;
+    mensajeFormateado += `🆔 *ID Ítem:* \`${itemSeleccionadoParaCompra.id}\`\n`;
+    mensajeFormateado += `🏷️ *Tipo:* ${tipoItem.toUpperCase()}\n\n`;
+    mensajeFormateado += `⚙️ *Opción/Plazo:* ${opcionSeleccionada}\n`;
+    mensajeFormateado += `💳 *Método de Pago:* ${metodoPago}\n`;
+    mensajeFormateado += `💰 *Importe Neto:* ${importeFinal}€\n\n`;
+    mensajeFormateado += `🚀 _Deseo proceder con la activación de este módulo._`;
 
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
-        window.Telegram.WebApp.sendData(JSON.stringify(payloadOrdenSaaS));
-        window.Telegram.WebApp.close();
+    // 4. Convertir el texto a formato seguro para URLs (URL Encoding)
+    const mensajeCodificado = encodeURIComponent(mensajeFormateado);
+
+    // 5. Construir el enlace directo a tu chat @Airdayz con el texto pre-cargado
+    const enlaceChatPrivado = `https://t.me/Airdayz?text=${mensajeCodificado}`;
+
+    // 6. Ejecutar la redirección inteligente
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+        // Método oficial y seguro dentro de las Mini Apps de Telegram
+        window.Telegram.WebApp.openTelegramLink(enlaceChatPrivado);
     } else {
-        console.log("PAYLOAD EXTRAÍDO EN LOCALHOST:", payloadOrdenSaaS);
-        alert(`[Extracción de Datos Realizada]\nAlias: ${tgUser}\nID: ${tgID}\nMódulo: ${itemSeleccionadoParaCompra.titulo}\nCajón: ${importeFinal}€ a través de ${metodoPago}`);
-        cerrarModalCheckout();
+        // Fallback por si estás probando desde un navegador web de escritorio común
+        window.open(enlaceChatPrivado, '_blank');
     }
+
+    // Cerramos el modal visual para dejar la app limpia si el usuario regresa
+    cerrarModalCheckout();
 }
 
 // =========================================================================
