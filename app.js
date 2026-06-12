@@ -38,7 +38,7 @@ window.CATALOGO_SERVICIOS.push({
 window.CATALOGO_SERVICIOS.push({
     id: "SERV-002",
     tipo: "servicio",
-    categoria: "grupo",
+    categoria: "mi",
     titulo: "🛠️ Configuración y Montaje de Grupo Monetizado",
     rating: "4.9",
     imagen: "https://picsum.photos/id/1043/400/220",
@@ -72,9 +72,9 @@ window.CATALOGO_SERVICIOS.push({
 
 // 📦 ITEM 003: Configurado como producto digital (Activa formulario de Estrellas de Telegram)
 window.CATALOGO_SERVICIOS.push({
-    id: "PROD-003",
+    id: "PROD-002",
     tipo: "producto", // 🌟 Activa pasarela de Estrellas, PayPal y USDT sin preguntas de entrega
-    categoria: "canal",
+    categoria: "grupo",
     titulo: "📦 Inteligente AI",
     rating: "4.2",
     imagen: "https://picsum.photos/id/1025/400/220",
