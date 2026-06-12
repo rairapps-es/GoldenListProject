@@ -252,19 +252,73 @@ function filtrarPorCategoria(categoria) {
 // 📥 MOTOR DE RENDIMIENTO LAZY LOAD
 // =========================================================================
 // =========================================================================
-// 🔄 DISPARADORES INTERACTIVOS DEL HTML PARA FILTRADO
+// 🔄 MOTOR CORE: RENDERIZADO CON FILTRADO CRUZADO INTELIGENTE
 // =========================================================================
+function renderizerEcosistemaActual(cargarMas = false) {
+    const grid = document.querySelector('.catalog-grid');
+    if (!grid) return;
 
-// Controla las pestañas superiores (Filtro A)
-function cambiarPestañaTipo(tipo, botonPulsado) {
-    filtroTipoActivo = tipo;
+    // Si es un filtrado nuevo (no "cargar más"), limpiamos la grilla y reiniciamos el scroll
+    if (!cargarMas) { 
+        grid.innerHTML = ""; 
+        tarjetasDesplegadasActualmente = 10; 
+    }
+
+    // 1. Clonamos la base de datos completa de ítems
+    let listadoFiltrado = [...window.CATALOGO_SERVICIOS];
+
+    // 2. 🏷️ PRIMER FILTRO: Por Tipo de Modelo (Pestaña Superior del HTML)
+    if (filtroTipoActivo !== "todos") {
+        listadoFiltrado = listadoFiltrado.filter(item => item.tipo === filtroTipoActivo);
+    }
+
+    // 3. 📂 SEGUNDO FILTRO: Por Destinatario/Categoría (Fila Inferior del HTML)
+    if (filtroCategoriaActiva !== "todos") {
+        listadoFiltrado = listadoFiltrado.filter(item => item.categoria === filtroCategoriaActiva);
+    }
+
+    // 4. Aplicar ordenación avanzada si la tienes declarada (por precio, rating, etc.)
+    if (typeof aplicarFiltrosYOrdenacion === "function") {
+        listadoFiltrado = aplicarFiltrosYOrdenacion(listadoFiltrado);
+    }
+
+    // 5. Segmentación del Lazy Load (Paginación visual de 10 en 10)
+    const bloquePaginado = listadoFiltrado.slice(0, tarjetasDesplegadasActualmente);
+    let html = "";
     
-    // Cambiar la clase activa visualmente en la fila de Tipos
-    document.querySelectorAll('.tab-tipo-btn').forEach(btn => btn.classList.remove('active'));
-    botonPulsado.classList.add('active');
-    
-    // Refrescar el catálogo con el doble filtro aplicado
-    renderizerEcosistemaActual();
+    // Construimos el bloque inyectable
+    bloquePaginado.forEach(item => { 
+        html += generarTarjetaInyectableHTML(item); 
+    });
+
+    // Eliminamos el botón disparador anterior para que no se quede duplicado en medio
+    const trigger = document.getElementById('trigger-lazy-load');
+    if (trigger) trigger.remove();
+
+    // Inyectamos el HTML en la grilla cyberpunk
+    if (cargarMas) {
+        grid.insertAdjacentHTML('beforeend', html);
+    } else {
+        grid.innerHTML = html;
+    }
+
+    // 6. 🚨 PANTALLA DE ALERTA: Si la combinación cruzada no arroja stock
+    if (listadoFiltrado.length === 0) {
+        grid.innerHTML = `
+            <div style="text-align:center; padding: 40px 20px; color:#64748b; width:100%; font-size:0.8rem;" class="view-fade-in">
+                📡 La red no ha detectado módulos tipo "${filtroTipoActivo.toUpperCase()}" enfocados en "${filtroCategoriaActiva.toUpperCase()}". Prueba otra combinación.
+            </div>
+        `;
+    }
+
+    // 7. RENDERIZAR BOTÓN "DESPLEGAR MÁS" (Solo si quedan elementos en cola)
+    if (listadoFiltrado.length > tarjetasDesplegadasActualmente) {
+        grid.insertAdjacentHTML('beforeend', `
+            <div id="trigger-lazy-load" style="text-align:center; padding:10px 0; width:100%;" class="view-fade-in">
+                <button onclick="tarjetasDesplegadasActualmente+=10; renderizerEcosistemaActual(true);" style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,240,255,0.2); color:#00f0ff; padding:10px; border-radius:12px; font-size:0.75rem; font-weight:bold; cursor:pointer; width:100%; box-shadow: 0 0 10px rgba(0,240,255,0.05);">Desplegar Más Conexiones ⬇️</button>
+            </div>
+        `);
+    }
 }
 
 // Controla los botones de categoría inferiores (Filtro B)
