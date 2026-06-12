@@ -127,12 +127,7 @@ window.CATALOGO_ANUNCIOS = [
         tiempoEntregaBase: "12 horas" 
     }
 ];
-
 // =========================================================================
-// 🎛️ TORRE DE CONTROL DE ESTADOS (FILTRADO CRUZADO Y PASARELAS)
-// =========================================================================
-
-    // =========================================================================
 // 🎛️ TORRE DE CONTROL DE ESTADOS (FILTRADO CRUZADO Y PASARELAS)
 // =========================================================================
 let filtroTipoActivo = "todos";      // 🏷️ Filtro A (Pestaña): "todos", "servicio", "suscripcion", "producto"
