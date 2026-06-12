@@ -631,7 +631,7 @@
         let filtroTipoActivo = "todos";      
         let filtroCategoriaActiva = "todos"; 
         let seccionActualActiva = "servicios";
-        let limitePostBlogVisibles = 3; // Parámetro Lazy Load exigido: Inicializa en 3 posts
+        let limitePostBlogVisibles = 3; 
         let filtroCategoriaBlog = "todos";
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -712,7 +712,7 @@
                 document.getElementById('vista-contratar-anuncios').style.display = "block";
             } else if (seccion === "blog") {
                 document.getElementById('vista-blog-exclusivo').style.display = "block";
-                limitePostBlogVisibles = 3; // Reseteo de Lazy Load
+                limitePostBlogVisibles = 3; 
                 renderizarBlogExclusivo();
             } else if (seccion === "apoyo") {
                 document.getElementById('vista-apoyo-proyecto').style.display = "block";
@@ -804,7 +804,6 @@
 
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const tgID = userTelegram?.id || "1320417199";
-            // Analizar condición de suscripción VIP activa
             const esVIP = window.LISTA_USUARIOS_PREMIUM.includes(String(tgID));
 
             let filtrados = [...window.REPOSITORIO_BLOG];
@@ -812,12 +811,11 @@
                 filtrados = filtrados.filter(p => p.categoria === filtroCategoriaBlog);
             }
 
-            // Aplicar corte para simular Lazy Load (Carga progresiva de 3 en 3 posts)
             const bloqueVisibles = filtrados.slice(0, limitePostBlogVisibles);
             let html = "";
 
             bloqueVisibles.forEach(post => {
-                let acceso Concedido = false;
+                let accesoConcedido = false;
                 if (post.condicion === "POST-PUBLICO" || post.condicion === "POST-GRATIS") {
                     accesoConcedido = true;
                 } else if (post.condicion === "POST-PREMIUM" && esVIP) {
@@ -859,7 +857,6 @@
 
             container.innerHTML = html;
 
-            // Trigger interactivo para inyectar más posts (Lazy Load)
             if (filtrados.length > limitePostBlogVisibles) {
                 container.insertAdjacentHTML('beforeend', `
                     <button onclick="limitePostBlogVisibles += 3; renderizarBlogExclusivo();" style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,240,255,0.1); padding:12px; border-radius:10px; color:var(--neon-cyan); font-size:0.75rem; font-weight:bold; cursor:pointer; width:100%; margin-top:8px;">
@@ -929,14 +926,12 @@
             const compras = window.DB_COMPRAS_USUARIOS[userTelegramID] || [];
             const favoritos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
 
-            // Calcular números para el HUD en tiempo real
             let numSubs = compras.filter(c => c.tipo === "suscripcion").length;
             let numProds = compras.filter(c => c.tipo === "producto").length;
             let numServs = compras.filter(c => c.tipo === "servicio").length;
             let numCamp = compras.filter(c => c.tipo === "anuncio" || c.idItem.startsWith("ANUN")).length;
             let numFavs = favoritos.length;
 
-            // Inyectar contadores numéricos en el DOM
             document.getElementById('hud-val-subs').innerText = numSubs;
             document.getElementById('hud-val-prods').innerText = numProds;
             document.getElementById('hud-val-servs').innerText = numServs;
@@ -944,7 +939,6 @@
             document.getElementById('hud-val-favs').innerText = numFavs;
             document.getElementById('hud-val-rango').innerText = esVIP ? "VIP LEVEL" : "NIVEL 1";
 
-            // Renderizar listados en el Perfil
             const pSubs = document.getElementById('panel-suscripciones');
             const pServs = document.getElementById('panel-servicios');
             const pProds = document.getElementById('panel-productos');
@@ -1008,7 +1002,6 @@
             `;
         }
 
-        // Inyección de función auxiliar para el renderizado dinámico de Deseos
         function cargarPaginaDeseosOriginales() {
             const grid = document.getElementById('wishlist-original-grid');
             if (!grid) return; grid.innerHTML = "";
