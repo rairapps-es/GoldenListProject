@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lista Golden - Ecosistema Premium</title>
+    <title>Lista Golden - Ecosistema Cyberpunk</title>
     <!-- SDK Oficial de Telegram WebApps -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -66,7 +66,6 @@
             padding: 6px 12px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
         }
 
         .user-pill span {
@@ -79,19 +78,12 @@
             height: 24px;
             border-radius: 50%;
             overflow: hidden;
-            box-sizing: border-box;
         }
         
-        /* Bordes Dinámicos de Perfil */
-        .avatar-premium-border {
-            border: 2px solid var(--neon-gold) !important;
-            box-shadow: 0 0 8px var(--neon-gold);
-        }
-        .avatar-free-border {
-            border: 1.5px solid var(--text-muted) !important;
-        }
+        .avatar-premium-border { border: 2px solid var(--neon-gold) !important; box-shadow: 0 0 8px var(--neon-gold); }
+        .avatar-free-border { border: 1.5px solid var(--text-muted) !important; }
 
-        /* --- CONTENEDOR DE FILTROS ESTILO AMAZON --- */
+        /* --- FILTROS ESTILO AMAZON --- */
         .amazon-filter-wrapper {
             background: #090d1a;
             border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -106,7 +98,6 @@
             gap: 8px;
             overflow-x: auto;
             padding: 4px 16px;
-            scroll-behavior: smooth;
             scrollbar-width: none;
         }
         .amazon-scroll-row::-webkit-scrollbar { display: none; }
@@ -121,7 +112,6 @@
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.15s ease;
         }
 
         .tab-tipo-btn.active {
@@ -149,7 +139,6 @@
             border-radius: 6px;
             font-size: 0.72rem;
             outline: none;
-            white-space: nowrap;
         }
 
         .cat-btn {
@@ -171,12 +160,7 @@
         }
 
         /* --- GRID / TARJETAS --- */
-        .catalog-grid {
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .catalog-grid { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
 
         .servicio-card {
             background: var(--bg-card);
@@ -184,29 +168,15 @@
             border-radius: 14px;
             overflow: hidden;
             position: relative;
-            transition: transform 0.2s;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
-        .card-image-placeholder {
-            width: 100%;
-            height: 150px;
-            position: relative;
-            background: #131926;
-            overflow: hidden;
-        }
+        .card-image-placeholder { width: 100%; height: 150px; position: relative; background: #131926; overflow: hidden; }
+        .card-image-placeholder img { width: 100%; height: 100%; object-fit: cover; }
 
-        .card-image-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* 🏷️ CINTA DE DESCUENTO ESQUINA SUPERIOR DERECHA */
         .ribbon-descuento {
             position: absolute;
-            top: 15px;
-            right: -35px;
+            top: 15px; right: -35px;
             background: linear-gradient(135deg, var(--neon-pink), #b3003b);
             color: #fff;
             text-align: center;
@@ -216,225 +186,148 @@
             transform: rotate(45deg);
             box-shadow: 0 2px 8px rgba(0,0,0,0.4);
             z-index: 5;
-            letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
         .badge-tipo-flotante {
             position: absolute;
-            top: 12px;
-            left: 12px;
+            top: 12px; left: 12px;
             padding: 4px 8px;
             border-radius: 6px;
             font-size: 0.6rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             z-index: 2;
         }
         .badge-servicio { background: #0284c7; color: #fff; }
         .badge-suscripcion { background: #7c3aed; color: #fff; }
         .badge-producto { background: #16a34a; color: #fff; }
-        .badge-anuncio { background: #eab308; color: #000; }
 
-        .card-body-flex {
-            display: flex;
-            padding: 14px;
-            gap: 12px;
-            justify-content: space-between;
-        }
-
+        .card-body-flex { display: flex; padding: 14px; gap: 12px; justify-content: space-between; }
         .card-left-info { flex: 1; }
-        .card-title-clickable, .card-desc-clickable {
-            cursor: pointer;
-        }
-        .card-title-clickable {
-            font-size: 0.9rem;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 4px;
-        }
+        .card-title-clickable, .card-desc-clickable { cursor: pointer; }
+        .card-title-clickable { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
 
         .rating-clickable {
-            font-size: 0.7rem;
-            color: #fbbf24;
-            display: inline-block;
-            cursor: pointer;
+            font-size: 0.7rem; color: #fbbf24;
+            display: inline-block; cursor: pointer;
             background: rgba(251, 191, 3, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 2px 6px; border-radius: 4px;
             border: 1px solid rgba(251, 191, 3, 0.1);
         }
 
-        .card-right-pricing {
-            text-align: right;
-            min-width: 80px;
-        }
-
-        .simulador-deseos-box {
-            background: rgba(255, 0, 85, 0.01);
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-            padding: 8px 14px;
-            font-size: 0.68rem;
-            color: #94a3b8;
-        }
+        .card-right-pricing { text-align: right; min-width: 80px; }
+        .simulador-deseos-box { background: rgba(255, 0, 85, 0.01); border-top: 1px solid rgba(255, 255, 255, 0.02); padding: 8px 14px; font-size: 0.68rem; color: #94a3b8; }
 
         .acordeon-contenido {
-            max-height: 0;
-            overflow: hidden;
+            max-height: 0; overflow: hidden;
             transition: max-height 0.25s ease-out;
-            padding: 0 14px;
-            background: rgba(0,0,0,0.1);
+            padding: 0 14px; background: rgba(0,0,0,0.1);
             font-size: 0.72rem;
         }
-        .acordeon-contenido.open {
-            max-height: 200px;
-            padding: 12px 14px;
-        }
+        .acordeon-contenido.open { max-height: 200px; padding: 12px 14px; }
 
-        .card-actions-row {
-            display: flex;
-            padding: 12px 14px;
-            gap: 10px;
-        }
+        .card-actions-row { display: flex; padding: 12px 14px; gap: 10px; }
+        .btn-wishlist { flex: 1; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: var(--text-main); padding: 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
+        .btn-wishlist.active { background: rgba(255, 0, 85, 0.1); border-color: var(--neon-pink); color: var(--neon-pink); }
+        .btn-contratar { flex: 1.4; background: linear-gradient(135deg, #00f0ff, #0077ff); border: none; color: #000; padding: 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
 
-        .btn-wishlist {
-            flex: 1;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-main);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .btn-wishlist.active {
-            background: rgba(255, 0, 85, 0.1);
-            border-color: var(--neon-pink);
-            color: var(--neon-pink);
-        }
-
-        .btn-contratar {
-            flex: 1.4;
-            background: linear-gradient(135deg, #00f0ff, #0077ff);
-            border: none;
-            color: #000;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        /* --- VISTAS AUXILIARES --- */
+        /* --- VISTAS GENERALES --- */
         .view-section { display: none; padding: 16px; }
         .view-fade-in { animation: fadeIn 0.3s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PERFIL DE USUARIO MODERNO --- */
-        .perfil-header {
-            text-align: center;
-            padding: 24px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+        /* --- ESTADÍSTICAS HUD PERFIL --- */
+        .hud-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
             margin-bottom: 20px;
-            position: relative;
         }
-        .big-avatar-container {
-            position: relative;
-            width: 82px;
-            height: 82px;
-            margin: 0 auto 14px auto;
+        .hud-stat-card {
+            background: linear-gradient(135deg, #0d1424, #080c16);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 12px 6px;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
-        .big-avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
+        .hud-stat-value { font-size: 1.25rem; font-weight: 900; color: var(--neon-cyan); text-shadow: 0 0 6px rgba(0,240,255,0.3); }
+        .hud-stat-label { font-size: 0.58rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-top: 2px; }
+
+        .perfil-header { text-align: center; padding: 24px 0 14px 0; position: relative; }
+        .big-avatar-container { position: relative; width: 82px; height: 82px; margin: 0 auto 14px auto; }
+        .big-avatar { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; }
         .big-avatar img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 🏷️ ETIQUETA FLOTANTE CENTRADA ABAJO EN IMAGEN */
-        .badge-status-avatar {
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            font-size: 0.58rem;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 10px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-            text-transform: uppercase;
-        }
-        .badge-avatar-premium {
-            background: linear-gradient(135deg, var(--neon-gold), #b37400);
-            color: #000;
-        }
-        .badge-avatar-free {
-            background: #334155;
-            color: #cbd5e1;
-        }
+        .badge-status-avatar { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.58rem; font-weight: 900; padding: 3px 8px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); text-transform: uppercase; }
+        .badge-avatar-premium { background: linear-gradient(135deg, var(--neon-gold), #b37400); color: #000; }
+        .badge-avatar-free { background: #334155; color: #cbd5e1; }
 
         .panel-container-historial { margin-bottom: 20px; }
         .panel-title { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px; }
+        .panel-item-data { background: var(--bg-card); padding: 14px; border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.02); cursor: pointer; }
         
-        /* Tarjetas interactivas del historial */
-        .panel-item-data { 
-            background: var(--bg-card); 
-            padding: 14px; 
-            border-radius: 10px; 
-            margin-bottom: 8px; 
-            border: 1px solid rgba(255,255,255,0.02); 
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .panel-item-data:transparent-hover {
-            background: rgba(255,255,255,0.02);
-        }
-        
-        .badge-estado-pago {
-            display: inline-block;
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 3px 6px;
-            border-radius: 4px;
-            margin-top: 6px;
-            text-transform: uppercase;
-        }
+        .badge-estado-pago { display: inline-block; font-size: 0.65rem; font-weight: 800; padding: 3px 6px; border-radius: 4px; margin-top: 6px; text-transform: uppercase; }
         .status-pagado { background: rgba(22, 163, 74, 0.15); color: #22c55e; border: 1px solid rgba(22, 163, 74, 0.3); }
         .status-esperando { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
         .status-verificando { background: rgba(6, 182, 212, 0.15); color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.3); }
+
+        /* --- SECCIÓN BLOG CYBERPUNK (POSTS EXCLUSIVOS) --- */
+        .blog-wrapper { display: flex; flex-direction: column; gap: 16px; }
+        .post-card {
+            background: #090e1a;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+            position: relative;
+        }
+        .post-card.locked { border: 1px dashed rgba(255, 0, 85, 0.4); }
+        .post-card.unlocked { border: 1px solid rgba(0, 255, 102, 0.3); }
         
-        /* --- MODAL GLOBAL EXCLUSIVO CYBERPUNK --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(4, 6, 14, 0.92);
-            backdrop-filter: blur(6px);
-            z-index: 200;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        .post-header-img { width: 100%; height: 130px; position: relative; background: #131926; }
+        .post-header-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .post-condition-badge {
+            position: absolute; top: 12px; right: 12px;
+            font-size: 0.58rem; font-weight: 900;
+            padding: 4px 8px; border-radius: 4px; text-transform: uppercase;
         }
-        .modal-card {
-            background: #0d1321;
-            border: 1px solid var(--neon-cyan);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 400px;
-            padding: 22px;
-            box-shadow: 0 0 35px rgba(0,240,255,0.15);
-            animation: modalScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .cond-free { background: #3b82f6; color: #fff; }
+        .cond-premium { background: var(--neon-gold); color: #000; }
+        .cond-public { background: var(--neon-green); color: #000; }
+
+        .post-body { padding: 14px; }
+        .post-cat { font-size: 0.62rem; color: var(--neon-cyan); text-transform: uppercase; font-weight: 800; margin-bottom: 2px; }
+        .post-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
+        .post-summary { font-size: 0.75rem; color: #94a3b8; line-height: 1.4; margin-bottom: 12px; }
+        
+        .post-hidden-content {
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px; padding: 10px; margin-bottom: 12px; font-size: 0.72rem; color: #cbd5e1;
         }
+
+        .btn-post-action {
+            width: 100%; padding: 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; border: none; text-transform: uppercase;
+        }
+        .btn-post-ok { background: var(--neon-green); color: #000; }
+        .btn-post-lock { background: linear-gradient(135deg, var(--neon-pink), #990033); color: #fff; box-shadow: 0 0 10px rgba(255,0,85,0.2); }
+
+        /* --- APΟΥO AL PROYECTO --- */
+        .support-box { background: var(--bg-card); border-radius: 14px; border: 1px solid rgba(0, 240, 255, 0.1); padding: 16px; margin-bottom: 16px; }
+        .support-option-btn {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px; border-radius: 10px; color: #fff; width: 100%; text-align: left; margin-top: 8px; cursor: pointer;
+        }
+        .support-option-btn:hover { background: rgba(0,240,255,0.03); border-color: var(--neon-cyan); }
+
+        /* --- MODALES --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(4, 6, 14, 0.92); backdrop-filter: blur(6px); z-index: 200; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { background: #0d1321; border: 1px solid var(--neon-cyan); border-radius: 16px; width: 100%; max-width: 400px; padding: 22px; box-shadow: 0 0 35px rgba(0,240,255,0.15); animation: modalScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes modalScaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        .modal-title { font-size: 1.05rem; font-weight: 900; line-height: 1.3; color: #fff; }
+        .modal-title { font-size: 1.05rem; font-weight: 900; color: #fff; }
         .modal-divider { border: 0; height: 1px; background: rgba(255,255,255,0.08); margin: 14px 0; }
         .modal-field { margin-bottom: 12px; }
         .modal-field label { display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 700; }
@@ -444,57 +337,16 @@
         .btn-modal-cancelar { flex: 1; background: rgba(255,255,255,0.04); border: 0; color: #fff; padding: 11px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
         .btn-modal-confirmar { flex: 1.5; background: var(--neon-cyan); border: 0; color: #000; padding: 11px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
 
-        /* --- NOTIFICACIÓN FOMO --- */
-        .fomo-banner {
-            position: fixed;
-            bottom: 74px; left: 16px; right: 16px;
-            background: rgba(11, 15, 25, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            z-index: 90;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.5s ease;
-            pointer-events: none;
-        }
-
-        /* --- NAVEGACIÓN INFERIOR NATIVA --- */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            height: 60px;
-            background: #070a14;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 100;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            background: none;
-            border: none;
-            font-size: 0.65rem;
-            font-weight: 700;
-            cursor: pointer;
-            gap: 4px;
-        }
-        .nav-item.active { color: var(--neon-cyan); }
-        .nav-icon { font-size: 1.2rem; }
+        /* --- BOTONES DE NAVEGACIÓN INFERIOR --- */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #070a14; border-top: 1px solid rgba(255,255,255,0.03); display: flex; justify-content: space-around; align-items: center; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 0.65rem; font-weight: 700; cursor: pointer; gap: 4px; width: 100%; height: 100%; justify-content: center; }
+        .nav-item.active { color: var(--neon-cyan); background: rgba(255,255,255,0.01); }
+        .nav-icon { font-size: 1.15rem; }
     </style>
 </head>
 <body>
 
-    <!-- 🌐 TOP HEADER -->
+    <!-- 🌐 HEADER GENERAL -->
     <div class="top-bar">
         <div class="brand">Lista Golden</div>
         <div class="user-pill">
@@ -503,51 +355,118 @@
         </div>
     </div>
 
-    <!-- 🛒 AMAZON FILTER COMPACT WRAPPER -->
+    <!-- 🛒 FILTROS ESTILO AMAZON -->
     <div class="amazon-filter-wrapper" id="filter-bar-container">
-        <!-- Nivel A: Tipos (Scroll Horizontal) -->
         <div class="amazon-scroll-row" id="pestañas-tipo-container">
-            <button class="tab-tipo-btn active" onclick="cambiarPestañaTipo('todos', this)">🌐 Todos los productos</button>
+            <button class="tab-tipo-btn active" onclick="cambiarPestañaTipo('todos', this)">🌐 Todo el Catálogo</button>
             <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('servicio', this)">🛠️ Servicios</button>
             <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('suscripcion', this)">👑 Subs VIP</button>
             <button class="tab-tipo-btn" onclick="cambiarPestañaTipo('producto', this)">📦 Estructuras</button>
         </div>
         
-        <!-- Nivel B: Orden y Subcategorías combinadas -->
         <div class="amazon-sub-row">
             <select id="select-sort" class="selector-ordenacion" onchange="renderizerEcosistemaActual(false)">
-                <option value="estrellas">⭐ Filtro: Top Premium</option>
-                <option value="barato">📈 Filtro: Precio bajo</option>
-                <option value="descuento">🔥 Filtro: Liquidaciones</option>
-                <option value="ofertas">⚡ Filtro: Ofertas Flash</option>
+                <option value="estrellas">⭐ Top Premium</option>
+                <option value="barato">📈 Precio bajo</option>
+                <option value="descuento">🔥 Liquidaciones</option>
             </select>
             <button class="cat-btn active" onclick="cambiarCategoriaFiltro('todos', this)">Todos</button>
+            <!-- 👤 NUEVA OPCIÓN "PARA MÍ" EN FILTRO DE CATEGORÍAS -->
+            <button class="cat-btn" onclick="cambiarCategoriaFiltro('personal', this)">👤 Para Mí</button>
             <button class="cat-btn" onclick="cambiarCategoriaFiltro('bot', this)">Bots</button>
             <button class="cat-btn" onclick="cambiarCategoriaFiltro('grupo', this)">Grupos</button>
             <button class="cat-btn" onclick="cambiarCategoriaFiltro('canal', this)">Canales</button>
         </div>
     </div>
 
-    <!-- 🛒 GRID CENTRAL PRINCIPAL -->
-    <div class="catalog-grid view-fade-in"></div>
+    <!-- 📦 VISTA A: GRID DE CATÁLOGO PRINCIPAL -->
+    <div class="catalog-grid view-fade-in" id="vista-catalogo-principal"></div>
 
-    <!-- ❤️ SECUNDARIA: LISTA DE DESEOS -->
+    <!-- 📰 VISTA B: BLOG EXCLUSIVO CYBERPUNK (POSTS DE CONTENIDO) -->
+    <div id="vista-blog-exclusivo" class="view-section">
+        <div style="margin-bottom: 14px;">
+            <h2 style="font-size:1.2rem; font-weight:900; text-shadow: 0 0 8px var(--neon-cyan);">⚡ DATA CENTER ARCHIVES</h2>
+            <p style="font-size:0.75rem; color:var(--text-muted);">Repositorio y herramientas cifradas de Lista Golden.</p>
+        </div>
+        <!-- Filtros del Blog -->
+        <div style="display:flex; gap:6px; overflow-x:auto; margin-bottom:16px; padding-bottom:4px; scrollbar-width:none;">
+            <button class="tab-tipo-btn active" id="blog-cat-all" onclick="filtrarBlog('todos', this)">Todos</button>
+            <button class="tab-tipo-btn" onclick="filtrarBlog('descargas', this)">💾 Descargas</button>
+            <button class="tab-tipo-btn" onclick="filtrarBlog('herramientas', this)">⚙️ Scripts</button>
+            <button class="tab-tipo-btn" onclick="filtrarBlog('guias', this)">📖 Tutoriales</button>
+        </div>
+        <div class="blog-wrapper" id="feed-posts-container"></div>
+    </div>
+
+    <!-- 🛡️ VISTA C: APOYO AL PROYECTO -->
+    <div id="vista-apoyo-proyecto" class="view-section">
+        <div style="margin-bottom: 16px;">
+            <h2 style="font-size:1.2rem; font-weight:900; color:#fff;">🤍 APOYO AL DESARROLLO</h2>
+            <p style="font-size:0.75rem; color:var(--text-muted);">Ayúdanos a mantener la infraestructura libre de publicidad intrusiva y servidores de alta velocidad.</p>
+        </div>
+
+        <div class="support-box">
+            <h3 style="font-size:0.9rem; font-weight:800; color:var(--neon-cyan); margin-bottom:6px;">¿Por qué apoyar?</h3>
+            <p style="font-size:0.75rem; color:#cbd5e1; line-height:1.4;">Lista Golden despliega herramientas automatizadas distribuidas de manera gratuita para miles de terminales. Tu aporte financia el nodo principal de cómputo y API de mensajería.</p>
+        </div>
+
+        <div class="panel-title">Canales Criptográficos y Fondeo</div>
+        <button class="support-option-btn" onclick="abrirDonacionEspecifica('PayPal', 'Donación Directa')">
+            <span>💳 PayPal / Tarjeta Bancaria</span><span>➡️</span>
+        </button>
+        <button class="support-option-btn" onclick="abrirDonacionEspecifica('USDT', 'Red TRC20 / TON')">
+            <span>🪙 Criptomonedas (USDT / TON)</span><span>➡️</span>
+        </button>
+        <button class="support-option-btn" onclick="abrirDonacionEspecifica('Estrellas', 'Telegram Stars Network')">
+            <span>⭐ Enviar Estrellas Oficiales</span><span>➡️</span>
+        </button>
+    </div>
+
+    <!-- ❤️ VISTA D: LISTA DE DESEOS -->
     <div id="lista-deseos-view" class="view-section">
         <h2 style="font-size:1.1rem; font-weight:900; margin-bottom:4px;">Tu Almacén Virtual</h2>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">Módulos guardados en la memoria de este terminal local.</p>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">Módulos guardados en la memoria de tu terminal.</p>
         <div id="wishlist-original-grid" style="display:flex; flex-direction:column; gap:16px;"></div>
     </div>
 
-    <!-- 👤 SECUNDARIA: PERFIL DE USUARIO -->
+    <!-- 👤 VISTA E: PERFIL DE USUARIO COMPLETO -->
     <div id="perfil-usuario-view" class="view-section">
         <div class="perfil-header">
             <div class="big-avatar-container">
                 <div class="big-avatar" id="page-user-avatar"></div>
-                <!-- ID Dinámico Inyectado para Etiqueta Medio Inferior -->
                 <div class="badge-status-avatar" id="page-user-badge-status">PLAN GRATIS</div>
             </div>
             <h3 id="perf-nombre" style="font-size:1.1rem; font-weight:800;">...</h3>
             <p id="perf-rango" style="font-size:0.7rem; color:var(--neon-cyan); font-weight:bold; margin-top:2px;"></p>
+        </div>
+
+        <!-- 📊 NUEVO PANEL DE ESTADÍSTICAS HUD EXIGIDO -->
+        <div class="panel-title">Estadísticas del Nodo</div>
+        <div class="hud-stats-grid">
+            <div class="hud-stat-card">
+                <div class="hud-stat-value" id="hud-val-subs">0</div>
+                <div class="hud-stat-label">Subs VIP</div>
+            </div>
+            <div class="hud-stat-card">
+                <div class="hud-stat-value" id="hud-val-prods">0</div>
+                <div class="hud-stat-label">Productos</div>
+            </div>
+            <div class="hud-stat-card">
+                <div class="hud-stat-value" id="hud-val-servs">0</div>
+                <div class="hud-stat-label">Servicios</div>
+            </div>
+            <div class="hud-stat-card">
+                <div class="hud-stat-value" id="hud-val-camp">0</div>
+                <div class="hud-stat-label">Campañas</div>
+            </div>
+            <div class="hud-stat-card">
+                <div class="hud-stat-value" id="hud-val-favs" style="color:var(--neon-pink); text-shadow:0 0 6px rgba(255,0,85,0.3);">0</div>
+                <div class="hud-stat-label">Favoritos</div>
+            </div>
+            <div class="hud-stat-card" style="border-color: rgba(0,255,102,0.15);">
+                <div class="hud-stat-value" id="hud-val-rango" style="color:var(--neon-green); font-size:0.8rem; padding-top:4px;">LVL 1</div>
+                <div class="hud-stat-label">Acceso</div>
+            </div>
         </div>
 
         <div class="panel-container-historial">
@@ -559,39 +478,33 @@
             <div id="panel-servicios"></div>
         </div>
         <div class="panel-container-historial">
-            <div class="panel-title">Asignación de Software (Productos)</div>
+            <div class="panel-title">Asignación de Software</div>
             <div id="panel-productos"></div>
         </div>
         <div class="panel-container-historial">
-            <div class="panel-title">Campañas Publicitarias (Pautas Activas)</div>
+            <div class="panel-title">Campañas Publicitarias</div>
             <div id="panel-anuncios"></div>
         </div>
     </div>
 
-    <!-- 🔮 NOTIFICACIÓN FOMO FLOTANTE -->
-    <div class="fomo-banner" id="fomo-notification">
-        <div style="width:6px; height:6px; background:var(--neon-cyan); border-radius:50%; box-shadow:0 0 8px var(--neon-cyan);"></div>
-        <div id="fomo-text">...</div>
-    </div>
-
-    <!-- 🛍️ MODAL DINÁMICO DE CHECKOUT / DETALLES DE COMPRAS -->
+    <!-- 🛍️ MODAL DE CHECKOUT / INFORMACIÓN -->
     <div class="modal-overlay" id="checkout-modal">
         <div class="modal-card" id="modal-dinamico-cuerpo"></div>
     </div>
 
-    <!-- 🧭 NAVEGACIÓN INFERIOR -->
+    <!-- 🧭 NAVEGACIÓN INFERIOR NATIVA REESTRUCTURADA -->
     <div class="bottom-nav">
         <button class="nav-item active" id="nav-servicios" onclick="navegarA('servicios')">
             <span class="nav-icon">🛠️</span><span>Catálogo</span>
         </button>
-        <button class="nav-item" id="nav-canales" onclick="navegarA('canales')">
-            <span class="nav-icon">📢</span><span>Canales</span>
+        <button class="nav-item" id="nav-blog" onclick="navegarA('blog')">
+            <span class="nav-icon">📰</span><span>Archivos</span>
         </button>
-        <button class="nav-item" id="nav-anuncios" onclick="navegarA('anuncios')">
-            <span class="nav-icon">💎</span><span>Anuncios</span>
+        <button class="nav-item" id="nav-apoyo" onclick="navegarA('apoyo')">
+            <span class="nav-icon">🤍</span><span>Apoyo</span>
         </button>
         <button class="nav-item" id="nav-deseos" onclick="navegarA('deseos')">
-            <span class="nav-icon">❤️</span><span>Mis Favoritos</span>
+            <span class="nav-icon">❤️</span><span>Deseos</span>
         </button>
         <button class="nav-item" id="nav-perfil" onclick="navegarA('perfil')">
             <span class="nav-icon">👤</span><span>Perfil</span>
@@ -599,131 +512,97 @@
     </div>
 
     <script>
-        // Listado de administradores o VIPs con privilegios premium en la app
+        // Configuración de Identidades Premium
         window.LISTA_USUARIOS_PREMIUM = ["1320417199", "987654321"]; 
 
-        // 📊 BASE DE DATOS LOCAL ACTUALIZADA CON DOS EJEMPLOS DE CAMPANAS PUBLICITARIAS EN EL HISTORIAL
+        // Historial General de Compras por ID de Usuario
         window.DB_COMPRAS_USUARIOS = {
             "1320417199": [
                 { idItem: "SUB-GOLDEN", tipo: "suscripcion", titulo: "Suscripción Golden VIP Anual", fechaInicio: "01/01/2026", fechaFin: "01/01/2027", estadoPago: "pagado", mensajeEstado: "Activa 👑", descLarga: "Acceso total ilimitado de alto rendimiento a todas las estructuras de servidores y bots analíticos de la red." },
-                { idItem: "SERV-002", tipo: "servicio", titulo: "Estructural de Grupo Monetizado", fechaInicio: "10/06/2026", fechaFin: "25/06/2026", estadoPago: "verificando", mensajeEstado: "Verificando Pago 🔄", descLarga: "Estructuración técnica limpia de canales de ventas de tráfico. Montaje de filtros antispam y pasarelas automatizadas." },
+                { idItem: "SERV-002", tipo: "servicio", titulo: "Estructural de Grupo Monetizado", fechaInicio: "10/06/2026", fechaFin: "25/06/2026", estadoPago: "verificando", mensajeEstado: "Verificando Pago 🔄", descLarga: "Estructuración técnica limpia de canales de ventas de tráfico. Montaje de filtros antispam." },
                 { idItem: "PROD-001", tipo: "producto", titulo: "Script Auto-Backup Modular", fechaCompra: "12/05/2026", estadoPago: "esperando", mensajeEstado: "Esperando Pago ⏳", descLarga: "Descarga e instalación limpia de archivos binarios ejecutables para clonación de bases de datos distribuidas." },
-                // 📢 Campañas de muestra integradas en el historial del perfil
-                { idItem: "ANUN-001", tipo: "anuncio", titulo: "Campaña Publicitaria: Intercambio Masivo", fechaInicio: "05/06/2026", fechaFin: "19/06/2026", estadoPago: "pagado", mensajeEstado: "En Curso 📊", descLarga: "Impacto publicitario masivo cruzado segmentado a 15,000 usuarios activos diarios en la red de bots." },
-                { idItem: "ANUN-002", tipo: "anuncio", titulo: "Banner Premium: Sección Canales Fijos", fechaInicio: "20/06/2026", fechaFin: "27/06/2026", estadoPago: "esperando", mensajeEstado: "Verificando Fondos ⏳", descLarga: "Fijado estructural de alto impacto visual en el cinturón de categorías móviles principales." }
+                { idItem: "ANUN-001", tipo: "anuncio", titulo: "Campaña Publicitaria: Intercambio Masivo", fechaInicio: "05/06/2026", fechaFin: "19/06/2026", estadoPago: "pagado", mensajeEstado: "En Curso 📊", descLarga: "Impacto publicitario masivo cruzado segmentado a 15,000 usuarios activos diarios en la red." }
             ]
         };
 
-        // Repositorios Maestros de Datos del Catálogo
+        // Catálogo de Productos y Servicios (Incluyendo Categoría 'personal' para el Filtro "Para Mí")
         window.CATALOGO_SERVICIOS = [
             {
-                id: "SERV-001",
-                tipo: "suscripcion",
-                categoria: "bot",
-                titulo: "👑 Suscripción GPlus",
-                rating: "5.0",
+                id: "SERV-001", tipo: "suscripcion", categoria: "personal",
+                titulo: "👑 Suscripción Anual - Bot SaaS Automatizado", rating: "5.0",
                 imagen: "https://picsum.photos/id/1062/400/220",
-                descripcion_corta: "Acceso ilimitado a nuestra infraestructura en tiempo real.",
-                descripcion_larga: ".",
-                precio: 150,
-                descuento: 30,
-                oferta: "¡30€ OFF!",
-                tiempoEntregaBase: "Inmediato"
+                descripcion_corta: "Acceso ilimitado a nuestra infraestructura de bots en tiempo real.",
+                descripcion_larga: "Licencia anual premium dedicada al terminal. Incluye soporte prioritario 24/7 y acceso a módulos Beta.",
+                precio: 150, descuento: 30, oferta: "¡30€ OFF!", tiempoEntregaBase: "Inmediato"
             },
             {
-                id: "SERV-002",
-                tipo: "suscripcion",
-                categoria: "grupo",
-                titulo: "👑 Suscripción GPlus",
-                rating: "5.0",
-                imagen: "https://picsum.photos/id/1062/400/220",
-                descripcion_corta: "Acceso ilimitado a nuestra infraestructura en tiempo real.",
-                descripcion_larga: ".",
-                precio: 150,
-                descuento: 30,
-                oferta: "¡30€ OFF!",
-                tiempoEntregaBase: "Inmediato"
-            },
-            {
-                id: "SERV-003",
-                tipo: "servicio",
-                categoria: "grupo",
-                titulo: "🛠️ Montaje de Grupo Monetizado",
-                rating: "4.9",
+                id: "SERV-002", tipo: "servicio", categoria: "grupo",
+                titulo: "🛠️ Montaje de Grupo Monetizado", rating: "4.9",
                 imagen: "https://picsum.photos/id/1043/400/220",
                 descripcion_corta: "Estructuración completa de canales de venta y embudos.",
-                descripcion_larga: "Modelado técnico de tu grupo de Telegram. Instalación de bots de bienvenida, pasarelas integradas al chat y sistemas anti-spam.",
-                precio: 95,
-                descuento: 15,
-                oferta: "🔥 FLASH",
-                tiempoEntregaBase: "72 horas"
+                descripcion_larga: "Modelado técnico de tu grupo de Telegram. Instalación de bots de bienvenida y sistemas anti-spam.",
+                precio: 95, descuento: 15, oferta: "🔥 FLASH", tiempoEntregaBase: "72 horas"
             },
             {
-                id: "PROD-001",
-                tipo: "producto",
-                categoria: "canal",
-                titulo: "📦 Script Pack Auto-Post Inteligente AI",
-                rating: "5.0",
+                id: "PROD-001", tipo: "producto", categoria: "personal",
+                titulo: "📦 Script Pack Auto-Post Inteligente AI", rating: "5.0",
                 imagen: "https://picsum.photos/id/1025/400/220",
-                descripcion_corta: "Código fuente nativo para automatizar contenido en tus canales.",
-                descripcion_larga: "Descarga inmediata de archivo ejecutable compatible con Linux/Windows. Conecta tus fuentes de información y deja que la IA trabaje de forma autónoma.",
-                precio: 60,
-                descuento: 0,
-                oferta: "",
-                tiempoEntregaBase: "Descarga Inmediata"
+                descripcion_corta: "Código fuente nativo para automatizar contenido personal.",
+                descripcion_larga: "Descarga inmediata de archivo ejecutable compatible con Linux/Windows. Conecta tus fuentes de información y automatiza tus flujos.",
+                precio: 60, descuento: 0, oferta: "", tiempoEntregaBase: "Descarga Inmediata"
             }
         ];
 
-        window.CATALOGO_CANALES = [
-            { 
-                id: "CHAN-001", 
-                tipo: "producto", 
-                categoria: "canal",
-                titulo: "💰 Canal de Apuestas Deportivas (Venta)", 
-                imagen: "https://picsum.photos/id/1071/400/220", 
-                rating: "4.8",
-                precio: 290, 
-                descuento: 50, 
-                oferta: "LIQUIDACIÓN", 
-                descripcion_corta: "Rentabilidad y conversión demostrable mediante auditorías.",
-                descripcion_larga: "Canal con llave en mano y más de 4,500 miembros orgánicos. Se entrega transferencia limpia de propiedad absoluta.",
-                tiempoEntregaBase: "24 horas"
+        // 📰 SIMULACIÓN MAESTRA DE 5 POSTS EXCLUSIVOS PARA EL ARCHIVO/BLOG
+        window.REPOSITORIO_BLOG = [
+            {
+                id: "POST-001", condicion: "POST-GRATIS", categoria: "guias",
+                titulo: "📖 Introducción a la Automatización Distribuidora de Mensajería",
+                resumen: "Conceptos fundamentales para construir bots sin caer en cuellos de botella.",
+                contenidoExclusivo: "🔓 CONTENIDO ABIERTO: El secreto está en la distribución simétrica de tareas asíncronas con Redis. Configura hilos secundarios en tu VPS para procesar eventos sin saturar el bucle nativo principal de ejecución.",
+                imagen: "https://picsum.photos/id/1048/400/200"
+            },
+            {
+                id: "POST-002", condicion: "POST-PREMIUM", categoria: "descargas",
+                titulo: "💾 Descarga Directa: Pack Binario Anti-DDoS para Servidores TON",
+                resumen: "Módulo compilado en C++ listo para blindar puertos de conexión de red.",
+                contenidoExclusivo: "💎 CONTENIDO PREMIUM VERIFICADO: Descarga disponible del paquete [AntidDoS_Core_v2.bin]. Parámetros optimizados para mitigar ataques de denegación de servicio de hasta 40 Gbps mediante filtrado avanzado de paquetes syn.",
+                imagen: "https://picsum.photos/id/1068/400/200"
+            },
+            {
+                id: "POST-003", condicion: "POST-PUBLICO", categoria: "herramientas",
+                titulo: "⚙️ Script Clonador Estructural de Enlaces de Afiliados",
+                resumen: "Herramienta global abierta para saneamiento y reescritura de enlaces masivos.",
+                contenidoExclusivo: "🌐 CONTENIDO PÚBLICO DESBLOQUEADO: Copia el código fuente completo en JavaScript desde nuestro repositorio principal git. El algoritmo reescribe expresiones regulares en menos de 4ms por lote.",
+                imagen: "https://picsum.photos/id/1070/400/200"
+            },
+            {
+                id: "POST-004", condicion: "POST-PREMIUM", categoria: "herramientas",
+                titulo: "⚡ Extractor de Datos Analíticos Avanzados de Canales",
+                resumen: "Analiza la tasa de retención de usuarios reales en tus canales y grupos de Telegram.",
+                contenidoExclusivo: "💎 CONTENIDO PREMIUM VERIFICADO: Ejecutable [Golden_Analytics_v4]. Permite extraer patrones de comportamiento, picos de interacción por franja horaria y exportar registros tabulados limpios a formato CSV.",
+                imagen: "https://picsum.photos/id/1076/400/200"
+            },
+            {
+                id: "POST-005", condicion: "POST-PREMIUM", categoria: "descargas",
+                titulo: "🎁 Base de Datos Estructurada de Clientes Alta Conversión",
+                resumen: "Segmentación depurada con nichos de interés validados durante el último trimestre.",
+                contenidoExclusivo: "💎 CONTENIDO PREMIUM VERIFICADO: Descarga liberada del catálogo estructural de nichos calientes. Contiene métricas de interacción demográfica cruzada ideales para campañas publicitarias de precisión.",
+                imagen: "https://picsum.photos/id/1079/400/200"
             }
         ];
 
-        window.CATALOGO_ANUNCIOS = [
-            { 
-                id: "ANUN-001", 
-                tipo: "servicio", 
-                categoria: "canal",
-                titulo: "📢 Pack Anuncios Masivo Lista Golden", 
-                imagen: "https://picsum.photos/id/1081/400/220", 
-                rating: "5.0",
-                precio: 60, 
-                descuento: 10, 
-                oferta: "10% MENOS", 
-                descripcion_corta: "Captura masiva de leads de forma hiper-segmentada dentro del ecosistema.",
-                descripcion_larga: "Inyección publicitaria masiva en la red principal de intercambio comercial de Lista Golden con reportes de analítica en tiempo real.", 
-                tiempoEntregaBase: "24 horas" 
-            }
-        ];
-
-        // Torre de Control Global
+        // Estado de control del sistema
         let filtroTipoActivo = "todos";      
         let filtroCategoriaActiva = "todos"; 
-        let catalogoActualActivo = "servicios"; 
-        let tarjetasDesplegadasActualmente = 10; 
-        let itemSeleccionadoParaCompra = null;   
+        let seccionActualActiva = "servicios";
+        let limitePostBlogVisibles = 3; // Parámetro Lazy Load exigido: Inicializa en 3 posts
+        let filtroCategoriaBlog = "todos";
 
-        // Inicialización de la Aplicación
         document.addEventListener("DOMContentLoaded", () => {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
                 window.Telegram.WebApp.expand();
-            }
-            
-            if (!localStorage.getItem('lista_deseos_golden')) {
-                localStorage.setItem('lista_deseos_golden', JSON.stringify([]));
             }
 
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
@@ -733,256 +612,299 @@
             const nombreCompleto = `${firstName} ${lastName}`.trim();
             const urlFoto = userTelegram?.photo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(nombreCompleto)}&background=0b0f19&color=00f0ff&bold=true`;
 
-            // Verificar Estado Premium / VIP
             const esPremium = window.LISTA_USUARIOS_PREMIUM.includes(String(tgID));
 
-            // Elementos DOM de Interfaz de Usuario
-            const topNameDOM = document.getElementById('top-user-name');
-            const topAvatarDOM = document.getElementById('top-user-avatar');
-            const pageAvatarDOM = document.getElementById('page-user-avatar');
-            const pageBadgeDOM = document.getElementById('page-user-badge-status');
-
-            // 1. Configurar Saludo Barra Superior con Formato Exigido
-            if (topNameDOM) topNameDOM.innerText = `Hola, ${firstName}`;
+            if (document.getElementById('top-user-name')) {
+                document.getElementById('top-user-name').innerText = `Hola, ${firstName}`;
+            }
             
-            // 2. Personalizar Borde Neón Superior de forma Dinámica
-            if (topAvatarDOM) {
-                topAvatarDOM.innerHTML = `<img src="${urlFoto}" style="width:100%; height:100%; object-fit:cover;" alt="Avatar">`;
-                if (esPremium) topAvatarDOM.classList.add('avatar-premium-border');
-                else topAvatarDOM.classList.add('avatar-free-border');
+            const topAvatar = document.getElementById('top-user-avatar');
+            if (topAvatar) {
+                topAvatar.innerHTML = `<img src="${urlFoto}" style="width:100%; height:100%; object-fit:cover;">`;
+                topAvatar.className = esPremium ? "avatar avatar-premium-border" : "avatar avatar-free-border";
             }
 
-            // 3. Personalizar Borde e Inyección de Etiquetas en Imagen del Perfil (Medio Inferior)
-            if (pageAvatarDOM) {
-                pageAvatarDOM.innerHTML = `<img src="${urlFoto}" alt="Avatar Grande">`;
-                if (esPremium) pageAvatarDOM.classList.add('avatar-premium-border');
-                else pageAvatarDOM.classList.add('avatar-free-border');
+            const pageAvatar = document.getElementById('page-user-avatar');
+            if (pageAvatar) {
+                pageAvatar.innerHTML = `<img src="${urlFoto}">`;
+                pageAvatar.className = esPremium ? "big-avatar avatar-premium-border" : "big-avatar avatar-free-border";
             }
 
-            if (pageBadgeDOM) {
+            const pageBadge = document.getElementById('page-user-badge-status');
+            if (pageBadge) {
                 if (esPremium) {
-                    pageBadgeDOM.innerText = "PREMIUM ACTIVO";
-                    pageBadgeDOM.className = "badge-status-avatar badge-avatar-premium";
+                    pageBadge.innerText = "PREMIUM ACTIVO";
+                    pageBadge.className = "badge-status-avatar badge-avatar-premium";
                 } else {
-                    pageBadgeDOM.innerText = "PLAN GRATIS ACTIVADO";
-                    pageBadgeDOM.className = "badge-status-avatar badge-avatar-free";
+                    pageBadge.innerText = "PLAN GRATIS ACTIVADO";
+                    pageBadge.className = "badge-status-avatar badge-avatar-free";
                 }
             }
 
             renderizerEcosistemaActual(false);
-            iniciarSimuladorContadoresTarjeta();
-
-            setTimeout(ejecutarFomoFlotanteSincronizado, 2500);
-            setInterval(ejecutarFomoFlotanteSincronizado, 13000);
         });
 
-        // Redirección Exclusiva al Canal de Reseñas Oficial
         function abrirCanalReseñasOficial() {
             const urlCanal = "https://t.me/ListaGolden";
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
-                window.Telegram.WebApp.openTelegramLink(urlCanal);
-            } else {
-                window.open(urlCanal, '_blank');
-            }
+            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(urlCanal);
+            else window.open(urlCanal, '_blank');
         }
 
-        // Enrutador y Navegación
+        // Sistema Router Unificado de Navegación
         function navegarA(seccion) {
+            seccionActualActiva = seccion;
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
             
-            const viewCatalog = document.querySelector('.catalog-grid');
-            const viewPerfil = document.getElementById('perfil-usuario-view');
-            const viewDeseos = document.getElementById('lista-deseos-view');
-            const filterBar = document.getElementById('filter-bar-container');
+            document.getElementById('vista-catalogo-principal').style.display = "none";
+            document.getElementById('vista-blog-exclusivo').style.display = "none";
+            document.getElementById('vista-apoyo-proyecto').style.display = "none";
+            document.getElementById('lista-deseos-view').style.display = "none";
+            document.getElementById('perfil-usuario-view').style.display = "none";
+            document.getElementById('filter-bar-container').style.display = "none";
 
-            if (viewCatalog) viewCatalog.style.display = "none";
-            if (viewPerfil) viewPerfil.style.display = "none";
-            if (viewDeseos) viewDeseos.style.display = "none";
-            if (filterBar) filterBar.style.display = "none";
+            const navBtn = document.getElementById(`nav-${seccion === 'servicios' ? 'servicios' : seccion}`);
+            if (navBtn) navBtn.classList.add('active');
 
-            const views = [viewCatalog, viewPerfil, viewDeseos].filter(Boolean);
-            views.forEach(v => v.classList.remove('view-fade-in'));
-
-            if (seccion === "servicios" || seccion === "canales" || seccion === "anuncios") {
-                const navBtn = document.getElementById(`nav-${seccion}`);
-                if (navBtn) navBtn.classList.add('active');
-                
-                if (viewCatalog) {
-                    viewCatalog.style.display = "flex";
-                    viewCatalog.classList.add('view-fade-in');
-                }
-                catalogoActualActivo = seccion;
-                if (filterBar) filterBar.style.display = "block";
-                
+            if (seccion === "servicios") {
+                document.getElementById('vista-catalogo-principal').style.display = "flex";
+                document.getElementById('filter-bar-container').style.display = "block";
                 renderizerEcosistemaActual(false);
-            } 
-            else if (seccion === "deseos") {
-                const navBtn = document.getElementById('nav-deseos');
-                if (navBtn) navBtn.classList.add('active');
-                if (viewDeseos) {
-                    viewDeseos.style.display = "block";
-                    viewDeseos.classList.add('view-fade-in');
-                }
+            } else if (seccion === "blog") {
+                document.getElementById('vista-blog-exclusivo').style.display = "block";
+                limitePostBlogVisibles = 3; // Reseteo de Lazy Load
+                renderizarBlogExclusivo();
+            } else if (seccion === "apoyo") {
+                document.getElementById('vista-apoyo-proyecto').style.display = "block";
+            } else if (seccion === "deseos") {
+                document.getElementById('lista-deseos-view').style.display = "block";
                 cargarPaginaDeseosOriginales();
-            } 
-            else if (seccion === "perfil") {
-                const navBtn = document.getElementById('nav-perfil');
-                if (navBtn) navBtn.classList.add('active');
-                if (viewPerfil) {
-                    viewPerfil.style.display = "block";
-                    viewPerfil.classList.add('view-fade-in');
-                }
+            } else if (seccion === "perfil") {
+                document.getElementById('perfil-usuario-view').style.display = "block";
                 cargarDatosPanelPerfil();
             }
         }
 
-        function aplicarFiltrosYOrdenacion(listado) {
-            const selectSort = document.getElementById('select-sort');
-            if (!selectSort) return listado;
-            
-            const criterio = selectSort.value;
-            if (criterio === "barato") {
-                listado.sort((a, b) => (a.precio - (a.descuento || 0)) - (b.precio - (b.descuento || 0)));
-            } else if (criterio === "descuento") {
-                listado.sort((a, b) => (b.descuento || 0) - (a.descuento || 0));
-            } else if (criterio === "ofertas") {
-                listado = listado.filter(item => item.oferta && item.oferta.includes("Flash"));
-            } else {
-                listado.sort((a, b) => parseFloat(b.rating || 0) - parseFloat(a.rating || 0));
-            }
-            return listado;
-        }
-
-        function cambiarPestañaTipo(tipo, botonPulsado) {
+        // Lógica de Renderizado y Filtrado de Catálogo Principal
+        function cambiarPestañaTipo(tipo, boton) {
             filtroTipoActivo = tipo;
-            document.querySelectorAll('.tab-tipo-btn').forEach(btn => btn.classList.remove('active'));
-            if (botonPulsado) botonPulsado.classList.add('active');
-            renderizerEcosistemaActual(false); 
-        }
-
-        function cambiarCategoriaFiltro(categoria, botonPulsado) {
-            filtroCategoriaActiva = categoria;
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            if (botonPulsado) botonPulsado.classList.add('active');
+            document.querySelectorAll('#pestañas-tipo-container .tab-tipo-btn').forEach(b => b.classList.remove('active'));
+            boton.classList.add('active');
             renderizerEcosistemaActual(false);
         }
 
-        // Motor Core de Procesamiento del Catálogo
+        function cambiarCategoriaFiltro(cat, boton) {
+            filtroCategoriaActiva = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            boton.classList.add('active');
+            renderizerEcosistemaActual(false);
+        }
+
         function renderizerEcosistemaActual(cargarMas = false) {
-            const grid = document.querySelector('.catalog-grid');
-            if (!grid) return;
+            const grid = document.getElementById('vista-catalogo-principal');
+            if (!grid || seccionActualActiva !== "servicios") return;
 
-            if (!cargarMas) { 
-                grid.innerHTML = ""; 
-                tarjetasDesplegadasActualmente = 10; 
-            }
+            let source = [...window.CATALOGO_SERVICIOS];
+            if (filtroTipoActivo !== "todos") source = source.filter(i => i.tipo === filtroTipoActivo);
+            if (filtroCategoriaActiva !== "todos") source = source.filter(i => i.categoria === filtroCategoriaActiva);
 
-            let sourceData = [];
-            if (catalogoActualActivo === "servicios") sourceData = window.CATALOGO_SERVICIOS || [];
-            else if (catalogoActualActivo === "canales") sourceData = window.CATALOGO_CANALES || [];
-            else if (catalogoActualActivo === "anuncios") sourceData = window.CATALOGO_ANUNCIOS || [];
+            // Ordenación básica
+            const sortVal = document.getElementById('select-sort')?.value;
+            if (sortVal === "barato") source.sort((a,b) => a.precio - b.precio);
+            if (sortVal === "descuento") source.sort((a,b) => b.descuento - a.descuento);
 
-            let listadoFiltrado = [...sourceData];
-
-            if (filtroTipoActivo !== "todos") {
-                listadoFiltrado = listadoFiltrado.filter(item => item.tipo === filtroTipoActivo);
-            }
-
-            if (filtroCategoriaActiva !== "todos") {
-                listadoFiltrado = listadoFiltrado.filter(item => item.categoria === filtroCategoriaActiva);
-            }
-
-            listadoFiltrado = aplicarFiltrosYOrdenacion(listadoFiltrado);
-
-            const bloquePaginado = listadoFiltrado.slice(0, tarjetasDesplegadasActualmente);
             let html = "";
-            
-            bloquePaginado.forEach(item => { html += generarTarjetaInyectableHTML(item); });
-
-            const trigger = document.getElementById('trigger-lazy-load');
-            if (trigger) trigger.remove();
-
-            if (cargarMas) grid.insertAdjacentHTML('beforeend', html);
-            else grid.innerHTML = html;
-
-            if (listadoFiltrado.length === 0) {
-                grid.innerHTML = `
-                    <div style="text-align:center; padding: 40px 20px; color:#64748b; width:100%; font-size:0.8rem;">
-                        📡 Sin respuestas en este espectro. Filtros cruzados vacíos.
+            source.forEach(item => {
+                const precioFinal = item.precio - item.descuento;
+                const ribbon = item.descuento > 0 ? `<div class="ribbon-descuento">${item.oferta || 'OFERTA'}</div>` : "";
+                
+                html += `
+                    <div class="servicio-card view-fade-in">
+                        <div class="card-image-placeholder">
+                            ${ribbon}
+                            <div class="badge-tipo-flotante badge-servicio">${item.tipo}</div>
+                            <img src="${item.imagen}">
+                        </div>
+                        <div class="card-body-flex">
+                            <div>
+                                <h3 class="card-title-clickable" onclick="document.getElementById('exp-${item.id}').classList.toggle('open')">👉 ${item.titulo}</h3>
+                                <div class="rating-clickable" onclick="abrirCanalReseñasOficial()">⭐ ${item.rating} <span style="font-weight:800; font-size:0.65rem;">RESEÑAS</span></div>
+                                <p class="card-desc-clickable" onclick="document.getElementById('exp-${item.id}').classList.toggle('open')" style="font-size:0.75rem; color:#94a3b8; margin-top:6px;">${item.descripcion_corta}</p>
+                            </div>
+                            <div class="card-right-pricing">
+                                <div style="font-size:1.15rem; font-weight:900; color:var(--neon-cyan);">${precioFinal}€</div>
+                            </div>
+                        </div>
+                        <div id="exp-${item.id}" class="acordeon-contenido">
+                            <p style="color:#cbd5e1;">${item.descripcion_larga}</p>
+                            <p style="color:var(--text-muted); font-size:0.65rem; margin-top:4px;">Entrega: ${item.tiempoEntregaBase}</p>
+                        </div>
+                        <div class="card-actions-row">
+                            <button class="btn-wishlist" onclick="controladorDeseosDirecto('${item.id}', '${item.titulo}', this)">❤️ Guardar</button>
+                            <button class="btn-contratar" onclick="abrirModalCheckoutEspecifico('${item.id}', '${item.tipo}')">Comprar Módulo 🛍️</button>
+                        </div>
                     </div>
                 `;
+            });
+            grid.innerHTML = html || `<p style="color:var(--text-muted); font-size:0.8rem; padding:20px; text-align:center;">Ningún módulo coincide con los filtros.</p>`;
+        }
+
+        // 📰 MOTOR DEL ARCHIVO/BLOG DE POSTS EXCLUSIVOS CON REGLA DE BLOQUEO DE ESTADO
+        function filtrarBlog(cat, boton) {
+            filtroCategoriaBlog = cat;
+            document.querySelectorAll('#vista-blog-exclusivo .tab-tipo-btn').forEach(b => b.classList.remove('active'));
+            boton.classList.add('active');
+            limitePostBlogVisibles = 3; 
+            renderizarBlogExclusivo();
+        }
+
+        function renderizarBlogExclusivo() {
+            const container = document.getElementById('feed-posts-container');
+            if (!container) return;
+
+            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            const tgID = userTelegram?.id || "1320417199";
+            // Analizar condición de suscripción VIP activa
+            const esVIP = window.LISTA_USUARIOS_PREMIUM.includes(String(tgID));
+
+            let filtrados = [...window.REPOSITORIO_BLOG];
+            if (filtroCategoriaBlog !== "todos") {
+                filtrados = filtrados.filter(p => p.categoria === filtroCategoriaBlog);
             }
 
-            if (listadoFiltrado.length > tarjetasDesplegadasActualmente) {
-                grid.insertAdjacentHTML('beforeend', `
-                    <div id="trigger-lazy-load" style="text-align:center; padding:10px 0; width:100%;">
-                        <button onclick="tarjetasDesplegadasActualmente+=10; renderizerEcosistemaActual(true);" style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,240,255,0.2); color:#00f0ff; padding:10px; border-radius:12px; font-size:0.75rem; font-weight:bold; cursor:pointer; width:100%;">Desplegar Más Conexiones ⬇️</button>
+            // Aplicar corte para simular Lazy Load (Carga progresiva de 3 en 3 posts)
+            const bloqueVisibles = filtrados.slice(0, limitePostBlogVisibles);
+            let html = "";
+
+            bloqueVisibles.forEach(post => {
+                let accesoConcedido = false;
+                if (post.condicion === "POST-PUBLICO" || post.condicion === "POST-GRATIS") {
+                    accesoConcedido = true;
+                } else if (post.condicion === "POST-PREMIUM" && esVIP) {
+                    accesoConcedido = true;
+                }
+
+                let badgeClase = "cond-free";
+                if (post.condicion === "POST-PREMIUM") badgeClase = "cond-premium";
+                if (post.condicion === "POST-PUBLICO") badgeClase = "cond-public";
+
+                html += `
+                    <div class="post-card ${accesoConcedido ? 'unlocked' : 'locked'} view-fade-in">
+                        <div class="post-header-img">
+                            <span class="post-condition-badge ${badgeClase}">${post.condicion}</span>
+                            <img src="${post.imagen}">
+                        </div>
+                        <div class="post-body">
+                            <div class="post-cat">${post.categoria}</div>
+                            <h3 class="post-title">${post.titulo}</h3>
+                            <p class="post-summary">${post.resumen}</p>
+                            
+                            ${accesoConcedido ? `
+                                <div class="post-hidden-content">
+                                    <span style="color:var(--neon-green); font-weight:bold; display:block; margin-bottom:4px;">📡 CONEXIÓN SECURE ESTABLECIDA:</span>
+                                    ${post.contenidoExclusivo}
+                                </div>
+                                <button class="btn-post-action btn-post-ok" onclick="alert('Accediendo al recurso del servidor...')">VER CONTENIDO DEL POST ES OK</button>
+                            ` : `
+                                <div class="post-hidden-content" style="border-color:var(--neon-pink); background:rgba(255,0,85,0.02); text-align:center; padding:16px 10px;">
+                                    🔒 <span style="color:var(--neon-pink); font-weight:bold;">CONTENIDO ENCRIPTADO</span><br>
+                                    Este archivo requiere autorización de Nivel VIP.
+                                </div>
+                                <button class="btn-post-action btn-post-lock" onclick="navegarA('servicios')">BLOQUEAR CONTENIDO Y OFRECER LA SUSCRIPCIÓN PREMIUM</button>
+                            `}
+                        </div>
                     </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            // Trigger interactivo para inyectar más posts (Lazy Load)
+            if (filtrados.length > limitePostBlogVisibles) {
+                container.insertAdjacentHTML('beforeend', `
+                    <button onclick="limitePostBlogVisibles += 3; renderizarBlogExclusivo();" style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,240,255,0.1); padding:12px; border-radius:10px; color:var(--neon-cyan); font-size:0.75rem; font-weight:bold; cursor:pointer; width:100%; margin-top:8px;">
+                        Cargar siguientes archivos (Lazy Load) ⬇️
+                    </button>
                 `);
             }
         }
 
-        function generarTarjetaInyectableHTML(item) {
-            const deseosLocales = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
-            const estaEnDeseos = deseosLocales.some(d => d.id === item.id);
-            const precioFinal = item.precio - (item.descuento || 0);
+        // 🛡️ CONTROLADOR DE LA PÁGINA DE APOYO AL PROYECTO
+        function abrirDonacionEspecifica(canal, titulo) {
+            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            const tgID = userTelegram?.id || "1320417199";
+            
+            let msg = `🤍 *APOYO AL PROYECTO LISTA GOLDEN*\n\n`;
+            msg += `🆔 *Remitente ID:* \`${tgID}\`\n`;
+            msg += `渠道 *Vía Elegida:* ${canal}\n\n`;
+            msg += `_Solicito la dirección o el enlace de pasarela para procesar mi contribución voluntaria al mantenimiento del servidor._`;
 
-            let tipoTexto = "Servicio"; let tipoClase = "badge-servicio";
-            if (item.tipo === "suscripcion") { tipoTexto = "Suscripción"; tipoClase = "badge-suscripcion"; }
-            if (item.tipo === "producto") { tipoTexto = "Producto"; tipoClase = "badge-producto"; }
-
-            // Configurar Cinta de Descuento si aplica beneficio económico
-            let ribbonHTML = "";
-            if (item.descuento > 0 && item.oferta) {
-                ribbonHTML = `<div class="ribbon-descuento">${item.oferta}</div>`;
-            }
-
-            let simKey = `sim_deseos_${item.id}`;
-            let simData = JSON.parse(localStorage.getItem(simKey)) || { count: Math.floor(Math.random() * 40) + 15, timestamp: Date.now() };
-
-            const botonDeseosHTML = estaEnDeseos 
-                ? `<button class="btn-wishlist active" onclick="controladorDeseosDirecto('${item.id}', '${item.titulo}', this)">❤️ Guardado</button>`
-                : `<button class="btn-wishlist" onclick="controladorDeseosDirecto('${item.id}', '${item.titulo}', this)">❤️ Guardar</button>`;
-
-            return `
-                <div class="servicio-card view-fade-in">
-                    <div class="card-image-placeholder">
-                        ${ribbonHTML}
-                        <div class="badge-tipo-flotante ${tipoClase}">${tipoTexto}</div>
-                        <img src="${item.imagen}" alt="Media Network">
-                    </div>
-                    
-                    <div class="card-body-flex">
-                        <!-- El título y la descripción corta abren el acordeón informativo al pulsarse -->
-                        <div class="card-left-info">
-                            <h3 class="card-title-clickable" onclick="toggleAcordeon('${item.id}')">👉 ${item.titulo}</h3>
-                            <div style="margin: 4px 0;">
-                                <div class="rating-clickable" onclick="abrirCanalReseñasOficial(); event.stopPropagation();">⭐ ${item.rating || '4.9'} <span style="color:#fbbf24; font-weight:800; font-size:0.65rem; margin-left:2px;">RESEÑAS</span></div>
-                            </div>
-                            <p class="card-desc-clickable" onclick="toggleAcordeon('${item.id}')" style="font-size:0.75rem; color:#94a3b8; line-height:1.4;">${item.descripcion_corta}</p>
-                        </div>
-                        <div class="card-right-pricing">
-                            <div style="font-size: 1.15rem; font-weight: 900; color: var(--neon-cyan);">${precioFinal}€</div>
-                            ${item.descuento > 0 ? `<div style="font-size: 0.68rem; color: #64748b; text-decoration: line-through;">Antes: ${item.precio}€</div>` : ''}
-                        </div>
-                    </div>
-
-                    <div class="simulador-deseos-box">🔥 <strong><span id="sim-contador-render-${item.id}">${simData.count}</span></strong> terminales analizaron este módulo hoy.</div>
-
-                    <div id="expand-${item.id}" class="acordeon-contenido">
-                        <p style="color:#cbd5e1; margin-bottom:4px;"><strong>Módulo Técnico:</strong> ${item.descripcion_larga || 'Especificación de ingeniería optimizada para alta conversión.'}</p>
-                        <p style="color:#64748b; font-size:0.68rem;">Plazo de despliegue: ${item.tiempoEntregaBase || 'Inmediato'}</p>
-                    </div>
-
-                    <div class="card-actions-row">
-                        ${botonDeseosHTML}
-                        <button class="btn-contratar" onclick="abrirModalCheckoutEspecifico('${item.id}', '${item.tipo}')">Comprar Módulo 🛍️</button>
-                    </div>
-                </div>
-            `;
+            const url = `https://t.me/Airdayz?text=${encodeURIComponent(msg)}`;
+            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(url);
+            else window.open(url, '_blank');
         }
 
-        function toggleAcordeon(id) { document.getElementById(`expand-${id}`)?.classList.toggle('open'); }
+        // 📊 CARGA DEL PANEL DE PERFIL E INYECCIÓN DE CONTADORES EN EL HUD DE ESTADÍSTICAS
+        function cargarDatosPanelPerfil() {
+            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            const userTelegramID = userTelegram?.id || "1320417199";
+            const firstName = userTelegram?.first_name || "Usuario Golden";
+            
+            const esVIP = window.LISTA_USUARIOS_PREMIUM.includes(String(userTelegramID));
+            document.getElementById('perf-nombre').innerText = `👤 ${firstName}`;
+            document.getElementById('perf-rango').innerText = esVIP ? "Rango: 👑 Administrador Core Network" : "Rango: ⚡ Miembro Ecosistema Global";
+
+            const compras = window.DB_COMPRAS_USUARIOS[userTelegramID] || [];
+            const favoritos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
+
+            // Calcular números para el HUD en tiempo real
+            let numSubs = compras.filter(c => c.tipo === "suscripcion").length;
+            let numProds = compras.filter(c => c.tipo === "producto").length;
+            let numServs = compras.filter(c => c.tipo === "servicio").length;
+            let numCamp = compras.filter(c => c.tipo === "anuncio" || c.idItem.startsWith("ANUN")).length;
+            let numFavs = favoritos.length;
+
+            // Inyectar contadores numéricos en el DOM
+            document.getElementById('hud-val-subs').innerText = numSubs;
+            document.getElementById('hud-val-prods').innerText = numProds;
+            document.getElementById('hud-val-servs').innerText = numServs;
+            document.getElementById('hud-val-camp').innerText = numCamp;
+            document.getElementById('hud-val-favs').innerText = numFavs;
+            document.getElementById('hud-val-rango').innerText = esVIP ? "VIP LEVEL" : "NIVEL 1";
+
+            // Renderizar listados en el Perfil
+            const pSubs = document.getElementById('panel-suscripciones');
+            const pServs = document.getElementById('panel-servicios');
+            const pProds = document.getElementById('panel-productos');
+            const pAnunc = document.getElementById('panel-anuncios');
+
+            pSubs.innerHTML = ""; pServs.innerHTML = ""; pProds.innerHTML = ""; pAnunc.innerHTML = "";
+
+            compras.forEach(item => {
+                let cssClass = item.estadoPago === "pagado" ? "status-pagado" : (item.estadoPago === "esperando" ? "status-esperando" : "status-verificando");
+                let vigencia = item.fechaInicio && item.fechaFin ? `Vigencia: ${item.fechaInicio} al ${item.fechaFin}` : `Registro: ${item.fechaCompra || '2026'}`;
+
+                let cardHtml = `
+                    <div class="panel-item-data view-fade-in" onclick="abrirModalCheckoutEspecifico('${item.idItem}', '${item.tipo}', true, '${item.titulo}', '${item.descLarga || ''}', '${vigencia}')">
+                        <p style="font-weight:700; font-size:0.85rem; color:#fff;">${item.titulo}</p>
+                        <p style="color:#64748b; font-size:0.68rem; margin-top:2px;">${vigencia}</p>
+                        <div style="display:flex; justify-content:between; align-items:center; margin-top:4px;">
+                            <div class="badge-estado-pago ${cssClass}">${item.mensajeEstado}</div>
+                            <span style="font-size:0.65rem; color:var(--neon-cyan); margin-left:auto;">Expandir 🔍</span>
+                        </div>
+                    </div>
+                `;
+
+                if (item.tipo === "suscripcion") pSubs.innerHTML += cardHtml;
+                else if (item.tipo === "servicio") pServs.innerHTML += cardHtml;
+                else if (item.tipo === "producto") pProds.innerHTML += cardHtml;
+                else pAnunc.innerHTML += cardHtml;
+            });
+
+            if(!pSubs.innerHTML) pSubs.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin suscripciones.</p>";
+            if(!pServs.innerHTML) pServs.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin servicios contratados.</p>";
+            if(!pProds.innerHTML) pProds.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin productos asignados.</p>";
+            if(!pAnunc.innerHTML) pAnunc.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin pautas activas.</p>";
+        }
 
         function controladorDeseosDirecto(id, titulo, boton) {
             let deseos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
@@ -996,223 +918,50 @@
             localStorage.setItem('lista_deseos_golden', JSON.stringify(deseos));
         }
 
-        // CONTROLADOR MODAL EXPANSIVO PARA COMPRAS Y DETALLES DEL HISTORIAL
-        function abrirModalCheckoutEspecifico(idItem, tipoItem, extraidoDeHistorial = false, tituloH = "", descH = "", vigenciaH = "") {
-            let item = null;
-            if(!extraidoDeHistorial) {
-                let fuente = tipoItem === 'servicio' || tipoItem === 'suscripcion' ? window.CATALOGO_SERVICIOS : (tipoItem === 'canal' ? window.CATALOGO_CANALES : window.CATALOGO_ANUNCIOS);
-                item = fuente.find(i => i.id === idItem);
-                if (!item) return;
-            } else {
-                // Crear objeto virtual mapeado desde el historial
-                item = {
-                    id: idItem,
-                    titulo: tituloH,
-                    precio: 0,
-                    descuento: 0,
-                    descripcion_larga: descH,
-                    tiempoEntregaBase: vigenciaH
-                };
-            }
-
-            itemSeleccionadoParaCompra = item;
-            const precioBase = item.precio - (item.descuento || 0);
-            const contenedorModal = document.getElementById('modal-dinamico-cuerpo');
-
-            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
-            const tgID = userTelegram?.id || "1320417199";
-
-            let contenidoInferiorHTML = "";
-            
-            if(!extraidoDeHistorial) {
-                contenidoInferiorHTML = `
-                    <div class="modal-field">
-                        <label>Pasarela de Pago:</label>
-                        <select id="form-pago">
-                            <option value="PayPal">PayPal / Tarjeta de Crédito</option>
-                            <option value="USDT">Criptomonedas (USDT-TRC20 / TON)</option>
-                            <option value="Estrellas">⭐ Estrellas Oficiales de Telegram</option>
-                        </select>
-                    </div>
-                    <div class="modal-price-box">Total Neto: <span id="modal-precio-voto">${precioBase}</span>€</div>
-                    <div class="modal-actions">
-                        <button class="btn-modal-cancelar" onclick="cerrarModalCheckout()">Cancelar</button>
-                        <button class="btn-modal-confirmar" onclick="compilarYEnviarDatosTelegram('${tipoItem}')">Confirmar Pedido 🚀</button>
-                    </div>
-                `;
-            } else {
-                contenidoInferiorHTML = `
-                    <div style="background:rgba(255,255,255,0.02); padding:12px; border-radius:8px; font-size:0.75rem; color:#94a3b8; margin-bottom:14px; line-height:1.4;">
-                        <span style="color:var(--neon-cyan); font-weight:bold;">Estado Técnico:</span> Registro verificado en el núcleo local.<br>
-                        <span style="color:var(--neon-cyan); font-weight:bold;">Vigencia/Fecha:</span> ${vigenciaH}<br>
-                        <span style="color:var(--neon-cyan); font-weight:bold;">Propietario ID:</span> ${tgID}
-                    </div>
-                    <div class="modal-actions">
-                        <button class="btn-modal-cancelar" style="flex:1;" onclick="cerrarModalCheckout()">Cerrar Ventana</button>
-                        <button class="btn-modal-confirmar" style="flex:1.5; background:linear-gradient(135deg, #eab308, #ca8a04); color:#000;" onclick="reordenarSoporteModuloDirecto('${item.id}', '${item.titulo}')">Soporte Técnico ⚡</button>
-                    </div>
-                `;
-            }
-
-            contenedorModal.innerHTML = `
-                <div style="font-size:0.65rem; color:var(--neon-cyan); font-weight:800; text-transform:uppercase; margin-bottom:2px;">Matriz Terminal ID: ${item.id}</div>
-                <h2 class="modal-title">💎 ${item.titulo}</h2>
-                <hr class="modal-divider">
-                <div style="font-size:0.78rem; color:#cbd5e1; line-height:1.4; margin-bottom:14px;">
-                    ${item.descripcion_larga || 'Especificación de ingeniería optimizada para alta conversión dentro de los canales comerciales.'}
-                </div>
-                ${contenidoInferiorHTML}
-            `;
-            document.getElementById('checkout-modal').style.display = "flex";
-        }
-
-        function cerrarModalCheckout() { document.getElementById('checkout-modal').style.display = "none"; itemSeleccionadoParaCompra = null; }
-
-        function compilarYEnviarDatosTelegram(tipoItem) {
-            if (!itemSeleccionadoParaCompra) return;
-            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
-            const tgID = userTelegram?.id || "1320417199";
-            const tgName = userTelegram?.first_name || "Usuario Local Dev";
-            const tgUser = userTelegram?.username ? `@${userTelegram.username}` : "Sin_Alias";
-
-            const metodoPago = document.getElementById('form-pago')?.value || "N/A";
-            const importeFinal = document.getElementById('modal-precio-voto')?.innerText || "0";
-
-            let mensajeFormateado = `⚡ *NUEVA ORDEN DE COMPRA - LISTA GOLDEN*\n\n`;
-            mensajeFormateado += `👤 *Comprador:* ${tgName} (${tgUser})\n`;
-            mensajeFormateado += `🆔 *Telegram ID:* \`${tgID}\`\n\n`;
-            mensajeFormateado += `📦 *Módulo:* ${itemSeleccionadoParaCompra.titulo}\n`;
-            mensajeFormateado += `🆔 *ID Ítem:* \`${itemSeleccionadoParaCompra.id}\`\n`;
-            mensajeFormateado += `💳 *Método:* ${metodoPago}\n`;
-            mensajeFormateado += `💰 *Importe:* ${importeFinal}€\n\n`;
-            mensajeFormateado += `🚀 _Deseo proceder con la activación manual._`;
-
-            const enlaceChatPrivado = `https://t.me/Airdayz?text=${encodeURIComponent(mensajeFormateado)}`;
-            ejecutarRedireccionSegura(enlaceChatPrivado);
-            cerrarModalCheckout();
-        }
-
-        function reordenarSoporteModuloDirecto(id, titulo) {
-            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
-            const tgID = userTelegram?.id || "1320417199";
-            let msg = `🛠️ *SOLICITUD DE SOPORTE / RE-APERTURA*\n\n`;
-            msg += `🆔 *User ID:* \`${tgID}\`\n`;
-            msg += `📦 *Módulo Asignado:* ${titulo}\n`;
-            msg += `🆔 *Módulo ID:* \`${id}\`\n\n`;
-            msg += `📱 _Solicito verificación de estado o actualización sobre este servicio._`;
-            
-            ejecutarRedireccionSegura(`https://t.me/Airdayz?text=${encodeURIComponent(msg)}`);
-            cerrarModalCheckout();
-        }
-
-        function ejecutarRedireccionSegura(url) {
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
-                window.Telegram.WebApp.openTelegramLink(url);
-            } else {
-                window.open(url, '_blank');
-            }
-        }
-
         function cargarPaginaDeseosOriginales() {
-            const contenedorGrid = document.getElementById('wishlist-original-grid');
-            if (!contenedorGrid) return;
-            contenedorGrid.innerHTML = "";
-            let deseosLocales = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
-
-            if (deseosLocales.length === 0) {
-                contenedorGrid.innerHTML = `<p style="color:#64748b; font-size:0.75rem; text-align:center; padding:40px;">No registras ningún módulo guardado.</p>`;
+            const grid = document.getElementById('wishlist-original-grid');
+            if (!grid) return; grid.innerHTML = "";
+            let deseos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
+            if(deseos.length === 0) {
+                grid.innerHTML = "<p style='color:#64748b; font-size:0.75rem; text-align:center;'>Lista vacía.</p>";
                 return;
             }
-
-            const poolGlobal = [...window.CATALOGO_SERVICIOS, ...window.CATALOGO_CANALES, ...window.CATALOGO_ANUNCIOS];
-            deseosLocales.forEach(deseo => {
-                const itemOriginal = poolGlobal.find(p => p.id === deseo.id);
-                if (itemOriginal) contenedorGrid.innerHTML += generarTarjetaInyectableHTML(itemOriginal);
+            window.CATALOGO_SERVICIOS.forEach(item => {
+                if(deseos.some(d => d.id === item.id)) grid.innerHTML += generarTarjetaInyectableHTML(item);
             });
         }
 
-        // 👤 CARGA PANEL DE PERFIL INTEGRANDO DETALLES EXPANSIVOS EN MODALES CYBERPUNK
-        function cargarDatosPanelPerfil() {
-            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
-            const userTelegramID = userTelegram?.id || "1320417199";
-            const firstName = userTelegram?.first_name || "Usuario Golden";
-            
-            let rangoFuturista = "⚡ Miembro VIP Ecosistema Synergia";
-            if (window.LISTA_USUARIOS_PREMIUM.includes(String(userTelegramID))) {
-                rangoFuturista = "👑 Administrador Core Network";
-            }
-
-            document.getElementById('perf-nombre').innerText = `👤 ${firstName}`;
-            document.getElementById('perf-rango').innerText = `Rango: ${rangoFuturista}`;
-
-            const baseCompras = window.DB_COMPRAS_USUARIOS[userTelegramID] || [];
-            const pSubs = document.getElementById('panel-suscripciones');
-            const pServs = document.getElementById('panel-servicios');
-            const pProds = document.getElementById('panel-productos');
-            const pAnunc = document.getElementById('panel-anuncios');
-
-            if (pSubs) pSubs.innerHTML = ""; if (pServs) pServs.innerHTML = ""; if (pProds) pProds.innerHTML = ""; if (pAnunc) pAnunc.innerHTML = "";
-
-            baseCompras.forEach(item => {
-                let cssClass = "status-pagado";
-                if (item.estadoPago === "esperando") cssClass = "status-esperando";
-                if (item.estadoPago === "verificando") cssClass = "status-verificando";
-
-                let stringVigencia = item.fechaInicio && item.fechaFin 
-                    ? `Vigencia: ${item.fechaInicio} al ${item.fechaFin}` 
-                    : `Fecha Operación: ${item.fechaCompra || 'N/A'}`;
-
-                // Inyección de función controladora onclick para abrir modal con argumentos de datos puros compilados
-                let htmlCard = `
-                    <div class="panel-item-data view-fade-in" onclick="abrirModalCheckoutEspecifico('${item.idItem}', '${item.tipo}', true, '${item.titulo}', '${item.descLarga || ''}', '${stringVigencia}')">
-                        <p style="font-weight:700; font-size:0.85rem; color:#fff;">${item.titulo}</p>
-                        <p style="color:#64748b; font-size:0.68rem; margin-top:2px;">${stringVigencia}</p>
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <div class="badge-estado-pago ${cssClass}">${item.mensajeEstado}</div>
-                            <span style="font-size:0.65rem; color:var(--neon-cyan);">Ver Detalles 🔍</span>
-                        </div>
+        function abrirModalCheckoutEspecifico(idItem, tipoItem, extraidoDeHistorial = false, tituloH = "", descH = "", vigenciaH = "") {
+            const contenedorModal = document.getElementById('modal-dinamico-cuerpo');
+            if (extraidoDeHistorial) {
+                contenedorModal.innerHTML = `
+                    <div style="font-size:0.65rem; color:var(--neon-cyan); font-weight:800; text-transform:uppercase;">Historial ID: ${idItem}</div>
+                    <h2 class="modal-title">💎 ${tituloH}</h2>
+                    <hr class="modal-divider">
+                    <p style="font-size:0.78rem; color:#cbd5e1; line-height:1.4; margin-bottom:12px;">${descH}</p>
+                    <div class="modal-actions"><button class="btn-modal-cancelar" style="width:100%;" onclick="document.getElementById('checkout-modal').style.display='none'">Cerrar</button></div>
+                `;
+            } else {
+                let item = window.CATALOGO_SERVICIOS.find(i => i.id === idItem);
+                if (!item) return;
+                contenedorModal.innerHTML = `
+                    <div style="font-size:0.65rem; color:var(--neon-cyan); font-weight:800;">Adquisición: ${item.id}</div>
+                    <h2 class="modal-title">${item.titulo}</h2>
+                    <hr class="modal-divider">
+                    <div class="modal-field">
+                        <label>Pasarela Criptográfica / Fiat:</label>
+                        <select id="form-pago">
+                            <option value="Crypto">USDT TRC20 / TON Network</option>
+                            <option value="PayPal">PayPal Balance Secure</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-modal-cancelar" onclick="document.getElementById('checkout-modal').style.display='none'">Cancelar</button>
+                        <button class="btn-modal-confirmar" onclick="alert('Redireccionando orden manual...'); document.getElementById('checkout-modal').style.display='none'">Confirmar</button>
                     </div>
                 `;
-                
-                if (item.tipo === "suscripcion" && pSubs) pSubs.innerHTML += htmlCard;
-                if (item.tipo === "servicio" && pServs) pServs.innerHTML += htmlCard;
-                if (item.tipo === "producto" && pProds) pProds.innerHTML += htmlCard;
-                if (item.tipo === "anuncio" && pAnunc) pAnunc.innerHTML += htmlCard;
-            });
-
-            if (pSubs && pSubs.innerHTML === "") pSubs.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 suscripciones activas.</p>";
-            if (pServs && pServs.innerHTML === "") pServs.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 servicios en desarrollo.</p>";
-            if (pProds && pProds.innerHTML === "") pProds.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 estructuras de software asignadas.</p>";
-            if (pAnunc && pAnunc.innerHTML === "") pAnunc.innerHTML = "<p style='color:#64748b; font-size:0.7rem; padding:4px;'>0 campañas publicitarias registradas.</p>";
-        }
-
-        // Simuladores Dinámicos Asíncronos
-        function iniciarSimuladorContadoresTarjeta() {
-            setInterval(() => {
-                const pool = [...window.CATALOGO_SERVICIOS, ...window.CATALOGO_CANALES, ...window.CATALOGO_ANUNCIOS];
-                if (pool.length === 0) return;
-                const item = pool[Math.floor(Math.random() * pool.length)];
-                let simKey = `sim_deseos_${item.id}`;
-                let simData = JSON.parse(localStorage.getItem(simKey));
-                if (simData && Math.random() > 0.4) {
-                    simData.count += 1;
-                    localStorage.setItem(simKey, JSON.stringify(simData));
-                    const dom = document.getElementById(`sim-contador-render-${item.id}`);
-                    if (dom) dom.innerText = simData.count;
-                }
-            }, 8000);
-        }
-
-        function ejecutarFomoFlotanteSincronizado() {
-            const banner = document.getElementById('fomo-notification');
-            const fomoText = document.getElementById('fomo-text');
-            if (!banner || !fomoText) return;
-            const nombres = ["Nexus_7", "Kaelen", "Alpha_09", "Vesper", "Elysia"];
-            const pool = [...window.CATALOGO_SERVICIOS, ...window.CATALOGO_CANALES];
-            const item = pool[Math.floor(Math.random() * pool.length)];
-            fomoText.innerHTML = `👤 <strong>${nombres[Math.floor(Math.random() * nombres.length)]}</strong> ordenó <span style="color:var(--neon-cyan); font-weight:800;">${item.titulo}</span>`;
-            banner.style.opacity = "1"; banner.style.transform = "translateY(0px)";
-            setTimeout(() => { banner.style.opacity = "0"; banner.style.transform = "translateY(15px)"; }, 5000);
+            }
+            document.getElementById('checkout-modal').style.display = "flex";
         }
     </script>
 </body>
