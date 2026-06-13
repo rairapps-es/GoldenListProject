@@ -6,6 +6,7 @@
     <title>Lista Golden - Ecosistema Cyberpunk</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
         :root {
@@ -35,6 +36,53 @@
             overflow-x: hidden;
         }
 
+        /* --- CARTEL RÓTULO DESLIZANTE --- */
+        .rotulo-ticker-wrapper {
+            background: #0d1527;
+            border-bottom: 1px solid var(--neon-cyan);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 32px;
+            z-index: 101;
+        }
+        .rotulo-ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: tickerSlide 25s linear infinite;
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .rotulo-ticker a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            margin-left: 6px;
+        }
+        .btn-close-rotulo {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 32px;
+            background: #0d1527;
+            border: none;
+            color: var(--neon-pink);
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: -8px 0 10px #0d1527;
+            z-index: 2;
+        }
+        @keyframes tickerSlide {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
         /* --- HEADER / TOP BAR --- */
         .top-bar {
             display: flex;
@@ -58,6 +106,38 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .header-actions-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-share-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--neon-cyan);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .energy-counter-pill {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            padding: 6px 10px;
+            border-radius: 14px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--neon-green);
+        }
+
         .user-pill {
             display: flex;
             align-items: center;
@@ -66,6 +146,7 @@
             padding: 6px 12px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
         }
 
         .user-pill span {
@@ -83,7 +164,7 @@
         .avatar-premium-border { border: 2px solid var(--neon-gold) !important; box-shadow: 0 0 8px var(--neon-gold); }
         .avatar-free-border { border: 1.5px solid var(--text-muted) !important; }
 
-        /* --- FILTROS ESTILO AMAZON --- */
+        /* --- FILTROS --- */
         .amazon-filter-wrapper {
             background: #090d1a;
             border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -92,6 +173,7 @@
             top: 53px;
             z-index: 99;
         }
+        .amazon-filter-wrapper.with-ticker { top: 85px; }
 
         .amazon-scroll-row {
             display: flex;
@@ -232,6 +314,107 @@
         .btn-wishlist.active { background: rgba(255, 0, 85, 0.1); border-color: var(--neon-pink); color: var(--neon-pink); }
         .btn-contratar { flex: 1.4; background: linear-gradient(135deg, #00f0ff, #0077ff); border: none; color: #000; padding: 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
 
+        /* --- SUB-MÓDULO DE RECOMPENSAS DESBLOQUEABLES --- */
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .reward-item-card {
+            background: #101626;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .reward-item-card.unlocked {
+            border-color: var(--neon-green);
+            background: rgba(0, 255, 102, 0.02);
+        }
+        .btn-reclamar-reward {
+            background: #27354a;
+            color: var(--text-muted);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            cursor: not-allowed;
+        }
+        .btn-reclamar-reward.active {
+            background: var(--neon-green);
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--neon-green);
+        }
+
+        /* --- SUBASTAS CON PUJAS SIMULADAS --- */
+        .auction-card {
+            background: #0c1224;
+            border: 1px solid var(--neon-gold);
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.1);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .auction-timer-box {
+            background: rgba(255, 0, 85, 0.08);
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            padding: 6px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin: 10px 0;
+        }
+        .auction-bids-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+        .btn-pujar {
+            background: linear-gradient(135deg, var(--neon-gold), #e69900);
+            color: #000;
+            font-weight: 800;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        /* --- MÓDULO DE MÉTODOS DE PAGO --- */
+        .payment-methods-footer {
+            background: #090d19;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 24px;
+        }
+        .payment-grid-icons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+        .pay-badge-icon {
+            background: #12192c;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #cbd5e1;
+        }
+
         /* --- VISTAS GENERALES --- */
         .view-section { display: none; padding: 16px; }
         .view-fade-in { animation: fadeIn 0.3s ease forwards; }
@@ -273,7 +456,7 @@
         .status-esperando { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
         .status-verificando { background: rgba(6, 182, 212, 0.15); color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.3); }
 
-        /* --- SECCIÓN BLOG CYBERPUNK (POSTS EXCLUSIVOS) --- */
+        /* --- SECCIÓN BLOG CYBERPUNK --- */
         .blog-wrapper { display: flex; flex-direction: column; gap: 16px; }
         .post-card {
             background: #090e1a;
@@ -393,7 +576,7 @@
         .btn-modal-cancelar { flex: 1; background: rgba(255,255,255,0.04); border: 0; color: #fff; padding: 11px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
         .btn-modal-confirmar { flex: 1.5; background: var(--neon-cyan); border: 0; color: #000; padding: 11px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
 
-        /* --- BOTONES DE NAVEGACIÓN INFERIOR (ICONOS MODERNOS) --- */
+        /* --- BOTONES DE NAVEGACIÓN INFERIOR --- */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #070a14; border-top: 1px solid rgba(255,255,255,0.03); display: flex; justify-content: space-around; align-items: center; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 0.65rem; font-weight: 700; cursor: pointer; gap: 4px; width: 100%; height: 100%; justify-content: center; }
         .nav-item.active { color: var(--neon-cyan); background: rgba(255,255,255,0.01); }
@@ -403,11 +586,25 @@
 </head>
 <body>
 
+    <div class="rotulo-ticker-wrapper" id="rotulo-anuncios-top">
+        <div class="rotulo-ticker" id="ticker-contenido" onclick="redirigirPostRotulo()">
+            📆 Cargando transmisiones de la red...
+        </div>
+        <button class="btn-close-rotulo" onclick="cerrarRotuloTop()">×</button>
+    </div>
+
     <div class="top-bar">
         <div class="brand">Lista Golden</div>
-        <div class="user-pill">
-            <div class="avatar" id="top-user-avatar"></div>
-            <span id="top-user-name">Hola, ...</span>
+        <div class="header-actions-box">
+            <button class="top-share-btn" onclick="abrirModalCompartir()"><i data-lucide="share-2" style="width:16px; height:16px;"></i></button>
+            <div class="energy-counter-pill">
+                <i data-lucide="battery-charging" style="width:14px; height:14px;"></i>
+                <span id="top-energy-counter">0 PTS</span>
+            </div>
+            <div class="user-pill" onclick="navegarA('perfil')">
+                <div class="avatar" id="top-user-avatar"></div>
+                <span id="top-user-name">...</span>
+            </div>
         </div>
     </div>
 
@@ -433,7 +630,23 @@
         </div>
     </div>
 
-    <div class="catalog-grid view-fade-in" id="vista-catalogo-principal"></div>
+    <div id="vista-catalogo-principal-wrapper">
+        <div class="catalog-grid view-fade-in" id="vista-catalogo-principal"></div>
+        
+        <div class="payment-methods-footer" style="margin: 16px;">
+            <h3 style="font-size:0.85rem; color:var(--neon-cyan); text-transform:uppercase; margin-bottom:6px;">💳 Protocolos de Liquidación</h3>
+            <p style="font-size:0.72rem; color:#94a3b8; line-height:1.4;">Aceptamos transacciones cifradas automáticas y depósitos Fiat manuales verificados:</p>
+            <div class="payment-grid-icons">
+                <span class="pay-badge-icon">🪙 USDT (TRC20 / TON)</span>
+                <span class="pay-badge-icon">⭐ Telegram Stars</span>
+                <span class="pay-badge-icon">💳 PayPal Express</span>
+                <span class="pay-badge-icon">🏦 Tarjeta Visa/Mastercard</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; font-size:0.68rem; color:#cbd5e1; border:1px solid rgba(255,255,255,0.05);">
+                <strong>Instrucciones:</strong> Presiona "Comprar Módulo". Selecciona tu pasarela preferida. Serás guiado para completar la transferencia o recibirás una orden cifrada para confirmar vía soporte técnico automatizado.
+            </div>
+        </div>
+    </div>
 
     <div id="vista-blog-exclusivo" class="view-section">
         <div style="margin-bottom: 14px;">
@@ -458,12 +671,18 @@
         <div class="energy-bar-container">
             <div class="energy-bar-header">
                 <span>Carga de Energía Global</span>
-                <span id="energy-text-ratio">0 / 10 PTS</span>
+                <span id="energy-text-ratio">0 / 100 PTS</span>
             </div>
             <div class="energy-bar-bg">
                 <div class="energy-bar-fill" id="energy-fill-bar"></div>
             </div>
             <div id="energy-vip-status-box"></div>
+        </div>
+
+        <div class="support-box" style="border-color: rgba(0,255,102,0.2);">
+            <h3 style="font-size:0.9rem; font-weight:800; color:var(--neon-green);"><i data-lucide="gift" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Recompensas del Nodo</h3>
+            <p style="font-size:0.72rem; color:var(--text-muted);">Acumula puntos en tu saldo y desbloquea módulos criptográficos gratis:</p>
+            <div class="rewards-grid" id="contenedor-recompensas-hitos"></div>
         </div>
 
         <div class="support-box">
@@ -494,6 +713,33 @@
             <h2 style="font-size:1.2rem; font-weight:900; color:var(--neon-gold);">🔄 MERCADO DE TRASPASOS</h2>
             <p style="font-size:0.75rem; color:var(--text-muted);">Terminales de canales y grupos en proceso de transferencia de propiedad.</p>
         </div>
+
+        <div class="auction-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.6rem; background:var(--neon-pink); color:#fff; padding:2px 6px; border-radius:4px; font-weight:bold;">⚡ SUBASTA EN VIVO CONTRA IA</span>
+                <span style="font-size:0.7rem; color:#94a3b8;" id="auction-bidders-count">👥 14 Agentes compitiendo</span>
+            </div>
+            <h3 style="font-size:1rem; margin:8px 0 4px 0; color:#fff;" id="auction-channel-title">Canal Premium: "Cyber Cryptos Alpha"</h3>
+            <p style="font-size:0.72rem; color:var(--text-muted);">Traspaso íntegro de derechos + Bot de Automatización incluido.</p>
+            
+            <div class="auction-timer-box" id="auction-countdown-clock">
+                72:00:00
+            </div>
+
+            <div class="auction-bids-line">
+                <div>
+                    <span style="font-size:0.65rem; color:var(--text-muted); display:block;">ÚLTIMA PUJA (MÁQUINA)</span>
+                    <span style="font-size:1.1rem; font-weight:900; color:var(--neon-pink);" id="auction-current-price">350 USDT</span>
+                </div>
+                <div style="text-align:right;">
+                    <span style="font-size:0.65rem; color:var(--text-muted); display:block;">TU RANGO DE ACCESO</span>
+                    <span style="font-size:0.9rem; font-weight:800; color:var(--neon-cyan);">Postulante Activo</span>
+                </div>
+            </div>
+
+            <button class="btn-pujar" id="btn-action-pujar" onclick="ejecutarPujaUsuario()">Incrementar Puja +25 USDT 🚀</button>
+        </div>
+
         <div id="grid-traspasos" style="display:flex; flex-direction:column; gap:16px;">
             <div class="post-card">
                 <div style="padding:14px; border-bottom:1px solid rgba(255,255,255,0.05);">
@@ -616,16 +862,23 @@
     </div>
 
     <script>
-        // Configuración de Identidades Premium / VIP activos
+        // Configuración Base de Identidades Premium / VIP activos
         window.LISTA_USUARIOS_PREMIUM = ["1320417199", "987654321"]; 
 
-        // Base de datos de saldo manual de puntos para usuarios VIP activos
+        // Base de datos de saldos extendida para soportar hitos de hasta 100 puntos
         window.DB_SALDOS_VIP = {
-            "1320417199": 8, // Este usuario (VIP simulado) tiene 8 puntos de energía
-            "987654321": 10
+            "1320417199": 75, // Usuario actual simulado con 75 puntos (activa hitos 10, 30 y 70)
+            "987654321": 12
         };
 
-        // Historial General de Compras por ID de Usuario
+        // Banco de Datos del Cartel Rótulo Deslizante
+        window.ROTULO_POSTS_POOL = [
+            { fecha: "13/06/2026", texto: "🔥 ¡Nueva actualización del Script Auto-Post Inteligente v4.2 liberada en el catálogo!", link: "https://t.me/listaGolden" },
+            { fecha: "12/06/2026", texto: "📢 Se abre cupo para 5 nuevos canales en el Mercado de Traspasos Seguros.", link: "https://t.me/listaGolden" },
+            { fecha: "10/06/2026", texto: "⚡ Mantenimiento del nodo central concluido con éxito. Velocidad de respuesta incrementada +40%.", link: "https://t.me/listaGolden" },
+            { fecha: "08/06/2026", texto: "💎 Tip VIP: Sincroniza tus bases de datos con Redis para evitar cuellos de botella.", link: "https://t.me/listaGolden" }
+        ];
+
         window.DB_COMPRAS_USUARIOS = {
             "1320417199": [
                 { idItem: "SUB-GOLDEN", tipo: "suscripcion", titulo: "Suscripción Golden VIP Anual", fechaInicio: "01/01/2026", fechaFin: "01/01/2027", estadoPago: "pagado", mensajeEstado: "Activa 👑", descLarga: "Acceso total ilimitado de alto rendimiento a todas las estructuras de servidores y bots analíticos de la red." },
@@ -635,7 +888,6 @@
             ]
         };
 
-        // Catálogo de Productos y Servicios
         window.CATALOGO_SERVICIOS = [
             {
                 id: "SERV-001", tipo: "suscripcion", categoria: "personal",
@@ -663,43 +915,29 @@
             }
         ];
 
-        // 📰 SIMULACIÓN MAESTRA DE POSTS EXCLUSIVOS
         window.REPOSITORIO_BLOG = [
             {
                 id: "POST-001", condicion: "POST-GRATIS", categoria: "guias",
                 titulo: "📖 Introducción a la Automatización Distribuidora de Mensajería",
                 resumen: "Conceptos fundamentales para construir bots sin caer en cuellos de botella.",
-                contenidoExclusivo: "🔓 CONTENIDO ABIERTO: El secreto está en la distribución simétrica de tareas asíncronas con Redis. Configura hilos secundarios en tu VPS para procesar eventos sin saturar el bucle nativo principal de ejecución.",
+                contenidoExclusivo: "🔓 CONTENIDO ABIERTO: Tareas asíncronas con Redis. Configura hilos secundarios en tu VPS para procesar eventos sin saturar el bucle nativo principal.",
                 imagen: "https://picsum.photos/id/1048/400/200"
             },
             {
                 id: "POST-002", condicion: "POST-PREMIUM", categoria: "descargas",
                 titulo: "💾 Descarga Directa: Pack Binario Anti-DDoS para Servidores TON",
                 resumen: "Módulo compilado en C++ listo para blindar puertos de conexión de red.",
-                contenidoExclusivo: "💎 CONTENIDO PREMIUM EXCLUSIVO: Descarga disponible del paquete [AntidDoS_Core_v2.bin]. Parámetros optimizados para mitigar ataques de denegación de servicio de hasta 40 Gbps mediante filtrado avanzado de paquetes syn.",
+                contenidoExclusivo: "💎 CONTENIDO PREMIUM EXCLUSIVO: Descarga del paquete [AntidDoS_Core_v2.bin]. Mitiga ataques de hasta 40 Gbps mediante filtrado avanzado.",
                 imagen: "https://picsum.photos/id/1068/400/200"
-            },
-            {
-                id: "POST-003", condicion: "POST-PUBLICO", categoria: "herramientas",
-                titulo: "⚙️ Script Clonador Estructural de Enlaces de Afiliados",
-                resumen: "Herramienta global abierta para saneamiento y reescritura de enlaces masivos.",
-                contenidoExclusivo: "🌐 CONTENIDO PÚBLICO DESBLOQUEADO: Copia el código fuente completo en JavaScript desde nuestro repositorio principal git. El algoritmo reescribe expresiones regulares en menos de 4ms por lote.",
-                imagen: "https://picsum.photos/id/1070/400/200"
-            },
-            {
-                id: "POST-004", condicion: "POST-PREMIUM", categoria: "herramientas",
-                titulo: "⚡ Extractor de Datos Analíticos Avanzados de Canales",
-                resumen: "Analiza la tasa de retención de usuarios reales en tus canales y grupos de Telegram.",
-                contenidoExclusivo: "💎 CONTENIDO PREMIUM EXCLUSIVO: Ejecutable [Golden_Analytics_v4]. Permite extraer patrones de comportamiento, picos de interacción por franja horaria y exportar registros tabulados limpios a formato CSV.",
-                imagen: "https://picsum.photos/id/1076/400/200"
-            },
-            {
-                id: "POST-005", condicion: "POST-PREMIUM", categoria: "descargas",
-                titulo: "🎁 Base de Datos Estructurada de Clientes Alta Conversión",
-                resumen: "Segmentación depurada con nichos de interés validados durante el último trimestre.",
-                contenidoExclusivo: "💎 CONTENIDO PREMIUM EXCLUSIVO: Descarga liberada del catálogo estructural de nichos calientes. Contiene métricas de interacción demográfica cruzada ideales para campañas publicitarias de precisión.",
-                imagen: "https://picsum.photos/id/1079/400/200"
             }
+        ];
+
+        // Listado estático de recompensas configurables por hitos
+        window.LISTADO_RECOMPENSAS_HITOS = [
+            { puntos: 10, titulo: "🔑 Token de Acceso Script v1", ReclamadoKey: "reward_claimed_10" },
+            { puntos: 30, titulo: "📦 Módulo Extractor Alpha Base", ReclamadoKey: "reward_claimed_30" },
+            { puntos: 70, titulo: "⚡ Bypass de Conectividad Node", ReclamadoKey: "reward_claimed_70" },
+            { puntos: 100, titulo: "👑 Licencia Vitalicia Clonadora Global", ReclamadoKey: "reward_claimed_100" }
         ];
 
         let filtroTipoActivo = "todos";      
@@ -707,6 +945,12 @@
         let seccionActualActiva = "servicios";
         let limitePostBlogVisibles = 3; 
         let filtroCategoriaBlog = "todos";
+        let actualPostRotuloLink = "https://t.me/listaGolden";
+
+        // Variables de subasta
+        let subastaPrecioFinal = 350;
+        let subastaTiempoRestante = 3 * 24 * 60 * 60; // 3 días en segundos
+        let subastaIntervaloReloj, subastaIntervaloMaquina;
 
         document.addEventListener("DOMContentLoaded", () => {
             if (window.Telegram && window.Telegram.WebApp) {
@@ -723,9 +967,8 @@
 
             const esPremium = window.LISTA_USUARIOS_PREMIUM.includes(String(tgID));
 
-            if (document.getElementById('top-user-name')) {
-                document.getElementById('top-user-name').innerText = `Hola, ${firstName}`;
-            }
+            // Inyectar datos en Header y Perfil
+            if (document.getElementById('top-user-name')) document.getElementById('top-user-name').innerText = firstName;
             
             const topAvatar = document.getElementById('top-user-avatar');
             if (topAvatar) {
@@ -741,62 +984,290 @@
 
             const pageBadge = document.getElementById('page-user-badge-status');
             if (pageBadge) {
-                if (esPremium) {
-                    pageBadge.innerText = "PREMIUM ACTIVO";
-                    pageBadge.className = "badge-status-avatar badge-avatar-premium";
-                } else {
-                    pageBadge.innerText = "PLAN GRATIS ACTIVADO";
-                    pageBadge.className = "badge-status-avatar badge-avatar-free";
-                }
+                pageBadge.innerText = esPremium ? "PREMIUM ACTIVO" : "PLAN GRATIS ACTIVADO";
+                pageBadge.className = esPremium ? "badge-status-avatar badge-avatar-premium" : "badge-status-avatar badge-avatar-free";
             }
 
-            // Inicializar Iconos Modernos de Lucide
+            // --- LÓGICA DE SUSCRIPCIÓN VIP (CELEBRACIÓN ÚNICA O MODAL OFERTA) ---
+            if (esPremium) {
+                if (!localStorage.getItem('vip_celebration_fired')) {
+                    localStorage.setItem('vip_celebration_fired', 'true');
+                    setTimeout(() => {
+                        dispararEfectosPirotecnicosConfeti();
+                    }, 800);
+                }
+            } else {
+                setTimeout(() => {
+                    abrirModalOfertaFlotante();
+                }, 1500);
+            }
+
+            // Inicializar Cartel Rótulo Deslizante
+            inicializarRotuloMensajesTop();
+
+            // Inicializar Subasta
+            inicializarModuloSubastaDinamica();
+
             lucide.createIcons();
             renderizerEcosistemaActual(false);
-            actualizarBarraEnergiaApoyo(tgID, esPremium);
+            actualizarBarraYRecompensasApoyo(tgID, esPremium);
         });
 
-        // CONTROL Y GESTIÓN DE LA BARRA DE ENERGÍA DE APOYO
-        function actualizarBarraEnergiaApoyo(userId, esVIP) {
+        // --- MANEJO DEL CARTEL RÓTULO SUPERIOR ---
+        function inicializarRotuloMensajesTop() {
+            const rotuloWrapper = document.getElementById('rotulo-anuncios-top');
+            const filterBar = document.getElementById('filter-bar-container');
+            
+            if (localStorage.getItem('rotulo_top_closed') === 'true') {
+                rotuloWrapper.style.display = 'none';
+                if(filterBar) filterBar.classList.remove('with-ticker');
+                return;
+            }
+
+            if(filterBar) filterBar.classList.add('with-ticker');
+            const randomPost = window.ROTULO_POSTS_POOL[Math.floor(Math.random() * window.ROTULO_POSTS_POOL.length)];
+            document.getElementById('ticker-contenido').innerHTML = `📆 [${randomPost.fecha}] — ${randomPost.texto} <span style="text-decoration:underline; font-weight:bold;">Ver Post 🔗</span>`;
+            actualPostRotuloLink = randomPost.link;
+        }
+
+        function redirigirPostRotulo() {
+            if (window.Telegram?.WebApp?.openLink) window.Telegram.WebApp.openLink(actualPostRotuloLink);
+            else window.open(actualPostRotuloLink, '_blank');
+        }
+
+        function cerrarRotuloTop() {
+            localStorage.setItem('rotulo_top_closed', 'true');
+            document.getElementById('rotulo-anuncios-top').style.display = 'none';
+            const filterBar = document.getElementById('filter-bar-container');
+            if(filterBar) filterBar.classList.remove('with-ticker');
+        }
+
+        // --- TRANSMISIÓN DE LA BARRA DE ENERGÍA Y RECOMPENSAS DESBLOQUEABLES ---
+        function actualizarBarraYRecompensasApoyo(userId, esVIP) {
             const ratioTexto = document.getElementById('energy-text-ratio');
             const barraRelleno = document.getElementById('energy-fill-bar');
             const cajaEstado = document.getElementById('energy-vip-status-box');
+            const topCounter = document.getElementById('top-energy-counter');
             
+            let puntos = 0;
+            if (esVIP) {
+                puntos = window.DB_SALDOS_VIP[String(userId)] !== undefined ? window.DB_SALDOS_VIP[String(userId)] : 0;
+            }
+            puntos = Math.min(Math.max(puntos, 0), 100);
+
+            if(topCounter) topCounter.innerText = `${puntos} PTS`;
             if(!barraRelleno) return;
 
+            barraRelleno.style.width = `${puntos}%`;
+            ratioTexto.innerText = `${puntos} / 100 PTS`;
+            
             if (esVIP) {
-                let puntosManuales = window.DB_SALDOS_VIP[String(userId)] !== undefined ? window.DB_SALDOS_VIP[String(userId)] : 5;
-                puntosManuales = Math.min(Math.max(puntosManuales, 0), 10); // Forzar rango 0-10
-                
-                let porcentaje = (puntosManuales / 10) * 100;
-                barraRelleno.style.width = `${porcentaje}%`;
-                ratioTexto.innerText = `${puntosManuales} / 10 PTS`;
-                
-                cajaEstado.innerHTML = `
-                    <div class="points-box">
-                        Sincronización de Red Exitosa. Tu terminal VIP dispone de ${puntosManuales} Puntos Operativos.
-                    </div>
-                `;
+                cajaEstado.innerHTML = `<div class="points-box">Sincronización de Red OK. Tu terminal dispone de ${puntos} Puntos Operativos globales.</div>`;
             } else {
-                barraRelleno.style.width = `0%`;
-                ratioTexto.innerText = `0 / 10 PTS`;
                 cajaEstado.innerHTML = `
                     <div class="non-vip-warning">
-                        <p>Terminal restringido. Las barras de energía de contingencia están reservadas exclusivamente para nodos VIP.</p>
-                        <button class="btn-contratar" style="width: 100%;" onclick="navegarA('servicios')">
-                            Contratar Suscripción Premium 👑
-                        </button>
+                        <p>Terminal restringido. Las barras de contingencia están reservadas exclusivamente para nodos VIP.</p>
+                        <button class="btn-contratar" style="width: 100%;" onclick="navegarA('servicios')">Contratar Suscripción Premium 👑</button>
                     </div>
                 `;
             }
+
+            // Renderizado de las Recompensas del Nodo (Hitos 10, 30, 70, 100)
+            const contenedorRewards = document.getElementById('contenedor-recompensas-hitos');
+            if(contenedorRewards) {
+                contenedorRewards.innerHTML = "";
+                window.LISTADO_RECOMPENSAS_HITOS.forEach(rew => {
+                    const estaDesbloqueado = puntos >= rew.puntos;
+                    const yaReclamado = localStorage.getItem(rew.ReclamadoKey) === 'true';
+                    
+                    let btnTexto = "Bloqueado 🔒";
+                    let btnClase = "";
+                    if (estaDesbloqueado) {
+                        btnTexto = yaReclamado ? "Reclamado ✓" : "Reclame Módulo 🎁";
+                        btnClase = yaReclamado ? "" : "active";
+                    }
+
+                    contenedorRewards.innerHTML += `
+                        <div class="reward-item-card ${estaDesbloqueado ? 'unlocked' : ''}">
+                            <div>
+                                <span style="font-size:0.75rem; font-weight:bold; display:block; color:${estaDesbloqueado ? 'var(--neon-green)' : '#fff'};">[Hito ${rew.puntos} PTS]</span>
+                                <span style="font-size:0.7rem; color:#cbd5e1;">${rew.titulo}</span>
+                            </div>
+                            <button class="btn-reclamar-reward ${btnClase}" onclick="procesarReclamacionPremio('${rew.ReclamadoKey}', ${estaDesbloqueado && !yaReclamado})">${btnTexto}</button>
+                        </div>
+                    `;
+                });
+            }
         }
 
-        // Sistema Router Unificado de Navegación
+        function procesarReclamacionPremio(key, puedeProceder) {
+            if(!puedeProceder) return;
+            localStorage.setItem(key, 'true');
+            alert("🎯 Solicitud de recompensa enviada al mainframe de Lista Golden. Módulo inyectado en tu terminal.");
+            const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            const tgID = userTelegram?.id || "1320417199";
+            const esPremium = window.LISTA_USUARIOS_PREMIUM.includes(String(tgID));
+            actualizarBarraYRecompensasApoyo(tgID, esPremium);
+        }
+
+        // --- CELEBRACIÓN DE PIROTECNIA Y CONFETI (CANVAS-CONFETTI) ---
+        function dispararEfectosPirotecnicosConfeti() {
+            var duration = 4 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.8 }, colors: ['#00f0ff', '#ff0055', '#ffaa00'] });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.8 }, colors: ['#00f0ff', '#ff0055', '#ffaa00'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        // --- MODAL OFERTA FLOTANTE PARA USUARIOS FREE ---
+        function abrirModalOfertaFlotante() {
+            const contenedorModal = document.getElementById('modal-dinamico-cuerpo');
+            if(!contenedorModal) return;
+
+            contenedorModal.innerHTML = `
+                <div style="font-size:0.65rem; color:var(--neon-pink); font-weight:800; text-transform:uppercase; letter-spacing:1px;">⚠️ ACCESO RESTRINGIDO DETECTADO</div>
+                <h2 class="modal-title">¡Mejora tu Terminal a VIP Premium! 👑</h2>
+                <hr class="modal-divider">
+                <p style="font-size:0.78rem; color:#cbd5e1; line-height:1.4; margin-bottom:12px;">
+                    Tu ID no está registrado en el Core de Lista Golden. Accede de inmediato al catálogo filtrado de suscripciones y maximiza tus automatizaciones.
+                </p>
+                <div class="modal-price-box" style="border-color:var(--neon-pink); color:var(--neon-pink); background:rgba(255,0,85,0.02)">DESDE 15,00€ / MES</div>
+                <div class="modal-actions">
+                    <button class="btn-modal-cancelar" onclick="document.getElementById('checkout-modal').style.display='none'">Luego</button>
+                    <button class="btn-modal-confirmar" style="background:var(--neon-pink); color:#fff;" onclick="irACatalogoFiltradoVIP()">Ver Catálogo VIP</button>
+                </div>
+            `;
+            document.getElementById('checkout-modal').style.display = "flex";
+        }
+
+        function irACatalogoFiltradoVIP() {
+            document.getElementById('checkout-modal').style.display = 'none';
+            navegarA('servicios');
+            // Filtrar automáticamente por suscripciones
+            const btnSuscrip = document.querySelectorAll('#pestañas-tipo-container .tab-tipo-btn')[2];
+            if(btnSuscrip) btnSuscrip.click();
+        }
+
+        // --- COMPARTIR SUPERIOR (TELEGRAM, COMPARTIR, WHATSAPP) ---
+        function abrirModalCompartir() {
+            const contenedorModal = document.getElementById('modal-dinamico-cuerpo');
+            if(!contenedorModal) return;
+
+            contenedorModal.innerHTML = `
+                <h2 class="modal-title">🔗 Compartir Lista Golden</h2>
+                <hr class="modal-divider">
+                <p style="font-size:0.75rem; color:#cbd5e1; margin-bottom:14px;">Elige tu canal de transmisión para invitar a otros terminales a la red:</p>
+                
+                <button class="support-option-btn" style="margin-top:0; margin-bottom:8px;" onclick="compartirTelegramOficial()">
+                    <span>✈️ Compartir en Telegram</span><span>➡️</span>
+                </button>
+                <button class="support-option-btn" style="margin-top:0; margin-bottom:8px;" onclick="compartirWhatsAppOficial()">
+                    <span>🟢 Enviar por WhatsApp</span><span>➡️</span>
+                </button>
+                <button class="support-option-btn" style="margin-top:0; margin-bottom:14px;" onclick="copiarEnlaceAlPortapapeles()">
+                    <span>📋 Copiar Enlace al Portapapeles</span><span>➡️</span>
+                </button>
+
+                <div class="modal-actions">
+                    <button class="btn-modal-cancelar" style="width:100%;" onclick="document.getElementById('checkout-modal').style.display='none'">Cerrar Ventana</button>
+                </div>
+            `;
+            document.getElementById('checkout-modal').style.display = "flex";
+        }
+
+        function compartirTelegramOficial() {
+            const texto = encodeURIComponent("🚀 Conéctate a Lista Golden, el mejor ecosistema cyberpunk de automatizaciones y canales VIP: https://t.me/ListaGolden");
+            const url = `https://t.me/share/url?url=https://t.me/ListaGolden&text=${texto}`;
+            if(window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(url);
+            else window.open(url, '_blank');
+        }
+
+        function compartirWhatsAppOficial() {
+            const texto = encodeURIComponent("🚀 Conéctate a Lista Golden, el mejor ecosistema cyberpunk de automatizaciones y canales VIP: https://t.me/ListaGolden");
+            const url = `https://api.whatsapp.com/send?text=${texto}`;
+            window.open(url, '_blank');
+        }
+
+        function copiarEnlaceAlPortapapeles() {
+            const link = "https://t.me/ListaGolden";
+            navigator.clipboard.writeText(link).then(() => {
+                alert("📋 ¡Enlace copiado al portapapeles con éxito!");
+            }).catch(() => {
+                alert("No se pudo copiar automáticamente. Copia manual: " + link);
+            });
+        }
+
+        // --- SISTEMA INTERNO DE SUBASTAS CONTRA LA MAQUINA ---
+        function inicializarModuloSubastaDinamica() {
+            // Manejar Reloj Regresivo de 72 Horas (3 días)
+            if(subastaIntervaloReloj) clearInterval(subastaIntervaloReloj);
+            subastaIntervaloReloj = setInterval(() => {
+                subastaTiempoRestante--;
+                if(subastaTiempoRestante <= 0) {
+                    clearInterval(subastaIntervaloReloj);
+                    clearInterval(subastaIntervaloMaquina);
+                    concluirSubastaGanador();
+                } else {
+                    const horas = Math.floor(subastaTiempoRestante / 3600);
+                    const minutos = Math.floor((subastaTiempoRestante % 3600) / 60);
+                    const segundos = subastaTiempoRestante % 60;
+                    document.getElementById('auction-countdown-clock').innerText = 
+                        `${String(horas).padStart(2,'0')}:${String(minutos).padStart(2,'0')}:${String(segundos).padStart(2,'0')}`;
+                }
+            }, 1000);
+
+            // Bucle simulado de pujas de la máquina para aumentar el precio
+            if(subastaIntervaloMaquina) clearInterval(subastaIntervaloMaquina);
+            subastaIntervaloMaquina = setInterval(() => {
+                // La máquina puja de manera aleatoria cada 12-25 segundos solo si queda tiempo
+                if(subastaTiempoRestante > 10) {
+                    subastaPrecioFinal += Math.floor(Math.random() * 15) + 10;
+                    document.getElementById('auction-current-price').innerText = `${subastaPrecioFinal} USDT`;
+                    document.getElementById('auction-bidders-count').innerText = `👥 ${Math.floor(Math.random() * 5) + 12} Agentes compitiendo`;
+                }
+            }, 18000);
+        }
+
+        function ejecutarPujaUsuario() {
+            if(subastaTiempoRestante <= 0) return;
+            subastaPrecioFinal += 25;
+            document.getElementById('auction-current-price').innerText = `${subastaPrecioFinal} USDT`;
+            alert("🚀 Has aumentado la puja con éxito. Lideras temporalmente la transferencia de propiedad.");
+        }
+
+        function concluirSubastaGanador() {
+            document.getElementById('auction-countdown-clock').innerText = "00:00:00 — TERMINADA";
+            document.getElementById('auction-countdown-clock').style.background = "rgba(0,255,102,0.15)";
+            document.getElementById('auction-countdown-clock').style.color = "var(--neon-green)";
+            document.getElementById('auction-countdown-clock').style.borderColor = "var(--neon-green)";
+            
+            document.getElementById('btn-action-pujar').style.display = "none";
+            
+            const cuerpoModal = document.getElementById('modal-dinamico-cuerpo');
+            cuerpoModal.innerHTML = `
+                <div style="font-size:0.65rem; color:var(--neon-green); font-weight:800; text-transform:uppercase;">🥇 ADJUDICACIÓN CONFIRMADA</div>
+                <h2 class="modal-title">¡Ganaste la subasta! 🎉</h2>
+                <hr class="modal-divider">
+                <p style="font-size:0.78rem; color:#cbd5e1; line-height:1.4; margin-bottom:14px;">
+                    El canal casi es tuyo, corre para asegurarlo y completa el pago antes de que expire la reserva del nodo.
+                </p>
+                <div class="modal-price-box">Total Liquidación: ${subastaPrecioFinal} USDT</div>
+                <div class="modal-actions">
+                    <button class="btn-modal-confirmar" style="width:100%;" onclick="abrirTraspasoManual('Cyber Cryptos Alpha Subasta', '${subastaPrecioFinal} USDT')">COMPLETAR PAGO AHORA 🔗</button>
+                </div>
+            `;
+            document.getElementById('checkout-modal').style.display = "flex";
+        }
+
+        // --- ROUTER GENERAL DE NAVEGACIÓN ---
         function navegarA(seccion) {
             seccionActualActiva = seccion;
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
             
-            document.getElementById('vista-catalogo-principal').style.display = "none";
+            document.getElementById('vista-catalogo-principal-wrapper').style.display = "none";
             document.getElementById('vista-blog-exclusivo').style.display = "none";
             document.getElementById('vista-apoyo-proyecto').style.display = "none";
             document.getElementById('lista-deseos-view').style.display = "none";
@@ -809,7 +1280,7 @@
             if (navBtn) navBtn.classList.add('active');
 
             if (seccion === "servicios") {
-                document.getElementById('vista-catalogo-principal').style.display = "flex";
+                document.getElementById('vista-catalogo-principal-wrapper').style.display = "block";
                 document.getElementById('filter-bar-container').style.display = "block";
                 renderizerEcosistemaActual(false);
             } else if (seccion === "traspaso") {
@@ -845,7 +1316,6 @@
             renderizerEcosistemaActual(false);
         }
 
-        // Renderizado del Catálogo de Servicios / Estructuras
         function renderizerEcosistemaActual(cargarMas = false) {
             const grid = document.getElementById('vista-catalogo-principal');
             if (!grid || seccionActualActiva !== "servicios") return;
@@ -861,7 +1331,6 @@
             grid.innerHTML = generarBloqueTarjetasHTML(source);
         }
 
-        // Función reutilizable para inyectar tarjetas completas tanto en catálogo como en favoritos
         function generarBloqueTarjetasHTML(listadoItems, esVistaDeseos = false) {
             let html = "";
             let deseos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
@@ -904,7 +1373,6 @@
             return html || `<p style="color:var(--text-muted); font-size:0.8rem; padding:20px; text-align:center;">Ningún módulo registrado.</p>`;
         }
 
-        // MOTOR DEL ARCHIVO/BLOG CON CONTENIDO SOLO-PREMIUM OCULTO
         function filtrarBlog(cat, boton) {
             filtroCategoriaBlog = cat;
             document.querySelectorAll('#vista-blog-exclusivo .tab-tipo-btn').forEach(b => b.classList.remove('active'));
@@ -930,16 +1398,8 @@
             let html = "";
 
             bloqueVisibles.forEach(post => {
-                let accesoConcedido = false;
-                if (post.condicion === "POST-PUBLICO" || post.condicion === "POST-GRATIS") {
-                    accesoConcedido = true;
-                } else if (post.condicion === "POST-PREMIUM" && esVIP) {
-                    accesoConcedido = true;
-                }
-
-                let badgeClase = "cond-free";
-                if (post.condicion === "POST-PREMIUM") badgeClase = "cond-premium";
-                if (post.condicion === "POST-PUBLICO") badgeClase = "cond-public";
+                let accesoConcedido = post.condicion === "POST-PUBLICO" || post.condicion === "POST-GRATIS" || (post.condicion === "POST-PREMIUM" && esVIP);
+                let badgeClase = post.condicion === "POST-PREMIUM" ? "cond-premium" : (post.condicion === "POST-PUBLICO" ? "cond-public" : "cond-free");
 
                 html += `
                     <div class="post-card ${accesoConcedido ? 'unlocked' : 'locked'} view-fade-in">
@@ -957,7 +1417,7 @@
                                     <span style="color:var(--neon-green); font-weight:bold; display:block; margin-bottom:4px;">📡 ACCESO VIP CONCEDIDO:</span>
                                     ${post.contenidoExclusivo}
                                 </div>
-                                <button class="btn-post-action btn-post-ok" onclick="alert('Descargando paquetes de datos cifrados de la base...')">EJECUTAR DESCARGA CORES 📥</button>
+                                <button class="btn-post-action btn-post-ok" onclick="alert('Descargando paquetes de datos cifrados...')">EJECUTAR DESCARGA 📥</button>
                             ` : `
                                 <div class="post-hidden-content" style="border-color:var(--neon-pink); background:rgba(255,0,85,0.02); text-align:center; padding:16px 10px;">
                                     🔒 <span style="color:var(--neon-pink); font-weight:bold;">CONTENIDO PREMIUM OCULTO</span><br>
@@ -971,25 +1431,12 @@
             });
 
             container.innerHTML = html;
-
-            if (filtrados.length > limitePostBlogVisibles) {
-                container.insertAdjacentHTML('beforeend', `
-                    <button onclick="limitePostBlogVisibles += 3; renderizarBlogExclusivo();" style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,240,255,0.1); padding:12px; border-radius:10px; color:var(--neon-cyan); font-size:0.75rem; font-weight:bold; cursor:pointer; width:100%; margin-top:8px;">
-                        Cargar siguientes archivos (Lazy Load) ⬇️
-                    </button>
-                `);
-            }
         }
 
         function abrirDonacionEspecifica(canal, titulo) {
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const tgID = userTelegram?.id || "1320417199";
-            
-            let msg = `🤍 *APOYO AL PROYECTO LISTA GOLDEN*\n\n`;
-            msg += `🆔 *Remitente ID:* \`${tgID}\`\n`;
-            msg += `渠道 *Vía Elegida:* ${canal}\n\n`;
-            msg += `_Solicito la dirección o el enlace de pasarela para procesar mi contribución voluntaria al mantenimiento del servidor._`;
-
+            let msg = `🤍 *APOYO AL PROYECTO LISTA GOLDEN*\n\n🆔 *Remitente ID:* \`${tgID}\`\n渠道 *Vía Elegida:* ${canal}\n\n_Solicito dirección para procesar mi contribución voluntaria._`;
             const url = `https://t.me/Airdayz?text=${encodeURIComponent(msg)}`;
             if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(url);
             else window.open(url, '_blank');
@@ -998,12 +1445,7 @@
         function abrirTraspasoManual(canalNombre, precio) {
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const tgID = userTelegram?.id || "1320417199";
-            let msg = `🔄 *SOLICITUD DE TRASPASO DE CANAL*\n\n`;
-            msg += `🆔 *Usuario ID:* \`${tgID}\`\n`;
-            msg += `📢 *Canal solicitado:* ${canalNombre}\n`;
-            msg += `💰 *Valor estipulado:* ${precio}\n\n`;
-            msg += `_Solicito iniciar el protocolo de traspaso seguro mediante intermediario certificado de Lista Golden._`;
-            
+            let msg = `🔄 *SOLICITUD DE TRASPASO DE CANAL*\n\n🆔 *Usuario ID:* \`${tgID}\`\n📢 *Canal/Subasta:* ${canalNombre}\n💰 *Valor:* ${precio}\n\n_Solicito iniciar el protocolo de traspaso seguro mediante intermediario._`;
             const url = `https://t.me/Airdayz?text=${encodeURIComponent(msg)}`;
             if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(url);
             else window.open(url, '_blank');
@@ -1015,12 +1457,7 @@
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const tgID = userTelegram?.id || "1320417199";
 
-            let msg = `📣 *NUEVA ORDEN DE CAMPAÑA PUBLICITARIA*\n\n`;
-            msg += `🆔 *Anunciante ID:* \`${tgID}\`\n`;
-            msg += `📊 *Tipo de impacto:* ${tipoImpacto}\n`;
-            msg += `🔗 *Proyecto:* ${urlProyecto}\n\n`;
-            msg += `_Solicito la generación del enlace de liquidación y confirmación de espacios de emisión en el dashboard._`;
-
+            let msg = `📣 *NUEVA ORDEN DE CAMPAÑA PUBLICITARIA*\n\n🆔 *Anunciante ID:* \`${tgID}\`\n📊 *Tipo:* ${tipoImpacto}\n🔗 *Proyecto:* ${urlProyecto}\n\n_Solicito enlace de liquidación._`;
             const url = `https://t.me/Airdayz?text=${encodeURIComponent(msg)}`;
             if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(url);
             else window.open(url, '_blank');
@@ -1038,17 +1475,11 @@
             const compras = window.DB_COMPRAS_USUARIOS[userTelegramID] || [];
             const favoritos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
 
-            let numSubs = compras.filter(c => c.tipo === "suscripcion").length;
-            let numProds = compras.filter(c => c.tipo === "producto").length;
-            let numServs = compras.filter(c => c.tipo === "servicio").length;
-            let numCamp = compras.filter(c => c.tipo === "anuncio" || c.idItem.startsWith("ANUN")).length;
-            let numFavs = favoritos.length;
-
-            document.getElementById('hud-val-subs').innerText = numSubs;
-            document.getElementById('hud-val-prods').innerText = numProds;
-            document.getElementById('hud-val-servs').innerText = numServs;
-            document.getElementById('hud-val-camp').innerText = numCamp;
-            document.getElementById('hud-val-favs').innerText = numFavs;
+            document.getElementById('hud-val-subs').innerText = compras.filter(c => c.tipo === "suscripcion").length;
+            document.getElementById('hud-val-prods').innerText = compras.filter(c => c.tipo === "producto").length;
+            document.getElementById('hud-val-servs').innerText = compras.filter(c => c.tipo === "servicio").length;
+            document.getElementById('hud-val-camp').innerText = compras.filter(c => c.tipo === "anuncio").length;
+            document.getElementById('hud-val-favs').innerText = favoritos.length;
             document.getElementById('hud-val-rango').innerText = esVIP ? "VIP LEVEL" : "NIVEL 1";
 
             const pSubs = document.getElementById('panel-suscripciones');
@@ -1078,11 +1509,6 @@
                 else if (item.tipo === "producto") pProds.innerHTML += cardHtml;
                 else pAnunc.innerHTML += cardHtml;
             });
-
-            if(!pSubs.innerHTML) pSubs.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin suscripciones.</p>";
-            if(!pServs.innerHTML) pServs.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin servicios contratados.</p>";
-            if(!pProds.innerHTML) pProds.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin productos asignados.</p>";
-            if(!pAnunc.innerHTML) pAnunc.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin pautas activas.</p>";
         }
 
         function controladorDeseosDirecto(id, titulo, boton, esVistaDeseos = false) {
@@ -1091,9 +1517,7 @@
                 deseos = deseos.filter(d => d.id !== id);
                 boton.classList.remove('active'); 
                 boton.innerText = "❤️ Guardar";
-                if(esVistaDeseos) {
-                    cargarPaginaDeseosOriginales(); // Refrescar vista si se elimina desde allí
-                }
+                if(esVistaDeseos) cargarPaginaDeseosOriginales();
             } else {
                 deseos.push({ id: id, titulo: titulo });
                 boton.classList.add('active'); 
@@ -1102,28 +1526,21 @@
             localStorage.setItem('lista_deseos_golden', JSON.stringify(deseos));
         }
 
-        // CARGA LAS TARJETAS COMPLETAS EN LA VISTA DE DESEOS/FAVORITOS
         function cargarPaginaDeseosOriginales() {
             const grid = document.getElementById('wishlist-original-grid');
             if (!grid) return; 
-            
-            grid.innerHTML = "";
             let deseos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
-            
             if(deseos.length === 0) {
                 grid.innerHTML = "<p style='color:#64748b; font-size:0.75rem; text-align:center; padding:20px;'>Tu almacén virtual está vacío.</p>";
                 return;
             }
-            
-            // Filtrar del catálogo maestro solo los guardados
             let itemsGuardados = window.CATALOGO_SERVICIOS.filter(item => deseos.some(d => d.id === item.id));
             grid.innerHTML = generarBloqueTarjetasHTML(itemsGuardados, true);
         }
 
         function abrirCanalReseñasOficial() {
-            const urlCanal = "https://t.me/ListaGolden";
-            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(urlCanal);
-            else window.open(urlCanal, '_blank');
+            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink("https://t.me/ListaGolden");
+            else window.open("https://t.me/ListaGolden", '_blank');
         }
 
         function abrirModalCheckoutEspecifico(idItem, tipoItem, extraidoDeHistorial = false, tituloH = "", descH = "", vigenciaH = "") {
