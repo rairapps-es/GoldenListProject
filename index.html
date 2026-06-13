@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lista Golden - Ecosistema Cyberpunk</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
         :root {
@@ -312,7 +313,63 @@
         .btn-post-ok { background: var(--neon-green); color: #000; }
         .btn-post-lock { background: linear-gradient(135deg, var(--neon-pink), #990033); color: #fff; box-shadow: 0 0 10px rgba(255,0,85,0.2); }
 
-        /* --- APΟΥO AL PROYECTO --- */
+        /* --- BARRA DE ENERGÍA DE APOYO --- */
+        .energy-bar-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+        .energy-bar-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        .energy-bar-bg {
+            background: #111827;
+            height: 16px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            position: relative;
+        }
+        .energy-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+            box-shadow: 0 0 10px var(--neon-cyan);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .points-box {
+            margin-top: 10px;
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px dashed var(--neon-green);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--neon-green);
+            font-weight: bold;
+            text-align: center;
+        }
+        .non-vip-warning {
+            margin-top: 10px;
+            background: rgba(255, 0, 85, 0.05);
+            border: 1px dashed var(--neon-pink);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .non-vip-warning p {
+            font-size: 0.72rem;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+
+        /* --- APOYO AL PROYECTO --- */
         .support-box { background: var(--bg-card); border-radius: 14px; border: 1px solid rgba(0, 240, 255, 0.1); padding: 16px; margin-bottom: 16px; }
         .support-option-btn {
             display: flex; justify-content: space-between; align-items: center;
@@ -336,11 +393,12 @@
         .btn-modal-cancelar { flex: 1; background: rgba(255,255,255,0.04); border: 0; color: #fff; padding: 11px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
         .btn-modal-confirmar { flex: 1.5; background: var(--neon-cyan); border: 0; color: #000; padding: 11px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
 
-        /* --- BOTONES DE NAVEGACIÓN INFERIOR --- */
+        /* --- BOTONES DE NAVEGACIÓN INFERIOR (ICONOS MODERNOS) --- */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #070a14; border-top: 1px solid rgba(255,255,255,0.03); display: flex; justify-content: space-around; align-items: center; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 0.65rem; font-weight: 700; cursor: pointer; gap: 4px; width: 100%; height: 100%; justify-content: center; }
         .nav-item.active { color: var(--neon-cyan); background: rgba(255,255,255,0.01); }
-        .nav-icon { font-size: 1.15rem; }
+        .nav-icon { display: flex; align-items: center; justify-content: center; }
+        .nav-icon i { width: 18px; height: 18px; }
     </style>
 </head>
 <body>
@@ -397,6 +455,17 @@
             <p style="font-size:0.75rem; color:var(--text-muted);">Ayúdanos a mantener la infraestructura libre de publicidad intrusiva y servidores de alta velocidad.</p>
         </div>
 
+        <div class="energy-bar-container">
+            <div class="energy-bar-header">
+                <span>Carga de Energía Global</span>
+                <span id="energy-text-ratio">0 / 10 PTS</span>
+            </div>
+            <div class="energy-bar-bg">
+                <div class="energy-bar-fill" id="energy-fill-bar"></div>
+            </div>
+            <div id="energy-vip-status-box"></div>
+        </div>
+
         <div class="support-box">
             <h3 style="font-size:0.9rem; font-weight:800; color:var(--neon-cyan); margin-bottom:6px;">¿Por qué apoyar?</h3>
             <p style="font-size:0.75rem; color:#cbd5e1; line-height:1.4;">Lista Golden despliega herramientas automatizadas distribuidas de manera gratuita para miles de terminales. Tu aporte financia el nodo principal de cómputo y API de mensajería.</p>
@@ -417,7 +486,7 @@
     <div id="lista-deseos-view" class="view-section">
         <h2 style="font-size:1.1rem; font-weight:900; margin-bottom:4px;">Tu Almacén Virtual</h2>
         <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">Módulos guardados en la memoria de tu terminal.</p>
-        <div id="wishlist-original-grid" style="display:flex; flex-direction:column; gap:16px;"></div>
+        <div id="wishlist-original-grid" class="catalog-grid" style="padding:0;"></div>
     </div>
 
     <div id="vista-traspaso-canales" class="view-section">
@@ -524,31 +593,37 @@
 
     <div class="bottom-nav">
         <button class="nav-item active" id="nav-servicios" onclick="navegarA('servicios')">
-            <span class="nav-icon">🛠️</span><span>Catálogo</span>
+            <span class="nav-icon"><i data-lucide="layers"></i></span><span>Catálogo</span>
         </button>
         <button class="nav-item" id="nav-traspaso" onclick="navegarA('traspaso')">
-            <span class="nav-icon">🔄</span><span>Traspaso</span>
+            <span class="nav-icon"><i data-lucide="shuffle"></i></span><span>Traspaso</span>
         </button>
         <button class="nav-item" id="nav-publicidad" onclick="navegarA('publicidad')">
-            <span class="nav-icon">📣</span><span>Ads</span>
+            <span class="nav-icon"><i data-lucide="megaphone"></i></span><span>Ads</span>
         </button>
         <button class="nav-item" id="nav-blog" onclick="navegarA('blog')">
-            <span class="nav-icon">📰</span><span>Archivos</span>
+            <span class="nav-icon"><i data-lucide="terminal"></i></span><span>Archivos</span>
         </button>
         <button class="nav-item" id="nav-apoyo" onclick="navegarA('apoyo')">
-            <span class="nav-icon">🤍</span><span>Apoyo</span>
+            <span class="nav-icon"><i data-lucide="zap"></i></span><span>Apoyo</span>
         </button>
         <button class="nav-item" id="nav-deseos" onclick="navegarA('deseos')">
-            <span class="nav-icon">❤️</span><span>Deseos</span>
+            <span class="nav-icon"><i data-lucide="heart"></i></span><span>Deseos</span>
         </button>
         <button class="nav-item" id="nav-perfil" onclick="navegarA('perfil')">
-            <span class="nav-icon">👤</span><span>Perfil</span>
+            <span class="nav-icon"><i data-lucide="user"></i></span><span>Perfil</span>
         </button>
     </div>
 
     <script>
-        // Configuración de Identidades Premium
+        // Configuración de Identidades Premium / VIP activos
         window.LISTA_USUARIOS_PREMIUM = ["1320417199", "987654321"]; 
+
+        // Base de datos de saldo manual de puntos para usuarios VIP activos
+        window.DB_SALDOS_VIP = {
+            "1320417199": 8, // Este usuario (VIP simulado) tiene 8 puntos de energía
+            "987654321": 10
+        };
 
         // Historial General de Compras por ID de Usuario
         window.DB_COMPRAS_USUARIOS = {
@@ -560,7 +635,7 @@
             ]
         };
 
-        // Catálogo de Productos y Servicios (Incluyendo Categoría 'personal' para el Filtro "Para Mí")
+        // Catálogo de Productos y Servicios
         window.CATALOGO_SERVICIOS = [
             {
                 id: "SERV-001", tipo: "suscripcion", categoria: "personal",
@@ -588,7 +663,7 @@
             }
         ];
 
-        // 📰 SIMULACIÓN MAESTRA DE 5 POSTS EXCLUSIVOS PARA EL ARCHIVO/BLOG
+        // 📰 SIMULACIÓN MAESTRA DE POSTS EXCLUSIVOS
         window.REPOSITORIO_BLOG = [
             {
                 id: "POST-001", condicion: "POST-GRATIS", categoria: "guias",
@@ -601,7 +676,7 @@
                 id: "POST-002", condicion: "POST-PREMIUM", categoria: "descargas",
                 titulo: "💾 Descarga Directa: Pack Binario Anti-DDoS para Servidores TON",
                 resumen: "Módulo compilado en C++ listo para blindar puertos de conexión de red.",
-                contenidoExclusivo: "💎 CONTENIDO PREMIUM VERIFICADO: Descarga disponible del paquete [AntidDoS_Core_v2.bin]. Parámetros optimizados para mitigar ataques de denegación de servicio de hasta 40 Gbps mediante filtrado avanzado de paquetes syn.",
+                contenidoExclusivo: "💎 CONTENIDO PREMIUM EXCLUSIVO: Descarga disponible del paquete [AntidDoS_Core_v2.bin]. Parámetros optimizados para mitigar ataques de denegación de servicio de hasta 40 Gbps mediante filtrado avanzado de paquetes syn.",
                 imagen: "https://picsum.photos/id/1068/400/200"
             },
             {
@@ -615,19 +690,18 @@
                 id: "POST-004", condicion: "POST-PREMIUM", categoria: "herramientas",
                 titulo: "⚡ Extractor de Datos Analíticos Avanzados de Canales",
                 resumen: "Analiza la tasa de retención de usuarios reales en tus canales y grupos de Telegram.",
-                contenidoExclusivo: "💎 CONTENIDO PREMIUM VERIFICADO: Ejecutable [Golden_Analytics_v4]. Permite extraer patrones de comportamiento, picos de interacción por franja horaria y exportar registros tabulados limpios a formato CSV.",
+                contenidoExclusivo: "💎 CONTENIDO PREMIUM EXCLUSIVO: Ejecutable [Golden_Analytics_v4]. Permite extraer patrones de comportamiento, picos de interacción por franja horaria y exportar registros tabulados limpios a formato CSV.",
                 imagen: "https://picsum.photos/id/1076/400/200"
             },
             {
                 id: "POST-005", condicion: "POST-PREMIUM", categoria: "descargas",
                 titulo: "🎁 Base de Datos Estructurada de Clientes Alta Conversión",
                 resumen: "Segmentación depurada con nichos de interés validados durante el último trimestre.",
-                contenidoExclusivo: "💎 CONTENIDO PREMIUM VERIFICADO: Descarga liberada del catálogo estructural de nichos calientes. Contiene métricas de interacción demográfica cruzada ideales para campañas publicitarias de precisión.",
+                contenidoExclusivo: "💎 CONTENIDO PREMIUM EXCLUSIVO: Descarga liberada del catálogo estructural de nichos calientes. Contiene métricas de interacción demográfica cruzada ideales para campañas publicitarias de precisión.",
                 imagen: "https://picsum.photos/id/1079/400/200"
             }
         ];
 
-        // Estado de control del sistema
         let filtroTipoActivo = "todos";      
         let filtroCategoriaActiva = "todos"; 
         let seccionActualActiva = "servicios";
@@ -676,13 +750,45 @@
                 }
             }
 
+            // Inicializar Iconos Modernos de Lucide
+            lucide.createIcons();
             renderizerEcosistemaActual(false);
+            actualizarBarraEnergiaApoyo(tgID, esPremium);
         });
 
-        function abrirCanalReseñasOficial() {
-            const urlCanal = "https://t.me/ListaGolden";
-            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(urlCanal);
-            else window.open(urlCanal, '_blank');
+        // CONTROL Y GESTIÓN DE LA BARRA DE ENERGÍA DE APOYO
+        function actualizarBarraEnergiaApoyo(userId, esVIP) {
+            const ratioTexto = document.getElementById('energy-text-ratio');
+            const barraRelleno = document.getElementById('energy-fill-bar');
+            const cajaEstado = document.getElementById('energy-vip-status-box');
+            
+            if(!barraRelleno) return;
+
+            if (esVIP) {
+                let puntosManuales = window.DB_SALDOS_VIP[String(userId)] !== undefined ? window.DB_SALDOS_VIP[String(userId)] : 5;
+                puntosManuales = Math.min(Math.max(puntosManuales, 0), 10); // Forzar rango 0-10
+                
+                let porcentaje = (puntosManuales / 10) * 100;
+                barraRelleno.style.width = `${porcentaje}%`;
+                ratioTexto.innerText = `${puntosManuales} / 10 PTS`;
+                
+                cajaEstado.innerHTML = `
+                    <div class="points-box">
+                        Sincronización de Red Exitosa. Tu terminal VIP dispone de ${puntosManuales} Puntos Operativos.
+                    </div>
+                `;
+            } else {
+                barraRelleno.style.width = `0%`;
+                ratioTexto.innerText = `0 / 10 PTS`;
+                cajaEstado.innerHTML = `
+                    <div class="non-vip-warning">
+                        <p>Terminal restringido. Las barras de energía de contingencia están reservadas exclusivamente para nodos VIP.</p>
+                        <button class="btn-contratar" style="width: 100%;" onclick="navegarA('servicios')">
+                            Contratar Suscripción Premium 👑
+                        </button>
+                    </div>
+                `;
+            }
         }
 
         // Sistema Router Unificado de Navegación
@@ -699,7 +805,7 @@
             document.getElementById('vista-contratar-anuncios').style.display = "none";
             document.getElementById('filter-bar-container').style.display = "none";
 
-            const navBtn = document.getElementById(`nav-${seccion === 'servicios' ? 'servicios' : (seccion === 'traspaso' ? 'traspaso' : (seccion === 'publicidad' ? 'publicidad' : seccion))}`);
+            const navBtn = document.getElementById(`nav-${seccion}`);
             if (navBtn) navBtn.classList.add('active');
 
             if (seccion === "servicios") {
@@ -725,7 +831,6 @@
             }
         }
 
-        // Lógica de Renderizado y Filtrado de Catálogo Principal
         function cambiarPestañaTipo(tipo, boton) {
             filtroTipoActivo = tipo;
             document.querySelectorAll('#pestañas-tipo-container .tab-tipo-btn').forEach(b => b.classList.remove('active'));
@@ -740,6 +845,7 @@
             renderizerEcosistemaActual(false);
         }
 
+        // Renderizado del Catálogo de Servicios / Estructuras
         function renderizerEcosistemaActual(cargarMas = false) {
             const grid = document.getElementById('vista-catalogo-principal');
             if (!grid || seccionActualActiva !== "servicios") return;
@@ -748,18 +854,25 @@
             if (filtroTipoActivo !== "todos") source = source.filter(i => i.tipo === filtroTipoActivo);
             if (filtroCategoriaActiva !== "todos") source = source.filter(i => i.categoria === filtroCategoriaActiva);
 
-            // Ordenación básica
             const sortVal = document.getElementById('select-sort')?.value;
             if (sortVal === "barato") source.sort((a,b) => a.precio - b.precio);
             if (sortVal === "descuento") source.sort((a,b) => b.descuento - a.descuento);
 
+            grid.innerHTML = generarBloqueTarjetasHTML(source);
+        }
+
+        // Función reutilizable para inyectar tarjetas completas tanto en catálogo como en favoritos
+        function generarBloqueTarjetasHTML(listadoItems, esVistaDeseos = false) {
             let html = "";
-            source.forEach(item => {
+            let deseos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
+
+            listadoItems.forEach(item => {
                 const precioFinal = item.precio - item.descuento;
                 const ribbon = item.descuento > 0 ? `<div class="ribbon-descuento">${item.oferta || 'OFERTA'}</div>` : "";
+                const isSaved = deseos.some(d => d.id === item.id);
                 
                 html += `
-                    <div class="servicio-card view-fade-in">
+                    <div class="servicio-card view-fade-in" id="${esVistaDeseos ? 'wish-' : 'cat-'}${item.id}">
                         <div class="card-image-placeholder">
                             ${ribbon}
                             <div class="badge-tipo-flotante badge-servicio">${item.tipo}</div>
@@ -767,29 +880,31 @@
                         </div>
                         <div class="card-body-flex">
                             <div>
-                                <h3 class="card-title-clickable" onclick="document.getElementById('exp-${item.id}').classList.toggle('open')">👉 ${item.titulo}</h3>
+                                <h3 class="card-title-clickable" onclick="document.getElementById('${esVistaDeseos ? 'expwish-' : 'expcat-'}${item.id}').classList.toggle('open')">👉 ${item.titulo}</h3>
                                 <div class="rating-clickable" onclick="abrirCanalReseñasOficial()">⭐ ${item.rating} <span style="font-weight:800; font-size:0.65rem;">RESEÑAS</span></div>
-                                <p class="card-desc-clickable" onclick="document.getElementById('exp-${item.id}').classList.toggle('open')" style="font-size:0.75rem; color:#94a3b8; margin-top:6px;">${item.descripcion_corta}</p>
+                                <p class="card-desc-clickable" onclick="document.getElementById('${esVistaDeseos ? 'expwish-' : 'expcat-'}${item.id}').classList.toggle('open')" style="font-size:0.75rem; color:#94a3b8; margin-top:6px;">${item.descripcion_corta}</p>
                             </div>
                             <div class="card-right-pricing">
                                 <div style="font-size:1.15rem; font-weight:900; color:var(--neon-cyan);">${precioFinal}€</div>
                             </div>
                         </div>
-                        <div id="exp-${item.id}" class="acordeon-contenido">
+                        <div id="${esVistaDeseos ? 'expwish-' : 'expcat-'}${item.id}" class="acordeon-contenido">
                             <p style="color:#cbd5e1;">${item.descripcion_larga}</p>
                             <p style="color:var(--text-muted); font-size:0.65rem; margin-top:4px;">Entrega: ${item.tiempoEntregaBase}</p>
                         </div>
                         <div class="card-actions-row">
-                            <button class="btn-wishlist" onclick="controladorDeseosDirecto('${item.id}', '${item.titulo}', this)">❤️ Guardar</button>
+                            <button class="btn-wishlist ${isSaved ? 'active' : ''}" onclick="controladorDeseosDirecto('${item.id}', '${item.titulo}', this, ${esVistaDeseos})">
+                                ${isSaved ? '❤️ Guardado' : '❤️ Guardar'}
+                            </button>
                             <button class="btn-contratar" onclick="abrirModalCheckoutEspecifico('${item.id}', '${item.tipo}')">Comprar Módulo 🛍️</button>
                         </div>
                     </div>
                 `;
             });
-            grid.innerHTML = html || `<p style="color:var(--text-muted); font-size:0.8rem; padding:20px; text-align:center;">Ningún módulo coincide con los filtros.</p>`;
+            return html || `<p style="color:var(--text-muted); font-size:0.8rem; padding:20px; text-align:center;">Ningún módulo registrado.</p>`;
         }
 
-        // 📰 MOTOR DEL ARCHIVO/BLOG DE POSTS EXCLUSIVOS CON REGLA DE BLOQUEO DE ESTADO
+        // MOTOR DEL ARCHIVO/BLOG CON CONTENIDO SOLO-PREMIUM OCULTO
         function filtrarBlog(cat, boton) {
             filtroCategoriaBlog = cat;
             document.querySelectorAll('#vista-blog-exclusivo .tab-tipo-btn').forEach(b => b.classList.remove('active'));
@@ -829,7 +944,7 @@
                 html += `
                     <div class="post-card ${accesoConcedido ? 'unlocked' : 'locked'} view-fade-in">
                         <div class="post-header-img">
-                            <span class="post-condition-badge ${badgeClase}">${post.condicion}</span>
+                            <span class="post-condition-badge ${badgeClase}">${post.condicion === 'POST-PREMIUM' ? '🔒 SOLO PREMIUM' : post.condicion}</span>
                             <img src="${post.imagen}">
                         </div>
                         <div class="post-body">
@@ -839,16 +954,16 @@
                             
                             ${accesoConcedido ? `
                                 <div class="post-hidden-content">
-                                    <span style="color:var(--neon-green); font-weight:bold; display:block; margin-bottom:4px;">📡 CONEXIÓN SECURE ESTABLECIDA:</span>
+                                    <span style="color:var(--neon-green); font-weight:bold; display:block; margin-bottom:4px;">📡 ACCESO VIP CONCEDIDO:</span>
                                     ${post.contenidoExclusivo}
                                 </div>
-                                <button class="btn-post-action btn-post-ok" onclick="alert('Accediendo al recurso del servidor...')">VER CONTENIDO DEL POST ES OK</button>
+                                <button class="btn-post-action btn-post-ok" onclick="alert('Descargando paquetes de datos cifrados de la base...')">EJECUTAR DESCARGA CORES 📥</button>
                             ` : `
                                 <div class="post-hidden-content" style="border-color:var(--neon-pink); background:rgba(255,0,85,0.02); text-align:center; padding:16px 10px;">
-                                    🔒 <span style="color:var(--neon-pink); font-weight:bold;">CONTENIDO ENCRIPTADO</span><br>
-                                    Este archivo requiere autorización de Nivel VIP.
+                                    🔒 <span style="color:var(--neon-pink); font-weight:bold;">CONTENIDO PREMIUM OCULTO</span><br>
+                                    Este post contiene scripts avanzados de alta demanda restringidos.
                                 </div>
-                                <button class="btn-post-action btn-post-lock" onclick="navegarA('servicios')">BLOQUEAR CONTENIDO Y OFRECER LA SUSCRIPCIÓN PREMIUM</button>
+                                <button class="btn-post-action btn-post-lock" onclick="navegarA('servicios')">Adquirir Suscripción Premium VIP 👑</button>
                             `}
                         </div>
                     </div>
@@ -866,7 +981,6 @@
             }
         }
 
-        // 🛡️ CONTROLADOR DE LA PÁGINA DE APOYO AL PROYECTO
         function abrirDonacionEspecifica(canal, titulo) {
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const tgID = userTelegram?.id || "1320417199";
@@ -881,7 +995,6 @@
             else window.open(url, '_blank');
         }
 
-        // FUNCIONES DE INTERACCIÓN DE LAS NUEVAS VISTAS RESTAURADAS
         function abrirTraspasoManual(canalNombre, precio) {
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const tgID = userTelegram?.id || "1320417199";
@@ -913,7 +1026,6 @@
             else window.open(url, '_blank');
         }
 
-        // 📊 CARGA DEL PANEL DE PERFIL E INYECCIÓN DE CONTADORES EN EL HUD DE ESTADÍSTICAS
         function cargarDatosPanelPerfil() {
             const userTelegram = window.Telegram?.WebApp?.initDataUnsafe?.user;
             const userTelegramID = userTelegram?.id || "1320417199";
@@ -973,46 +1085,45 @@
             if(!pAnunc.innerHTML) pAnunc.innerHTML = "<p style='color:#64748b; font-size:0.7rem;'>Sin pautas activas.</p>";
         }
 
-        function controladorDeseosDirecto(id, titulo, boton) {
+        function controladorDeseosDirecto(id, titulo, boton, esVistaDeseos = false) {
             let deseos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
             if (deseos.some(d => d.id === id)) {
                 deseos = deseos.filter(d => d.id !== id);
-                boton.classList.remove('active'); boton.innerText = "❤️ Guardar";
+                boton.classList.remove('active'); 
+                boton.innerText = "❤️ Guardar";
+                if(esVistaDeseos) {
+                    cargarPaginaDeseosOriginales(); // Refrescar vista si se elimina desde allí
+                }
             } else {
                 deseos.push({ id: id, titulo: titulo });
-                boton.classList.add('active'); boton.innerText = "❤️ Guardado";
+                boton.classList.add('active'); 
+                boton.innerText = "❤️ Guardado";
             }
             localStorage.setItem('lista_deseos_golden', JSON.stringify(deseos));
         }
 
-        function generarTarjetaInyectableHTML(item) {
-            const precioFinal = item.precio - item.descuento;
-            return `
-                <div class="servicio-card view-fade-in">
-                    <div class="card-body-flex" style="padding:12px;">
-                        <div>
-                            <p style="font-size:0.6rem; color:var(--neon-cyan); text-transform:uppercase; font-weight:800;">MÓDULO ALMACENADO</p>
-                            <h4 style="font-size:0.85rem; font-weight:700; margin-top:2px;">${item.titulo}</h4>
-                        </div>
-                        <div style="text-align:right;">
-                            <span style="font-size:0.9rem; font-weight:900; color:var(--neon-cyan);">${precioFinal}€</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
+        // CARGA LAS TARJETAS COMPLETAS EN LA VISTA DE DESEOS/FAVORITOS
         function cargarPaginaDeseosOriginales() {
             const grid = document.getElementById('wishlist-original-grid');
-            if (!grid) return; grid.innerHTML = "";
+            if (!grid) return; 
+            
+            grid.innerHTML = "";
             let deseos = JSON.parse(localStorage.getItem('lista_deseos_golden')) || [];
+            
             if(deseos.length === 0) {
-                grid.innerHTML = "<p style='color:#64748b; font-size:0.75rem; text-align:center;'>Lista vacía.</p>";
+                grid.innerHTML = "<p style='color:#64748b; font-size:0.75rem; text-align:center; padding:20px;'>Tu almacén virtual está vacío.</p>";
                 return;
             }
-            window.CATALOGO_SERVICIOS.forEach(item => {
-                if(deseos.some(d => d.id === item.id)) grid.innerHTML += generarTarjetaInyectableHTML(item);
-            });
+            
+            // Filtrar del catálogo maestro solo los guardados
+            let itemsGuardados = window.CATALOGO_SERVICIOS.filter(item => deseos.some(d => d.id === item.id));
+            grid.innerHTML = generarBloqueTarjetasHTML(itemsGuardados, true);
+        }
+
+        function abrirCanalReseñasOficial() {
+            const urlCanal = "https://t.me/ListaGolden";
+            if (window.Telegram?.WebApp?.openTelegramLink) window.Telegram.WebApp.openTelegramLink(urlCanal);
+            else window.open(urlCanal, '_blank');
         }
 
         function abrirModalCheckoutEspecifico(idItem, tipoItem, extraidoDeHistorial = false, tituloH = "", descH = "", vigenciaH = "") {
